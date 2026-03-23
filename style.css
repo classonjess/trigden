@@ -1009,7 +1009,7 @@ nav.scrolled {
 }
 
 .intro-title {
-  font-size: clamp(32px, 5vw, 56px);
+  font-size: clamp(40px, 6vw, 72px);
   font-weight: 800;
   letter-spacing: -0.02em;
   text-transform: none;
@@ -1041,10 +1041,10 @@ nav.scrolled {
 .walk-tagline {
   font-size: 18px;
   font-weight: 600;
-  color: var(--text-muted);
-  margin-bottom: 4px;
-  margin-top: 4px;
-  padding-top: 8px;
+  color: var(--accent);
+  margin-bottom: 16px;
+  margin-top: 0;
+  padding-top: 0;
   letter-spacing: 0.02em;
   animation: fadeInUp 0.8s ease-out 0.3s backwards;
   text-align: center;
@@ -1260,7 +1260,7 @@ nav.scrolled {
 }
 
 .about-container {
-  max-width: 1100px;
+  max-width: 1280px;
   width: 100%;
   background: rgba(62, 167, 198, 0.05);
   border: 1px solid rgba(62, 167, 198, 0.15);
@@ -1420,8 +1420,8 @@ nav.scrolled {
   line-height: 1.8;
   color: var(--text-muted);
   margin-bottom: 24px;
-  margin-top: -11px;
-  max-width: 800px;
+  margin-top: 0;
+  max-width: 1100px;
   margin-left: auto;
   margin-right: auto;
 }
@@ -1430,7 +1430,7 @@ nav.scrolled {
   .about-lead {
     font-size: 15px;
     line-height: 1.6;
-    margin-top: -30px;
+    margin-top: 0;
   }
 }
 
@@ -1478,13 +1478,16 @@ nav.scrolled {
 .about-services-grid {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
+  gap: 20px;
   margin-bottom: 44px;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .about-service-card {
   text-align: left;
-  padding: 22px;
+  padding: 28px 26px;
   border-radius: 18px;
   border: 1px solid rgba(62, 167, 198, 0.16);
   background: linear-gradient(160deg, rgba(12, 20, 30, 0.82) 0%, rgba(6, 10, 16, 0.9) 100%);
@@ -1513,7 +1516,7 @@ nav.scrolled {
 }
 
 .about-service-card h3 {
-  font-size: clamp(20px, 2.2vw, 30px);
+  font-size: clamp(18px, 1.8vw, 24px);
   line-height: 1.2;
   letter-spacing: -0.01em;
   margin-bottom: 10px;
@@ -1523,7 +1526,7 @@ nav.scrolled {
 .about-service-card p {
   margin: 0;
   color: var(--text-muted);
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.6;
 }
 
@@ -1535,7 +1538,7 @@ nav.scrolled {
   }
 
   .about-service-card {
-    padding: 16px;
+    padding: 22px 20px;
   }
 
   .about-service-icon {
@@ -1547,7 +1550,7 @@ nav.scrolled {
   }
 
   .about-service-card h3 {
-    font-size: 24px;
+    font-size: 20px;
   }
 
   .about-service-card p {
@@ -2373,6 +2376,11 @@ nav.scrolled {
     padding-bottom: 72px;
   }
 
+  .contact-copy {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
   .contact-content {
     gap: 30px;
   }
@@ -2706,10 +2714,10 @@ footer .footer-copyright {
   .cta-button {
     min-width: 0 !important;
     width: fit-content !important;
-    padding: 5px 10px 6px 10px !important;
+    padding: 5px 10px !important;
     font-size: 9px !important;
     letter-spacing: 2px !important;
-    line-height: 1 !important;
+    line-height: 1.05 !important;
   }
   
   .walking-container {
@@ -2805,7 +2813,7 @@ footer .footer-copyright {
   }
 
   .work-info {
-    padding: 16px 14px 18px 14px !important;
+    padding: 22px 20px 24px 20px !important;
   }
 
   .about-content {
@@ -2865,13 +2873,6 @@ footer .footer-copyright {
 }
 
 @media (max-width: 400px) {
-  .hero-content {
-    padding: 26px 16px 26px 16px !important;
-  }
-
-  .hero p {
-    padding-right: 145px !important;
-  }
 }
 
 @media (max-width: 393px) {
@@ -2884,26 +2885,15 @@ footer .footer-copyright {
     padding: 14px 18px 14px 18px !important;
   }
 
-  .hero-content {
-    padding: 24px 20px !important;
-  }
-
-  .hero h1 {
-    font-size: 19px !important;
-    line-height: 1.16 !important;
-  }
-
   .hero p {
-    font-size: 10px !important;
-    padding-right: 130px !important;
+    padding-right: 128px !important;
   }
 
   .cta-button {
-    min-width: 0 !important;
-    width: fit-content !important;
-    font-size: 7px !important;
-    padding: 5px 8px 6px 8px !important;
-    letter-spacing: 1.7px !important;
+    padding: 4px 10px !important;
+    font-size: 8px !important;
+    letter-spacing: 1.6px !important;
+    line-height: 1.05 !important;
   }
 
   .intro-title {
@@ -3018,6 +3008,7 @@ footer .footer-copyright {
   .hero h1 {
     font-size: 19px !important;
   }
+
 
   .hero p {
     font-size: 11px !important;
