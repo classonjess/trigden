@@ -24,7 +24,7 @@
   <link rel="canonical" href="https://twolinesstudio.com/" />
   
   <!-- Fonts -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" />
   <!-- Favicon & webmanifest -->
   <!-- PNG fallbacks (uploaded) -->
@@ -63,6 +63,20 @@
     <div class="entry-intro__content">
       <img class="entry-intro__logo" src="images/trigdenlogo.png" alt="Trigden Studio" />
       <p class="entry-intro__caption">Entering the studio</p>
+    </div>
+  </div>
+  <!-- Persistent animated background -->
+  <div class="site-bg" aria-hidden="true">
+    <div class="site-bg__geometry">
+      <span class="site-bg__shape site-bg__shape--one"></span>
+      <span class="site-bg__shape site-bg__shape--two"></span>
+      <span class="site-bg__shape site-bg__shape--three"></span>
+      <span class="site-bg__shape site-bg__shape--four"></span>
+      <span class="site-bg__shape site-bg__shape--five"></span>
+      <span class="site-bg__shape site-bg__shape--six"></span>
+      <span class="site-bg__shape site-bg__shape--seven"></span>
+      <span class="site-bg__shape site-bg__shape--eight"></span>
+      <span class="site-bg__shape site-bg__shape--nine"></span>
     </div>
   </div>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -350,56 +364,70 @@
   <!-- Contact Section -->
   <section class="contact-section flow-bg" id="contact">
     <div class="contact-content">
-      <h2>Start Your Project</h2>
-      <p>Let's bring it to life.</p>
-      
-      <form class="contact-form" id="contact-form" action="https://formspree.io/f/xreaqvyn" method="POST">
-        <div class="form-group">
-          <label for="name">Name</label>
-          <input type="text" id="name" name="name" autocomplete="name" placeholder="Your name" required />
-        </div>
-        
-        <div class="form-group">
-          <label for="email">Email</label>
-          <input type="email" id="email" name="email" autocomplete="email" placeholder="you@email.com" required />
-        </div>
-        
-        <div class="form-group">
-          <p class="interest-label">What are you interested in?</p>
-          <div class="checkbox-group">
-            <label class="checkbox-label">
-              <input type="checkbox" name="services" value="website-design" />
-              Website Design & Redesign
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="services" value="website-development" />
-              Website Development
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="services" value="seo-performance-optimization" />
-              SEO & Performance Optimization
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="services" value="brand-identity" />
-              Brand Identity
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="services" value="not-sure" />
-              Not sure yet - let's talk
-            </label>
+      <div class="contact-copy">
+        <p class="contact-eyebrow">Start Your Project</p>
+        <h2>Ready to elevate your online presence?</h2>
+        <p class="contact-lead">Whether you need a strategic redesign, a conversion-focused website, or a stronger digital foundation, Trigden Studio builds polished experiences designed to grow with your business.</p>
+        <div class="contact-points" aria-label="Project details">
+          <div class="contact-point">
+            <span class="contact-point__label">Services</span>
+            <span class="contact-point__value">Web design, development, SEO, and brand identity</span>
+          </div>
+          <div class="contact-point">
+            <span class="contact-point__label">Based In</span>
+            <span class="contact-point__value">Colorado</span>
+          </div>
+          <div class="contact-point">
+            <span class="contact-point__label">Response Time</span>
+            <span class="contact-point__value">Within 24-48 hours</span>
           </div>
         </div>
-        
-        <div class="form-group">
-          <label for="message">Message</label>
-          <textarea id="message" name="message" placeholder="Tell me about your project, goals, or timeline…" required></textarea>
-        </div>
-        
-        <p class="response-time">I'll get back to you within 24-48 hours.</p>
-        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
-        
-        <button type="submit" class="submit-btn">Start the Conversation</button>
-      </form>
+      </div>
+
+      <div class="contact-card">
+        <form class="contact-form" id="contact-form" action="https://formspree.io/f/xreaqvyn" method="POST">
+          <div class="form-group">
+            <input type="text" id="name" name="name" autocomplete="name" placeholder="Your Name" aria-label="Your name" required />
+          </div>
+
+          <div class="form-group">
+            <input type="email" id="email" name="email" autocomplete="email" placeholder="Email Address" aria-label="Email address" required />
+          </div>
+
+          <div class="form-group form-group--services">
+            <p class="interest-label">What are you interested in?</p>
+            <div class="checkbox-group">
+              <label class="checkbox-label">
+                <input type="checkbox" name="services" value="website-design" />
+                <span>Website Design &amp; Redesign</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="services" value="website-development" />
+                <span>Website Development</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="services" value="seo-performance-optimization" />
+                <span>SEO &amp; Performance Optimization</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="services" value="brand-identity" />
+                <span>Brand Identity</span>
+              </label>
+              <label class="checkbox-label">
+                <input type="checkbox" name="services" value="not-sure" />
+                <span>Not sure yet - let's talk</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <textarea id="message" name="message" placeholder="Tell me about your project, goals, timeline, or what you need help with..." aria-label="Project details" required></textarea>
+          </div>
+
+          <button type="submit" class="submit-btn">Send Message</button>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -697,7 +725,7 @@ let t = (start - rect.top) / (start - end);
       walkingObserver.observe(walkingStrip);
     }
 
-    const CONTACT_FALLBACK_EMAIL = 'hello@twolinesstudio.com';
+    const CONTACT_FALLBACK_EMAIL = 'hello@trigdenstudio.com';
 
     function openMailFallback(formElement) {
       const fallbackData = new FormData(formElement);
@@ -896,7 +924,7 @@ let t = (start - rect.top) / (start - end);
     }
 
     document.body.classList.add('intro-active');
-    window.setTimeout(finishIntro, 4300);
+    window.setTimeout(finishIntro, 2900);
   })();
 </script>
  </body>
