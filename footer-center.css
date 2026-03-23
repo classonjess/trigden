@@ -1,0 +1,17 @@
+/* Legacy footer styles - may conflict with current footer */
+.footer-bottom {
+  flex-direction: column !important;
+  text-align: center !important;
+  border-top: none !important;
+  padding-top: 0px !important;
+  gap: 0px !important;
+}
+
+.footer-nav {
+  justify-content: center !important;
+}
+
+.footer-copyright {
+  text-align: center !important;
+  margin-top: -30px !important;
+}
