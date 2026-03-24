@@ -1042,9 +1042,12 @@ nav.scrolled {
   font-size: 18px;
   font-weight: 600;
   color: var(--accent);
-  margin-bottom: 16px;
-  margin-top: 0;
+  margin-bottom: 22px;
+  margin-top: -10px;
   padding-top: 0;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 6px;
   letter-spacing: 0.02em;
   animation: fadeInUp 0.8s ease-out 0.3s backwards;
   text-align: center;
@@ -1722,12 +1725,35 @@ nav.scrolled {
 
 /* Target only the MRA card to make its logo larger */
 .mra-card .work-image {
-  padding: 36px;
+  padding: 24px;
 }
 
 .mra-card .work-image img {
-  max-width: 78%;
-  max-height: 78%;
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.integrity-card .work-image {
+  padding: 24px;
+}
+
+.integrity-card .work-image img {
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+.hoodie-card .work-image {
+  background: radial-gradient(circle at 35% 40%, rgba(62, 167, 198, 0.09), rgba(6, 10, 15, 0.78) 68%);
+  padding: 24px;
+}
+
+.hoodie-card .work-image img {
+  max-width: 90%;
+  max-height: 90%;
 }
 
 .work-info {
@@ -1769,6 +1795,45 @@ nav.scrolled {
   font-weight: 600;
   color: var(--accent);
   letter-spacing: 0.01em;
+}
+
+.work-mini-previews {
+  margin-top: 12px;
+  display: flex;
+  gap: 10px;
+}
+
+.work-mini-preview {
+  display: inline-flex;
+  border-radius: 10px;
+  text-decoration: none;
+  border: 1px solid rgba(62, 167, 198, 0.14);
+  background: rgba(7, 12, 16, 0.75);
+  padding: 4px;
+  cursor: pointer;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.work-mini-preview:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.34);
+}
+
+.work-mini-preview:focus-visible {
+  outline: 2px solid rgba(62, 167, 198, 0.55);
+  outline-offset: 2px;
+}
+
+.work-mini-preview.is-active {
+  border-color: rgba(62, 167, 198, 0.7);
+  box-shadow: 0 0 0 2px rgba(62, 167, 198, 0.22);
+}
+
+.work-mini-previews img {
+  width: 72px;
+  height: 50px;
+  object-fit: contain;
+  border-radius: 10px;
 }
 
 /* ===== SERVICES CTA SECTION ===== */
@@ -2059,12 +2124,38 @@ nav.scrolled {
   }
 
   .mra-card .work-image img {
-    max-width: 72% !important;
-    max-height: 72% !important;
+    max-width: 84% !important;
+    max-height: 84% !important;
+  }
+
+  .integrity-card .work-image {
+    padding: 8px !important;
   }
 
   .integrity-card .work-image img {
-    margin-bottom: -6px !important;
+    max-width: 84% !important;
+    max-height: 84% !important;
+    margin-bottom: 0 !important;
+  }
+
+  .hoodie-card .work-image {
+    justify-content: center !important;
+    padding: 8px !important;
+  }
+
+  .hoodie-card .work-image img {
+    max-width: 86% !important;
+    max-height: 86% !important;
+  }
+
+  .work-mini-previews {
+    margin-top: 10px;
+    gap: 8px;
+  }
+
+  .work-mini-previews img {
+    width: 62px;
+    height: 44px;
   }
   
   .checkbox-label {
@@ -2625,6 +2716,19 @@ footer .footer-copyright {
   .work-info::before {
     font-size: 64px;
   }
+
+  .mra-card .work-image,
+  .integrity-card .work-image {
+    padding: 10px !important;
+  }
+
+  .mra-card .work-image img,
+  .integrity-card .work-image img {
+    max-width: 90% !important;
+    max-height: 90% !important;
+    object-fit: contain !important;
+    border-radius: 10px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2897,12 +3001,12 @@ footer .footer-copyright {
   }
 
   .intro-title {
-    font-size: 28px !important;
+    font-size: 26px !important;
     line-height: 1.22 !important;
   }
 
   .walk-tagline {
-    font-size: 15px !important;
+    font-size: 14px !important;
   }
 
   .intro-section,
@@ -2940,8 +3044,26 @@ footer .footer-copyright {
   }
 
   .about-lead {
-    font-size: 17px !important;
-    line-height: 1.65 !important;
+    font-size: 15px !important;
+    line-height: 1.62 !important;
+  }
+
+  .about-services-grid {
+    gap: 14px !important;
+  }
+
+  .about-service-card {
+    padding: 18px 16px !important;
+  }
+
+  .about-service-card h3 {
+    font-size: 18px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .about-service-card p {
+    font-size: 13px !important;
+    line-height: 1.45 !important;
   }
 
   .services-title {
@@ -2955,7 +3077,7 @@ footer .footer-copyright {
   }
 
   .contact-content p {
-    font-size: 16px !important;
+    font-size: 15px !important;
   }
 
   .response-time {
@@ -2975,6 +3097,107 @@ footer .footer-copyright {
   .footer-pill {
     padding: 14px 18px;
     white-space: normal;
+  }
+}
+
+@media (max-width: 430px) {
+  .contact-section {
+    padding-top: 46px !important;
+    padding-bottom: 50px !important;
+  }
+
+  .contact-content {
+    gap: 20px !important;
+    padding-left: 2px !important;
+    padding-right: 2px !important;
+  }
+
+  .contact-eyebrow {
+    font-size: 11px !important;
+    letter-spacing: 0.22em !important;
+    margin-bottom: 12px !important;
+  }
+
+  .contact-copy h2 {
+    font-size: 32px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 14px !important;
+    letter-spacing: -0.03em !important;
+  }
+
+  .contact-lead {
+    font-size: 16px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 20px !important;
+  }
+
+  .contact-points {
+    gap: 16px !important;
+  }
+
+  .contact-point {
+    gap: 4px !important;
+    padding-top: 12px !important;
+  }
+
+  .contact-point__label {
+    font-size: 10px !important;
+    letter-spacing: 0.16em !important;
+  }
+
+  .contact-point__value {
+    font-size: 14px !important;
+    line-height: 1.4 !important;
+  }
+
+  .contact-card {
+    padding: 14px !important;
+    border-radius: 20px !important;
+  }
+
+  .contact-form {
+    gap: 12px !important;
+  }
+
+  .interest-label {
+    font-size: 11px !important;
+    letter-spacing: 0.12em !important;
+    margin-bottom: 10px !important;
+  }
+
+  .checkbox-group {
+    gap: 8px !important;
+  }
+
+  .checkbox-label {
+    font-size: 13px !important;
+    column-gap: 10px !important;
+  }
+
+  .checkbox-label input[type="checkbox"] {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .form-group input:not([type="checkbox"]),
+  .form-group textarea {
+    font-size: 15px !important;
+    padding: 14px 16px !important;
+    border-radius: 16px !important;
+  }
+
+  .form-group textarea {
+    min-height: 142px !important;
+  }
+
+  .submit-btn {
+    font-size: 15px !important;
+    padding: 14px 18px !important;
+    border-radius: 16px !important;
+  }
+
+  .response-time {
+    font-size: 11px !important;
   }
 }
 
@@ -3018,6 +3241,83 @@ footer .footer-copyright {
   .about-section {
     padding-left: 12px !important;
     padding-right: 12px !important;
+  }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --mobile-side-pad: 14px;
+    --mobile-work-copy-pad: 6px;
+  }
+
+  .intro-title,
+  .about-content h2,
+  .section-header h2,
+  .services-title,
+  .contact-content h2 {
+    font-size: 26px !important;
+    line-height: 1.2 !important;
+  }
+
+  .hero-content {
+    padding: 16px 14px !important;
+    max-width: 300px;
+  }
+
+  .hero h1 {
+    font-size: 18px !important;
+    line-height: 1.16 !important;
+    margin-bottom: 7px !important;
+  }
+
+  .hero p {
+    font-size: 10px !important;
+    line-height: 1.42 !important;
+    padding-right: 92px !important;
+    margin-bottom: 9px !important;
+  }
+
+  .cta-button {
+    font-size: 7px !important;
+    padding: 4px 9px !important;
+    letter-spacing: 1.4px !important;
+  }
+
+  .walk-tagline {
+    font-size: 14px !important;
+  }
+
+  .about-lead,
+  .contact-content p {
+    font-size: 15px !important;
+    line-height: 1.55 !important;
+  }
+
+  .work-image {
+    height: 162px !important;
+  }
+
+  .work-info {
+    padding: 18px 16px 20px 16px !important;
+  }
+
+  .work-info h3 {
+    font-size: 20px !important;
+  }
+
+  .work-info p {
+    font-size: 13px !important;
+    line-height: 1.55 !important;
+  }
+
+  .work-tag {
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+  }
+
+  .contact-section {
+    padding-top: 42px !important;
+    padding-bottom: 44px !important;
   }
 }
 

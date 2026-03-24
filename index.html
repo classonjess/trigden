@@ -131,10 +131,10 @@
             <p id="intro-desc" class="walk-tagline">Design That Drives Growth</p>
 
             <p class="about-lead">
-              We help small businesses and service-driven brands build clear, high-converting websites and digital assets with thoughtful UX, clean development, and lasting performance.
+              We build high-converting websites for growing businesses that need more than just a good-looking site.
             </p>
 
-            <p class="about-services-intro">Services built to help your business grow</p>
+            <p class="about-services-intro">How we help you grow</p>
             
             <div class="about-services-grid stagger-children" aria-label="Core services">
               <article class="about-service-card">
@@ -143,7 +143,7 @@
               </article>
               <article class="about-service-card">
                 <h3>Development</h3>
-                <p>Fast, responsive builds with clean code, strong accessibility, and reliable performance.</p>
+                <p>Fast, responsive websites built for performance, reliability, and long-term scalability.</p>
               </article>
               <article class="about-service-card">
                 <h3>Brand &amp; Digital Assets</h3>
@@ -151,7 +151,7 @@
               </article>
               <article class="about-service-card">
                 <h3>SEO &amp; Performance</h3>
-                <p>Technical optimization and on-page structure that help your site rank and convert better.</p>
+                <p>Optimization and structure that help your site rank, load fast, and convert more visitors.</p>
               </article>
             </div>
           
@@ -209,7 +209,7 @@
         <div class="work-image">
           <!-- Example srcset: provide 1x and 2x variants when available -->
           <!-- <img src="images/mra.png" srcset="images/mra.png 1x, images/mra@2x.png 2x" sizes="(max-width:600px) 100vw, 600px" alt="MRA Interior Design" loading="lazy" /> -->
-          <img src="images/mra.png" alt="MRA Interior Design" loading="lazy" />
+          <img src="images/mralandingpage.png" alt="MRA Interior Design landing page preview" loading="lazy" />
         </div>
         <div class="work-info" data-num="01">
           <h3>MRA Interior Design</h3>
@@ -226,7 +226,7 @@
         <div class="work-image">
           <!-- Example srcset: provide 1x and 2x variants when available -->
           <!-- <img src="images/integrity.png" srcset="images/integrity.png 1x, images/integrity@2x.png 2x" sizes="(max-width:600px) 100vw, 600px" alt="Integrity Medical Service" loading="lazy" /> -->
-          <img src="images/integrity.png" alt="Integrity Medical Service" loading="lazy" />
+          <img src="images/integritylandingpage.png" alt="Integrity Medical Service landing page preview" loading="lazy" />
         </div>
         <div class="work-info" data-num="02">
           <h3>Integrity Medical Service</h3>
@@ -240,6 +240,49 @@
           </div>
         </div>
       </a>
+
+      <article class="work-card hoodie-card" aria-label="Maverick Co. apparel logo project">
+        <div class="work-image">
+          <img class="hoodie-main-image" src="images/3hoodiepreview.png" alt="Three hoodie colorways featuring the Maverick Co. logo" loading="lazy" />
+        </div>
+        <div class="work-info" data-num="03">
+          <h3>Maverick Co. Apparel Branding</h3>
+          <p>A custom apparel logo design developed for chest placement across multiple hoodie colorways, balancing readability, character, and brand consistency.</p>
+          <div class="work-tags">
+            <span class="work-tag">Logo Design</span>
+            <span class="work-tag">Brand Identity</span>
+          </div>
+          <div class="work-mini-previews" aria-label="Additional Maverick project visuals">
+            <button
+              type="button"
+              class="work-mini-preview is-active"
+              aria-label="Show three hoodie colorways preview"
+              data-image-src="images/3hoodiepreview.png"
+              data-image-alt="Three hoodie colorways featuring the Maverick Co. logo"
+            >
+              <img src="images/3hoodiepreview.png" alt="Three hoodie colorways thumbnail" loading="lazy" />
+            </button>
+            <button
+              type="button"
+              class="work-mini-preview"
+              aria-label="Show Maverick logo preview"
+              data-image-src="images/Maverick logo - white.png"
+              data-image-alt="Maverick Co. logo in white"
+            >
+              <img src="images/Maverick logo - white.png" alt="Maverick Co. logo in white" loading="lazy" />
+            </button>
+            <button
+              type="button"
+              class="work-mini-preview"
+              aria-label="Show single hoodie preview"
+              data-image-src="images/onehoodiepreview.png"
+              data-image-alt="Single hoodie preview with logo placement"
+            >
+              <img src="images/onehoodiepreview.png" alt="Single hoodie preview with logo placement" loading="lazy" />
+            </button>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
 
@@ -615,6 +658,32 @@ let t = (start - rect.top) / (start - end);
         rotatingWordElement.textContent = rotatingWords[currentWordIndex];
       }, 3000);
     }
+
+    // Maverick card: swap main image when mini previews are clicked
+    (function () {
+      const hoodieCard = document.querySelector('.hoodie-card');
+      if (!hoodieCard) return;
+
+      const mainImage = hoodieCard.querySelector('.hoodie-main-image');
+      const miniButtons = hoodieCard.querySelectorAll('.work-mini-preview');
+      if (!mainImage || !miniButtons.length) return;
+
+      miniButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const src = button.getAttribute('data-image-src');
+          const alt = button.getAttribute('data-image-alt');
+          if (!src) return;
+
+          mainImage.src = src;
+          if (alt) {
+            mainImage.alt = alt;
+          }
+
+          miniButtons.forEach((item) => item.classList.remove('is-active'));
+          button.classList.add('is-active');
+        });
+      });
+    })();
   </script>
   <script>
   // Force video load and play (with iOS fallback)
