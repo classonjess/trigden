@@ -642,8 +642,17 @@ nav.scrolled {
   }
 
   nav.scrolled {
-    padding: 4px 16px 4px 16px !important;
-    min-height: 40px !important;
+    top: 0 !important;
+    padding: 10px 18px 10px 18px !important;
+    min-height: 54px !important;
+  }
+
+  nav.scrolled .logo img {
+    height: 22px;
+  }
+
+  nav.scrolled .hamburger span {
+    width: 20px !important;
   }
   
   .menu-toggle {
@@ -695,6 +704,8 @@ nav.scrolled {
     left: 0 !important;
     right: 0 !important;
     bottom: 0 !important;
+    margin: 0 !important;
+    width: 100vw !important;
     flex-direction: column !important;
     gap: 0 !important;
     background: rgba(11, 17, 19, 0.98) !important;
@@ -720,6 +731,8 @@ nav.scrolled {
   .nav-links li a {
     color: #ffffff !important;
     font-size: 16px !important;
+    display: inline-block !important;
+    padding-left: 10px !important;
   }
 
   .nav-cta {
@@ -727,10 +740,15 @@ nav.scrolled {
   }
 
   .nav-links .nav-cta {
-    display: block !important;
-    width: fit-content;
-    margin-top: 16px !important;
-    padding: 8px 20px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    align-self: flex-start !important;
+    width: auto !important;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+    padding: 8px 18px !important;
+    font-size: 16px !important;
     border: 1px solid rgba(255, 255, 255, 0.4) !important;
     border-radius: 50px !important;
   }
@@ -1274,7 +1292,7 @@ nav.scrolled {
 
 @media (max-width: 768px) {
   .about-section {
-    padding: 40px 30px 150px 30px;
+    padding: 16px 30px 150px 30px;
   }
 
   .about-container {
@@ -1726,6 +1744,8 @@ nav.scrolled {
 /* Target only the MRA card to make its logo larger */
 .mra-card .work-image {
   padding: 24px;
+  justify-content: center;
+  align-items: center;
 }
 
 .mra-card .work-image img {
@@ -1737,6 +1757,8 @@ nav.scrolled {
 
 .integrity-card .work-image {
   padding: 24px;
+  justify-content: center;
+  align-items: center;
 }
 
 .integrity-card .work-image img {
@@ -2126,6 +2148,13 @@ nav.scrolled {
   .mra-card .work-image img {
     max-width: 84% !important;
     max-height: 84% !important;
+  }
+
+  .mra-card .work-image,
+  .integrity-card .work-image {
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 8px !important;
   }
 
   .integrity-card .work-image {
@@ -2759,7 +2788,7 @@ footer .footer-copyright {
     height: 42vh;
     position: relative;
     overflow: hidden;
-    border-radius: 18px;
+    border-radius: 0;
     align-items: flex-start;
     justify-content: flex-start;
   }
@@ -2769,19 +2798,15 @@ footer .footer-copyright {
   }
 
   .hero::after {
-    display: block;
-    inset: 10px;
-    border-radius: 18px;
-    border: 1px solid rgba(62, 167, 198, 0.15);
-    box-shadow: 0 0 0 1px rgba(62, 167, 198, 0.06);
+    display: none;
   }
 
   .hero-video {
     position: absolute !important;
-    inset: 10px !important;
-    width: calc(100% - 20px);
-    height: calc(100% - 20px);
-    border-radius: 18px;
+    inset: 0 !important;
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
     object-fit: cover;
     object-position: center center;
     transform: none;
@@ -2819,8 +2844,8 @@ footer .footer-copyright {
     min-width: 0 !important;
     width: fit-content !important;
     padding: 5px 10px !important;
-    font-size: 9px !important;
-    letter-spacing: 2px !important;
+    font-size: 8px !important;
+    letter-spacing: 1.6px !important;
     line-height: 1.05 !important;
   }
   
@@ -2829,7 +2854,8 @@ footer .footer-copyright {
   }
   
   .walk-tagline {
-    margin-bottom: 0px !important;
+    font-size: 16px !important;
+    margin-bottom: 18px !important;
   }
   
   .walking-strip {
@@ -2913,7 +2939,7 @@ footer .footer-copyright {
   .walk-frame:last-child { animation-name: walk-cycle-last; }
   
   .about-content {
-    padding: 32px 24px 40px 24px !important;
+    padding: 16px 24px 40px 24px !important;
   }
 
   .work-info {
@@ -2958,7 +2984,7 @@ footer .footer-copyright {
 
   .intro-section {
     margin-top: 0;
-    padding-top: 40px;
+    padding-top: 15px;
     padding-bottom: 20px;
     padding-left: 0;
     padding-right: 0;
@@ -2966,6 +2992,7 @@ footer .footer-copyright {
 
   .intro-title {
     line-height: 1.25;
+    margin-top: -10px;
     animation: slideInLeftSimple 0.8s ease-out 0.1s both;
   }
   
@@ -2994,9 +3021,9 @@ footer .footer-copyright {
   }
 
   .cta-button {
-    padding: 4px 10px !important;
-    font-size: 8px !important;
-    letter-spacing: 1.6px !important;
+    padding: 4px 9px !important;
+    font-size: 7px !important;
+    letter-spacing: 1.4px !important;
     line-height: 1.05 !important;
   }
 
@@ -3006,7 +3033,8 @@ footer .footer-copyright {
   }
 
   .walk-tagline {
-    font-size: 14px !important;
+    font-size: 13px !important;
+    margin-bottom: 16px !important;
   }
 
   .intro-section,
@@ -3278,13 +3306,13 @@ footer .footer-copyright {
   }
 
   .cta-button {
-    font-size: 7px !important;
-    padding: 4px 9px !important;
-    letter-spacing: 1.4px !important;
+    font-size: 6px !important;
+    padding: 3px 8px !important;
+    letter-spacing: 1.2px !important;
   }
 
   .walk-tagline {
-    font-size: 14px !important;
+    font-size: 12px !important;
   }
 
   .about-lead,
