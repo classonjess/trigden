@@ -4086,10 +4086,10 @@ footer .footer-copyright {
 @media (max-width: 680px) {
   .cky-consent-container {
     position: fixed !important;
-    left: auto !important;
-    right: 10px !important;
+    left: 50% !important;
+    right: auto !important;
     bottom: 10px !important;
-    transform: none !important;
+    transform: translateX(-50%) !important;
     width: min(300px, calc(100vw - 20px)) !important;
     max-width: 300px !important;
     margin: 0 !important;
@@ -4110,35 +4110,40 @@ footer .footer-copyright {
   }
 
   .cky-notice {
-    padding: 8px 10px !important;
-    border-radius: 10px !important;
+    padding: 7px 8px !important;
+    border-radius: 8px !important;
   }
 
   .cky-title {
-    font-size: 14px !important;
-    line-height: 1.15 !important;
-    margin-bottom: 5px !important;
+    font-size: 13px !important;
+    line-height: 1.1 !important;
+    margin-bottom: 4px !important;
   }
 
   .cky-notice-des {
-    font-size: 12px !important;
-    line-height: 1.35 !important;
+    font-size: 11px !important;
+    line-height: 1.28 !important;
     margin-bottom: 0 !important;
   }
 
   .cky-notice-btn-wrapper {
-    gap: 6px !important;
-    margin-top: 7px !important;
+    gap: 5px !important;
+    margin-top: 6px !important;
   }
 
   .cky-btn,
   .cky-btn-accept,
   .cky-btn-reject,
   .cky-btn-customize {
-    min-height: 32px !important;
-    padding: 7px 9px !important;
-    font-size: 13px !important;
-    border-radius: 4px !important;
+    min-height: 29px !important;
+    padding: 6px 8px !important;
+    font-size: 12px !important;
+    border-radius: 3px !important;
+  }
+
+  .cky-powered-by {
+    font-size: 10px !important;
+    margin-top: 6px !important;
   }
 
   .cky-preference-wrapper,
