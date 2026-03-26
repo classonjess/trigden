@@ -1280,7 +1280,7 @@ nav.scrolled {
 
 /* ===== ABOUT SECTION ===== */
 .about-section {
-  padding: 40px 40px 150px 40px;
+  padding: 40px 40px 80px 40px;
   background: transparent !important;
   position: relative;
   border-bottom: 1px solid rgba(62, 167, 198, 0.08);
@@ -1295,7 +1295,7 @@ nav.scrolled {
   background: rgba(62, 167, 198, 0.05);
   border: 1px solid rgba(62, 167, 198, 0.15);
   border-radius: 16px;
-  padding: 60px 48px;
+  padding: 60px 48px 34px;
   backdrop-filter: blur(10px);
 }
 
@@ -3117,8 +3117,26 @@ footer .footer-copyright {
   }
 
   nav {
-    padding: 16px 24px 16px 32px;
+    padding: 18px 24px 18px 32px;
+    min-height: 60px;
   }
+
+  nav.scrolled {
+    padding: 14px 24px 14px 32px !important;
+    min-height: 58px !important;
+  }
+
+  .logo img,
+  nav.scrolled .logo img {
+    height: 24px;
+  }
+
+  .hamburger span,
+  nav.scrolled .hamburger span {
+    width: 22px !important;
+    height: 2.5px !important;
+  }
+
   .nav-links {
     gap: 20px;
     padding: 10px 16px;
@@ -4061,5 +4079,106 @@ footer .footer-copyright {
 
   #main {
     padding-top: 38px;
+  }
+}
+
+/* CookieYes compact first-load banner */
+@media (max-width: 680px) {
+  .cky-consent-container,
+  .cky-consent-bar,
+  #cky-consent {
+    width: calc(100% - 14px) !important;
+    max-width: 420px !important;
+    margin: 0 auto 6px !important;
+  }
+
+  .cky-notice {
+    padding: 10px 11px 10px !important;
+    border-radius: 10px !important;
+  }
+
+  .cky-title {
+    font-size: 15px !important;
+    line-height: 1.15 !important;
+    margin-bottom: 6px !important;
+  }
+
+  .cky-notice-des {
+    font-size: 13px !important;
+    line-height: 1.4 !important;
+    margin-bottom: 0 !important;
+  }
+
+  .cky-notice-btn-wrapper {
+    gap: 6px !important;
+    margin-top: 8px !important;
+  }
+
+  .cky-btn,
+  .cky-btn-accept,
+  .cky-btn-reject,
+  .cky-btn-customize {
+    min-height: 36px !important;
+    padding: 8px 10px !important;
+    font-size: 14px !important;
+    border-radius: 4px !important;
+  }
+
+  .cky-preference-wrapper,
+  .cky-preference-body,
+  .cky-prefrence-btn-wrapper {
+    font-size: inherit !important;
+  }
+}
+
+@media (min-width: 681px) {
+  .cky-consent-bar,
+  .cky-consent-container,
+  #cky-consent {
+    left: auto !important;
+    right: 18px !important;
+    bottom: 18px !important;
+    width: min(360px, calc(100vw - 36px)) !important;
+    max-width: 360px !important;
+    margin: 0 !important;
+  }
+
+  .cky-consent-bar {
+    position: fixed !important;
+    transform: none !important;
+    z-index: 9999 !important;
+  }
+
+  .cky-notice {
+    padding: 12px 14px !important;
+    border-radius: 12px !important;
+  }
+
+  .cky-title {
+    font-size: 16px !important;
+    margin-bottom: 6px !important;
+  }
+
+  .cky-notice-des {
+    font-size: 13px !important;
+    line-height: 1.42 !important;
+  }
+
+  .cky-notice-btn-wrapper {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 8px !important;
+    margin-top: 10px !important;
+  }
+
+  .cky-btn,
+  .cky-btn-accept,
+  .cky-btn-reject,
+  .cky-btn-customize {
+    flex: 1 1 auto !important;
+    min-height: 38px !important;
+    padding: 8px 12px !important;
+    font-size: 13px !important;
+    white-space: nowrap !important;
   }
 }
