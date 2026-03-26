@@ -3,8 +3,13 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- Start cookieyes banner -->
+  <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/7bdd59f8a27359a8f937a8ff3725c9c2/script.js"></script>
+  <!-- End cookieyes banner -->
   <title>Trigden Studio — Web Design & Development in Colorado</title>
   <meta name="description" content="Trigden Studio offers professional web design, development, SEO, and branding services for small businesses. Based in Colorado. MERN stack developer specializing in conversion-focused websites." />
+  <meta name="robots" content="index, follow" />
+  <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="Jessica Classon" />
   
   <!-- Open Graph / Social Media -->
@@ -12,16 +17,30 @@
   <meta property="og:description" content="Full-service design for websites, branding, and digital experiences that drive real impact." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://twolinesstudio.com" />
-  <meta property="og:image" content="https://twolinesstudio.com/images/image4.png" />
+  <meta property="og:site_name" content="Trigden Studio" />
+  <meta property="og:locale" content="en_US" />
+  <meta property="og:image" content="https://twolinesstudio.com/images/og-preview.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Trigden Studio social preview" />
   
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Trigden Studio — Web Design & Development" />
   <meta name="twitter:description" content="Full-service design for websites, branding, and digital experiences that drive real impact." />
-  <meta name="twitter:image" content="https://twolinesstudio.com/images/image4.png" />
+  <meta name="twitter:url" content="https://twolinesstudio.com/" />
+  <meta name="twitter:image" content="https://twolinesstudio.com/images/og-preview.png" />
+  <meta name="twitter:image:alt" content="Trigden Studio social preview" />
+  <meta name="twitter:label1" content="Location" />
+  <meta name="twitter:data1" content="Colorado, United States" />
   
   <!-- Canonical URL -->
   <link rel="canonical" href="https://twolinesstudio.com/" />
+
+  <!-- Performance hints for hosted web fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   
   <!-- Fonts -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" />
@@ -29,23 +48,57 @@
   <!-- Favicon & webmanifest -->
   <!-- PNG fallbacks (uploaded) -->
   <link rel="icon" type="image/png" sizes="192x192" href="/images/mobilefav.png">
-  <link rel="icon" type="image/png" sizes="48x48" href="/images/favicon-48.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/images/mobilefav.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/mobilefav.png">
-  <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="shortcut icon" href="/images/mobilefav.png">
   <link rel="manifest" href="/site.webmanifest">
   <meta name="theme-color" content="#0b1113">
   <!-- JSON-LD Organization -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Trigden Studio",
-    "url": "https://twolinesstudio.com",
-    "logo": "https://twolinesstudio.com/images/trigdenlogo.png"
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://twolinesstudio.com/#organization",
+        "name": "Trigden Studio",
+        "url": "https://twolinesstudio.com/",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://twolinesstudio.com/images/trigdenlogo.png",
+          "width": 1247,
+          "height": 200
+        }
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://twolinesstudio.com/#website",
+        "url": "https://twolinesstudio.com/",
+        "name": "Trigden Studio",
+        "publisher": {
+          "@id": "https://twolinesstudio.com/#organization"
+        },
+        "inLanguage": "en-US"
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://twolinesstudio.com/#webpage",
+        "url": "https://twolinesstudio.com/",
+        "name": "Trigden Studio — Web Design & Development in Colorado",
+        "description": "Trigden Studio offers professional web design, development, SEO, and branding services for small businesses.",
+        "isPartOf": {
+          "@id": "https://twolinesstudio.com/#website"
+        },
+        "about": {
+          "@id": "https://twolinesstudio.com/#organization"
+        },
+        "inLanguage": "en-US"
+      }
+    ]
   }
   </script>
   <!-- Your CSS file -->
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20260326-21" />
 </head>
 <body id="top">
   <div id="entry-intro" class="entry-intro" aria-hidden="true">
@@ -96,14 +149,13 @@
       <li><a href="#about">About</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#work">Work</a></li>
-      <li><a href="#services">Services</a></li>
       <li><a href="#contact" class="nav-cta">Contact</a></li>
     </ul>
     <a href="#contact" class="nav-cta">Contact</a>
   </nav>
 
 <section class="hero">
-  <video id="hero-vid" class="hero-video" autoplay muted defaultmuted loop playsinline webkit-playsinline preload="auto" poster="./images/image4.png" disablepictureinpicture>
+  <video id="hero-vid" class="hero-video" autoplay muted defaultmuted loop playsinline webkit-playsinline preload="auto" poster="./images/mobilefav.png" disablepictureinpicture>
       <source src="./video/website-banner-720.mp4" type="video/mp4" />
     </video>
   
@@ -156,9 +208,8 @@
             </div>
           
           <div class="stats stagger-children">
-
             <div class="stat" style="gap: 0 !important;">
-              <div class="stat-label" style="margin-top: 0 !important; padding-top: 0 !important; line-height: 1.2 !important;">Colorado-based • Serving clients nationwide</div>
+              <div class="stat-label" style="margin-top: 0 !important; padding-top: 0 !important; line-height: 1.2 !important;">Serving clients nationwide</div>
             </div>
           </div>
 
@@ -286,35 +337,114 @@
     </div>
   </section>
 
+  <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-title">
+    <div class="section-header">
+      <h2 id="testimonials-title">What Clients Say</h2>
+    </div>
+
+    <div class="testimonials-grid">
+      <article class="testimonial-card">
+        <p class="testimonial-quote">"They helped me create a logo so I could put it on some hoodies and gave me a lot of different ideas to choose from."</p>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">Gary, Maverick Co.</p>
+          <div class="testimonial-proof" aria-label="Five star client feedback">
+            <span class="testimonial-stars" aria-hidden="true">&#9733; &#9733; &#9733; &#9733; &#9733;</span>
+            <span class="testimonial-verified">Verified client feedback submitted via Typeform</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="testimonial-card">
+        <p class="testimonial-quote">"Don't think twice!!! Jessica is absolutely lovely to work with, has amazing ideas and created more than I ever thought possible for my website! She has already reached out after 8 months ready to update it again with all our new work. I had her do my logo too, after she suggested it needed work and I get compliments all the time!! She is on speed dial on my phone!!!"</p>
+        <div class="testimonial-meta">
+          <p class="testimonial-name">MRA Designs</p>
+          <div class="testimonial-proof" aria-label="Five star client feedback">
+            <span class="testimonial-stars" aria-hidden="true">&#9733; &#9733; &#9733; &#9733; &#9733;</span>
+            <span class="testimonial-verified">Verified client feedback submitted via Typeform</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
   <!-- Services/CTA Section -->
-  <section class="services-cta-section" id="services">
+  <section class="services-cta-section" id="services" hidden>
     <div class="services-cta-container">
       <div class="services-cta-content">
-        <p class="services-eyebrow">Need a design partner?</p>
-        <h2 class="services-title">Design Support That Scales With Your Business.</h2>
-        
+        <p class="services-eyebrow">Services &amp; Investment</p>
+        <h2 class="services-title">Clear offers for brands that need more than a basic website.</h2>
+        <p class="services-intro">Every project is scoped around your goals, timeline, and growth stage. The cards below show how work is typically structured so you know what kind of investment to expect before reaching out.</p>
       </div>
       
       <div class="services-visual">
-        <div class="services-cards" aria-label="Service highlights">
+        <div class="services-cards" aria-label="Services and investment options">
           <article class="service-card">
-            <div class="service-icon" aria-hidden="true">✦</div>
-            <h3>Conversion-Focused</h3>
-            <p>Pages designed for clarity, trust, and action so visitors are more likely to reach out.</p>
+            <div class="service-tier">Project-based</div>
+            <h3>Web Design</h3>
+            <p>Custom page design, messaging structure, and visual direction built to make your business look established and easy to trust.</p>
+            <ul class="service-features">
+              <li>Page layout and hierarchy</li>
+              <li>Messaging and conversion flow</li>
+              <li>Responsive design direction</li>
+            </ul>
           </article>
 
           <article class="service-card">
-            <div class="service-icon" aria-hidden="true">&lt;/&gt;</div>
-            <h3>Fast + Reliable</h3>
-            <p>Clean implementation, responsive behavior, and dependable support to keep momentum moving.</p>
+            <div class="service-tier">Scope-based</div>
+            <h3>Development</h3>
+            <p>Fast, responsive builds with clean structure, solid performance, and room to scale as your business grows.</p>
+            <ul class="service-features">
+              <li>Front-end development</li>
+              <li>Performance-focused implementation</li>
+              <li>Launch support and polish</li>
+            </ul>
           </article>
 
           <article class="service-card">
-            <div class="service-icon" aria-hidden="true">◌</div>
-            <h3>Built to Scale</h3>
-            <p>A flexible design system and ongoing improvements that grow with your business.</p>
+            <div class="service-tier">One-time or ongoing</div>
+            <h3>Brand, SEO &amp; Support</h3>
+            <p>Brand assets, search visibility improvements, and ongoing design help when your business needs consistent momentum.</p>
+            <ul class="service-features">
+              <li>Brand assets and digital collateral</li>
+              <li>SEO structure and on-page cleanup</li>
+              <li>Ongoing updates as needed</li>
+            </ul>
           </article>
         </div>
+      </div>
+
+      <div class="services-pricing-note">
+        <p>Final pricing depends on scope, timeline, and the number of pages or assets needed.</p>
+        <a class="services-cta-btn" href="#contact">Request a custom quote</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="services-support-section">
+    <div class="services-support-block">
+      <div class="services-support-header">
+        <p class="services-eyebrow">Need a design partner?</p>
+        <h3 class="services-support-title">Design Support That Scales With Your Business.</h3>
+      </div>
+
+      <div class="services-support-cards" aria-label="Design support highlights">
+        <article class="support-card">
+          <div class="support-icon" aria-hidden="true">✦</div>
+          <h3>Conversion-Focused</h3>
+          <p>Pages designed for clarity, trust, and action so visitors are more likely to reach out.</p>
+        </article>
+
+        <article class="support-card">
+          <div class="support-icon" aria-hidden="true">&lt;/&gt;</div>
+          <h3>Fast + Reliable</h3>
+          <p>Clean implementation, responsive behavior, and dependable support to keep momentum moving.</p>
+        </article>
+
+        <article class="support-card">
+          <div class="support-icon" aria-hidden="true">◌</div>
+          <h3>Built to Scale</h3>
+          <p>A flexible design system and ongoing improvements that grow with your business.</p>
+        </article>
       </div>
     </div>
   </section>
@@ -369,7 +499,7 @@
               </label>
               <label class="checkbox-label">
                 <input type="checkbox" name="services" value="brand-identity" />
-                <span>Brand Identity</span>
+                <span>Brand &amp; Digital Assets</span>
               </label>
               <label class="checkbox-label">
                 <input type="checkbox" name="services" value="not-sure" />
@@ -384,6 +514,7 @@
 
           <button type="submit" class="submit-btn">Send Message</button>
           <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          <p class="form-direct-email">Prefer to reach out directly? <a href="mailto:hello@trigdenstudio.com">hello@trigdenstudio.com</a></p>
         </form>
       </div>
     </div>
@@ -756,6 +887,7 @@ let t = (start - rect.top) / (start - end);
     '.about-section',
     '.process-section',
     '.work-section',
+    '.testimonials-section',
     '.services-cta-section',
     '.contact-section',
     '.walking-strip',
@@ -768,6 +900,7 @@ let t = (start - rect.top) / (start - end);
 
   if (window.matchMedia('(max-width: 768px)').matches) {
     animationTargets.push('.service-card');
+    animationTargets.push('.support-card');
   }
 
   document.querySelectorAll(animationTargets.join(', ')).forEach(el => {
