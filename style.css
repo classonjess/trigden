@@ -4087,13 +4087,21 @@ footer .footer-copyright {
   .cky-consent-container,
   .cky-consent-bar,
   #cky-consent {
-    left: 50% !important;
+    position: fixed !important;
+    left: auto !important;
     right: auto !important;
+    right: 10px !important;
     bottom: 10px !important;
-    transform: translateX(-50%) !important;
-    width: calc(100% - 28px) !important;
-    max-width: 340px !important;
+    transform: none !important;
+    width: min(300px, calc(100vw - 20px)) !important;
+    max-width: 300px !important;
     margin: 0 auto !important;
+  }
+
+  .cky-consent-bar {
+    position: fixed !important;
+    transform: none !important;
+    z-index: 9999 !important;
   }
 
   .cky-notice {
@@ -4142,8 +4150,8 @@ footer .footer-copyright {
     left: auto !important;
     right: 18px !important;
     bottom: 18px !important;
-    width: min(520px, calc(100vw - 36px)) !important;
-    max-width: 520px !important;
+    width: min(430px, calc(100vw - 36px)) !important;
+    max-width: 430px !important;
     margin: 0 !important;
   }
 
@@ -4154,7 +4162,7 @@ footer .footer-copyright {
   }
 
   .cky-notice {
-    padding: 12px 14px !important;
+    padding: 10px 12px !important;
     border-radius: 12px !important;
   }
 
@@ -4166,8 +4174,8 @@ footer .footer-copyright {
   }
 
   .cky-title {
-    font-size: 16px !important;
-    margin-bottom: 6px !important;
+    font-size: 15px !important;
+    margin-bottom: 5px !important;
   }
 
   .cky-notice-des,
@@ -4175,16 +4183,16 @@ footer .footer-copyright {
     display: block !important;
     width: 100% !important;
     max-width: none !important;
-    font-size: 13px !important;
-    line-height: 1.42 !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
     white-space: normal !important;
   }
 
   .cky-notice-btn-wrapper {
     display: grid !important;
     grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-    gap: 8px !important;
-    margin-top: 10px !important;
+    gap: 6px !important;
+    margin-top: 8px !important;
   }
 
   .cky-btn,
@@ -4192,9 +4200,9 @@ footer .footer-copyright {
   .cky-btn-reject,
   .cky-btn-customize {
     flex: 1 1 auto !important;
-    min-height: 38px !important;
-    padding: 8px 12px !important;
-    font-size: 13px !important;
+    min-height: 34px !important;
+    padding: 7px 10px !important;
+    font-size: 12px !important;
     white-space: normal !important;
     line-height: 1.2 !important;
   }
