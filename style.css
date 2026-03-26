@@ -4082,6 +4082,13 @@ footer .footer-copyright {
   }
 }
 
+/* Hide cookie banner during entry intro */
+body.intro-active .cky-consent-container {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transition: opacity 0.4s ease 0.3s !important;
+}
+
 /* CookieYes compact first-load banner */
 @media (max-width: 680px) {
   .cky-consent-container {
@@ -4109,42 +4116,32 @@ footer .footer-copyright {
     margin: 0 !important;
   }
 
-  /* Hard cap the entire banner height */
-  .cky-consent-container,
-  .cky-consent-bar,
-  #cky-consent,
-  .cky-notice,
-  .cky-notice-content {
-    max-height: 56px !important;
-    overflow: hidden !important;
-    min-height: 0 !important;
-  }
-
-  /* Single-row compact strip */
+  /* Compact strip — no height cap so description shows */
   .cky-notice {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: space-between !important;
-    flex-wrap: nowrap !important;
-    gap: 10px !important;
-    padding: 8px 14px !important;
+    display: block !important;
+    padding: 10px 14px !important;
     border-radius: 0 !important;
     box-sizing: border-box !important;
   }
 
-  /* Hide description, branding, and close button to save space */
-  .cky-notice-des,
-  .cky-notice-des p,
+  /* Hide only branding to save space */
   .cky-powered-by,
   .cky-powered-by *,
-  [class*="cky-powered"],
-  .cky-notice-des-content,
-  .cky-close-btn {
+  [class*="cky-powered"] {
     display: none !important;
     height: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
     overflow: hidden !important;
+  }
+
+  /* Show description */
+  .cky-notice-des,
+  .cky-notice-des p {
+    display: block !important;
+    font-size: 12px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 0 !important;
   }
 
   .cky-notice-group {
