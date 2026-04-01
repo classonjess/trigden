@@ -2,4 +2,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://twolinesstudio.com/sitemap.xml
+Sitemap: https://trigdenstudio.com/sitemap.xml
