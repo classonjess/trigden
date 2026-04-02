@@ -938,6 +938,93 @@ nav.scrolled {
   opacity: 0.98;
 }
 
+.hero-motion-toggle {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  width: 52px;
+  height: 52px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(165deg, rgba(16, 28, 35, 0.9) 0%, rgba(8, 16, 21, 0.94) 100%);
+  box-shadow:
+    0 10px 24px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(255, 255, 255, 0.18) inset;
+  display: grid;
+  place-items: center;
+  z-index: 3;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+}
+
+.hero-motion-toggle .motion-icon {
+  width: 16px;
+  height: 16px;
+  position: relative;
+}
+
+.hero-motion-toggle .motion-icon::before,
+.hero-motion-toggle .motion-icon::after {
+  content: '';
+  position: absolute;
+  top: 1px;
+  width: 4px;
+  height: 14px;
+  border-radius: 2px;
+  background: #ffffff;
+}
+
+.hero-motion-toggle .motion-icon::before {
+  left: 3px;
+}
+
+.hero-motion-toggle .motion-icon::after {
+  right: 3px;
+}
+
+.hero-motion-toggle.is-paused .motion-icon::before {
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 4px;
+  right: auto;
+  border-top: 8px solid transparent;
+  border-bottom: 8px solid transparent;
+  border-left: 12px solid #ffffff;
+  background: transparent;
+  border-radius: 0;
+}
+
+.hero-motion-toggle.is-paused .motion-icon::after {
+  display: none;
+}
+
+.hero-motion-toggle:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 12px 28px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.24) inset;
+}
+
+.hero-motion-toggle:focus-visible {
+  outline: 2px solid #8edcff;
+  outline-offset: 3px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* Desktop: expand video to edges */
 @media (min-width: 1025px) {
   .hero-video {
@@ -995,6 +1082,13 @@ nav.scrolled {
     font-size: clamp(32px, 7vw, 44px);
     line-height: 1.08;
     padding-right: 150px;
+  }
+
+  .hero-motion-toggle {
+    right: 14px;
+    bottom: 14px;
+    width: 46px;
+    height: 46px;
   }
 
   .contact-content p {
@@ -1344,11 +1438,11 @@ nav.scrolled {
 
 @media (max-width: 768px) {
   .about-section {
-    padding: 16px 30px 150px 30px;
+    padding: 16px 16px 150px 16px;
   }
 
   .about-container {
-    padding: 40px 30px 20px 30px;
+    padding: 40px 18px 20px 18px;
   }
 }
 
@@ -1578,25 +1672,57 @@ nav.scrolled {
   box-shadow: 0 20px 40px rgba(2, 8, 12, 0.34), 0 0 18px rgba(62, 167, 198, 0.12);
 }
 
+.about-service-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 10px;
+}
+
 .about-service-icon {
-  width: 46px;
-  height: 46px;
+  width: 54px;
+  height: 54px;
   display: grid;
   place-items: center;
-  border-radius: 14px;
-  margin-bottom: 16px;
-  color: var(--accent);
-  font-size: 18px;
-  font-weight: 700;
-  background: rgba(62, 167, 198, 0.1);
-  border: 1px solid rgba(62, 167, 198, 0.28);
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: linear-gradient(160deg, rgba(10, 24, 36, 0.84) 0%, rgba(4, 12, 18, 0.96) 100%);
+  border: 1px solid rgba(84, 205, 245, 0.26);
+  box-shadow:
+    0 0 0 1px rgba(138, 225, 255, 0.1) inset,
+    0 8px 22px rgba(2, 8, 14, 0.42),
+    0 0 18px rgba(68, 191, 236, 0.2);
+}
+
+.about-service-icon svg {
+  width: 28px;
+  height: 28px;
+  stroke: #74ddff;
+  stroke-width: 1.65;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  fill: none;
+  filter: drop-shadow(0 0 6px rgba(116, 221, 255, 0.42));
+}
+
+.about-service-icon--dev svg {
+  stroke: #6bc9ff;
+}
+
+.about-service-icon--design svg {
+  stroke: #66dcf4;
+}
+
+.about-service-icon--seo svg {
+  stroke: #79e7ff;
 }
 
 .about-service-card h3 {
   font-size: clamp(18px, 1.8vw, 24px);
   line-height: 1.2;
   letter-spacing: -0.01em;
-  margin-bottom: 10px;
+  margin: 0;
   color: var(--text);
 }
 
@@ -1623,11 +1749,14 @@ nav.scrolled {
   }
 
   .about-service-icon {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 12px;
-    border-radius: 11px;
-    font-size: 16px;
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+  }
+
+  .about-service-icon svg {
+    width: 21px;
+    height: 21px;
   }
 
   .about-service-card h3 {
@@ -1748,7 +1877,7 @@ nav.scrolled {
   color: inherit;
   display: flex;
   flex-direction: row;
-  height: 270px;
+  height: 300px;
   position: relative;
 }
 
@@ -1786,7 +1915,7 @@ nav.scrolled {
   width: 42%;
   flex-shrink: 0;
   align-self: stretch;
-  background: radial-gradient(circle at 35% 40%, rgba(62, 167, 198, 0.11), rgba(6, 10, 15, 0.7) 65%);
+  background: radial-gradient(circle at 35% 40%, rgba(62, 167, 198, 0.18), rgba(6, 10, 15, 0.8) 68%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1799,12 +1928,12 @@ nav.scrolled {
   max-width: 78%;
   max-height: 78%;
   object-fit: contain;
-  filter: drop-shadow(0 8px 22px rgba(0, 0, 0, 0.6));
+  filter: drop-shadow(0 10px 28px rgba(0, 0, 0, 0.7));
   transition: transform 400ms ease;
 }
 
 .work-card:hover .work-image img {
-  transform: scale(1.06);
+  transform: scale(1.12);
 }
 
 /* Target only the MRA card to make its logo larger */
@@ -1815,10 +1944,11 @@ nav.scrolled {
 }
 
 .mra-card .work-image img {
-  max-width: 92%;
-  max-height: 92%;
+  max-width: 96%;
+  max-height: 96%;
   object-fit: contain;
   border-radius: 12px;
+  border: 1px solid rgba(62, 167, 198, 0.42);
 }
 
 .integrity-card .work-image {
@@ -1828,10 +1958,11 @@ nav.scrolled {
 }
 
 .integrity-card .work-image img {
-  max-width: 92%;
-  max-height: 92%;
+  max-width: 96%;
+  max-height: 96%;
   object-fit: contain;
   border-radius: 12px;
+  border: 1px solid rgba(62, 167, 198, 0.42);
 }
 
 .hoodie-card .work-image {
@@ -1840,8 +1971,8 @@ nav.scrolled {
 }
 
 .hoodie-card .work-image img {
-  max-width: 90%;
-  max-height: 90%;
+  max-width: 94%;
+  max-height: 94%;
 }
 
 .work-info {
@@ -2321,6 +2452,14 @@ nav.scrolled {
   min-height: 220px;
   padding: 24px 22px 20px;
   box-shadow: 0 18px 42px rgba(2, 8, 12, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  cursor: pointer;
+}
+
+.support-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(62, 167, 198, 0.32);
+  box-shadow: 0 24px 56px rgba(2, 8, 12, 0.5), 0 0 22px rgba(62, 167, 198, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
 
 .support-icon {
@@ -2335,6 +2474,13 @@ nav.scrolled {
   color: var(--accent);
   background: rgba(62, 167, 198, 0.12);
   border: 1px solid rgba(62, 167, 198, 0.28);
+  transition: all 0.3s ease;
+}
+
+.support-card:hover .support-icon {
+  background: rgba(62, 167, 198, 0.22);
+  border-color: rgba(62, 167, 198, 0.5);
+  box-shadow: 0 0 16px rgba(62, 167, 198, 0.3);
 }
 
 .support-card h3 {
@@ -3073,6 +3219,34 @@ footer {
   align-items: center;
 }
 
+.back-to-top {
+  position: fixed;
+  bottom: 28px;
+  right: 28px;
+  z-index: 999;
+  display: inline-block;
+  padding: 9px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(62, 167, 198, 0.36);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  background: rgba(10, 18, 26, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease, color 0.25s ease;
+}
+
+.back-to-top:hover {
+  background: rgba(62, 167, 198, 0.14);
+  border-color: rgba(62, 167, 198, 0.6);
+  color: #8edcff;
+  transform: translateY(-2px);
+}
+
 .footer-pill {
   background: transparent;
   border: 1px solid rgba(62, 167, 198, 0.4);
@@ -3107,6 +3281,14 @@ footer p {
 footer .footer-copyright {
   margin: 0;
   margin-bottom: 0px;
+}
+
+.footer-tagline {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(154, 167, 173, 0.55);
+  font-style: italic;
+  letter-spacing: 0.02em;
 }
 
 /* Footer policy links (simple inline style) */
@@ -3478,12 +3660,15 @@ footer .footer-copyright {
   }
 
   .footer-pill {
-    padding: 16px 24px;
+    padding: 16px 20px;
     white-space: nowrap;
+    width: max-content;
+    max-width: calc(100vw - 32px);
   }
 
   .footer-pill p {
-    font-size: 14px;
+    font-size: 13px;
+    white-space: nowrap;
   }
 
   .intro-section {
@@ -3736,8 +3921,10 @@ footer .footer-copyright {
   }
 
   .footer-pill {
-    padding: 14px 18px;
-    white-space: normal;
+    padding: 14px 16px;
+    white-space: nowrap;
+    width: max-content;
+    max-width: calc(100vw - 24px);
   }
 }
 

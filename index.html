@@ -186,6 +186,11 @@
   <video id="hero-vid" class="hero-video" autoplay muted defaultmuted loop playsinline webkit-playsinline preload="auto" poster="./images/mobilefav.png" disablepictureinpicture>
       <source src="./video/website-banner-720.mp4" type="video/mp4" />
     </video>
+
+  <button type="button" class="hero-motion-toggle" id="hero-motion-toggle" aria-controls="hero-vid" aria-label="Pause background video" aria-pressed="false">
+    <span class="motion-icon" aria-hidden="true"></span>
+    <span class="sr-only">Pause background video</span>
+  </button>
   
   <div class="hero-content">
     <h1>Websites Designed To Grow With Your Business.</h1>
@@ -218,19 +223,63 @@
             
             <div class="about-services-grid stagger-children" aria-label="Core services">
               <a href="#services" class="about-service-card">
-                <h3>Web Design</h3>
+                <div class="about-service-head">
+                  <h3>Web Design</h3>
+                  <span class="about-service-icon about-service-icon--web" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                      <rect x="3.5" y="4" width="17" height="14" rx="2"></rect>
+                      <path d="M3.5 8.5h17"></path>
+                      <path d="M7 11.5h4.2"></path>
+                      <path d="M7 14.2h6.8"></path>
+                      <rect x="14.5" y="10.8" width="4.2" height="4.2" rx="0.8"></rect>
+                      <path d="M10.2 20h3.6"></path>
+                    </svg>
+                  </span>
+                </div>
                 <p>Conversion-focused page design with clear messaging and polished visual direction.</p>
               </a>
               <a href="#services" class="about-service-card">
-                <h3>Development</h3>
+                <div class="about-service-head">
+                  <h3>Development</h3>
+                  <span class="about-service-icon about-service-icon--dev" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                      <path d="M8 6L3.8 12 8 18"></path>
+                      <path d="M16 6l4.2 6-4.2 6"></path>
+                      <path d="M13.4 4.8l-2.8 14.4"></path>
+                    </svg>
+                  </span>
+                </div>
                 <p>Fast, responsive websites built for performance, reliability, and long-term scalability.</p>
               </a>
               <a href="#services" class="about-service-card">
-                <h3>Graphic &amp; Digital Design</h3>
+                <div class="about-service-head">
+                  <h3>Graphic &amp; Digital Design</h3>
+                  <span class="about-service-icon about-service-icon--design" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                      <path d="M6.2 18.7l2.6-.6 8.7-8.7a1.9 1.9 0 0 0-2.7-2.7L6.1 15.4z"></path>
+                      <path d="M13.7 7.9l2.4 2.4"></path>
+                      <path d="M5.2 19.4h13.6"></path>
+                    </svg>
+                  </span>
+                </div>
                 <p>Cohesive brand elements and supporting digital assets designed for consistency and trust.</p>
               </a>
               <a href="#services" class="about-service-card">
-                <h3>SEO &amp; Performance</h3>
+                <div class="about-service-head">
+                  <h3>SEO &amp; Performance</h3>
+                  <span class="about-service-icon about-service-icon--seo" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                      <path d="M4 18.5h16"></path>
+                      <path d="M6.5 16v-3.2"></path>
+                      <path d="M10.5 16v-5"></path>
+                      <path d="M14.5 16v-7"></path>
+                      <path d="M6.5 9.8l3.8-1.8 3.6-2.9"></path>
+                      <path d="M13.9 5.1h2.9v2.9"></path>
+                      <circle cx="17.4" cy="13.1" r="2.8"></circle>
+                      <path d="M19.4 15.1l1.9 1.9"></path>
+                    </svg>
+                  </span>
+                </div>
                 <p>Optimization and structure that help your site rank, load fast, and convert more visitors.</p>
               </a>
             </div>
@@ -455,7 +504,7 @@
           <p>Get a custom logo designed for your business when you need a fresh brand mark.</p>
           <a href="#contact" class="service-btn">Request Design</a>
         </div>
-        <p>Final pricing depends on scope, timeline, and the number of pages or assets needed.</p>
+        <p><em>Final pricing depends on scope, timeline, and the number of pages or assets needed.</em></p>
       </div>
     </div>
   </section>
@@ -507,7 +556,7 @@
           </div>
           <div class="contact-point">
             <span class="contact-point__label">Response Time</span>
-            <span class="contact-point__value">Within 24-48 hours</span>
+            <span class="contact-point__value">Within 24 hours</span>
           </div>
         </div>
       </div>
@@ -563,7 +612,7 @@
   <!-- Footer -->
   <footer>
     <div class="footer-pill">
-      <p>Stay fearless and have a <span class="rotating-word">fantastic</span> <span id="current-day">day</span>.</p>
+      <p>Stay fearless and have <span id="rotating-article">a</span> <span class="rotating-word">fantastic</span> <span id="current-day">day</span>.</p>
     </div>
     <div class="footer-links">
       <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
@@ -571,8 +620,11 @@
       <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms of Service</a>
     </div>
     <p class="footer-copyright">© <span id="year"></span> Trigden Studio. All rights reserved.</p>
+    <p class="footer-tagline">Designed &amp; Developed with purpose in Denver.</p>
   </footer>
   </main>
+
+  <a href="#" class="back-to-top" aria-label="Back to top">Back to Top ↑</a>
 
   <script>
     // Set current year in footer
@@ -822,11 +874,16 @@ let t = (start - rect.top) / (start - end);
     const rotatingWords = ['fantastic', 'amazing', 'wonderful', 'incredible', 'awesome', 'brilliant'];
     let currentWordIndex = 0;
     const rotatingWordElement = document.querySelector('.rotating-word');
+    const rotatingArticleElement = document.getElementById('rotating-article');
+
+    const getArticle = (word) => /^[aeiou]/i.test(word) ? 'an' : 'a';
 
     if (rotatingWordElement) {
       setInterval(() => {
         currentWordIndex = (currentWordIndex + 1) % rotatingWords.length;
-        rotatingWordElement.textContent = rotatingWords[currentWordIndex];
+        const newWord = rotatingWords[currentWordIndex];
+        rotatingWordElement.textContent = newWord;
+        if (rotatingArticleElement) rotatingArticleElement.textContent = getArticle(newWord);
       }, 3000);
     }
 
@@ -860,6 +917,7 @@ let t = (start - rect.top) / (start - end);
   // Force video load and play (with iOS fallback)
   document.addEventListener('DOMContentLoaded', function() {
     const video = document.getElementById('hero-vid');
+    const motionToggle = document.getElementById('hero-motion-toggle');
     if (!video) return;
 
     video.muted = true;
@@ -875,19 +933,67 @@ let t = (start - rect.top) / (start - end);
     } catch (e) {
     }
 
+    let allowKickstart = true;
+
+    const detachKickstartListeners = () => {
+      document.removeEventListener('touchstart', kickstartPlayback);
+      document.removeEventListener('click', kickstartPlayback);
+    };
+
     const kickstartPlayback = () => {
+      if (!allowKickstart || !video.paused) return;
       video.play().then(() => {
-        document.removeEventListener('touchstart', kickstartPlayback);
-        document.removeEventListener('click', kickstartPlayback);
+        detachKickstartListeners();
       }).catch(() => {
       });
+    };
+
+    const setMotionToggleState = (isPaused) => {
+      if (!motionToggle) return;
+
+      motionToggle.classList.toggle('is-paused', isPaused);
+      motionToggle.setAttribute('aria-pressed', isPaused ? 'true' : 'false');
+      motionToggle.setAttribute('aria-label', isPaused ? 'Play background video' : 'Pause background video');
+
+      const screenReaderText = motionToggle.querySelector('.sr-only');
+      if (screenReaderText) {
+        screenReaderText.textContent = isPaused ? 'Play background video' : 'Pause background video';
+      }
+    };
+
+    const toggleMotion = () => {
+      allowKickstart = false;
+      detachKickstartListeners();
+
+      if (video.paused) {
+        video.play().then(() => {
+          setMotionToggleState(false);
+        }).catch(() => {
+        });
+      } else {
+        video.pause();
+        setMotionToggleState(true);
+      }
     };
 
     video.load();
     kickstartPlayback();
 
-    document.addEventListener('touchstart', kickstartPlayback, { passive: true, once: true });
-    document.addEventListener('click', kickstartPlayback, { once: true });
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReducedMotion) {
+      allowKickstart = false;
+      detachKickstartListeners();
+      video.pause();
+      setMotionToggleState(true);
+    } else {
+      setMotionToggleState(false);
+      document.addEventListener('touchstart', kickstartPlayback, { passive: true, once: true });
+      document.addEventListener('click', kickstartPlayback, { once: true });
+    }
+
+    if (motionToggle) {
+      motionToggle.addEventListener('click', toggleMotion);
+    }
   });
 
   // Scroll animations - Intersection Observer
