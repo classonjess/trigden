@@ -987,8 +987,9 @@ let t = (start - rect.top) / (start - end);
       setMotionToggleState(true);
     } else {
       setMotionToggleState(false);
-      document.addEventListener('touchstart', kickstartPlayback, { passive: true, once: true });
-      document.addEventListener('click', kickstartPlayback, { once: true });
+      // Keep listeners until playback actually succeeds; iOS can reject first attempts.
+      document.addEventListener('touchstart', kickstartPlayback, { passive: true });
+      document.addEventListener('click', kickstartPlayback);
     }
 
     if (motionToggle) {
