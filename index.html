@@ -286,7 +286,7 @@
           
           <div class="stats stagger-children">
             <div class="stat" style="gap: 0 !important;">
-              <div class="stat-label" style="margin-top: 0 !important; padding-top: 0 !important; line-height: 1.2 !important;">Serving clients nationwide</div>
+              <div class="stat-label" style="margin-top: 0 !important; padding-top: 0 !important; line-height: 1.2 !important; font-style: italic;">Based in Denver, serving clients nationwide.</div>
             </div>
           </div>
 
@@ -454,7 +454,7 @@
       
       <div class="services-visual">
         <div class="services-cards" aria-label="Services and investment options">
-          <article class="service-card">
+          <article class="service-card service-card--webdev">
             <h3>Web Design &amp; Development</h3>
             <div class="service-tier">Starting at $1,500+</div>
             <p>Custom websites that look great, load fast, and convert visitors.</p>
@@ -465,11 +465,11 @@
               <li>Contact form integration</li>
               <li>Project launch in 4 weeks or less</li>
             </ul>
-            <p style="font-size: 0.8em; color: #b0b0b0; margin-top: 12px;">Need a larger site? Contact us for a custom quote on websites with more than 5 pages.</p>
+            <p class="service-note-webdev" style="font-size: 0.8em; color: #b0b0b0; margin-top: 12px; margin-bottom: 10px;">Need a larger site? Contact us for a custom quote on websites with more than 5 pages.</p>
             <a href="#contact" class="service-btn">Get Started</a>
           </article>
 
-          <article class="service-card">
+          <article class="service-card service-card--seo">
             <h3>SEO (Search Engine Optimization)</h3>
             <div class="service-tier">Starting at $499</div>
             <p>Boost your Google rankings and attract more customers.</p>
@@ -494,16 +494,17 @@
             </ul>
             <a href="#contact" class="service-btn">Request Design</a>
           </article>
+
+          <div class="services-addon-card">
+            <h3>Need a Logo Design?</h3>
+            <div class="service-tier">$400</div>
+            <p>Get a custom logo designed for your business when you need a fresh brand mark.</p>
+            <a href="#contact" class="service-btn">Request Design</a>
+          </div>
         </div>
       </div>
 
       <div class="services-pricing-note">
-        <div class="services-addon-card">
-          <h3>Need a Logo Design?</h3>
-          <div class="service-tier">$400</div>
-          <p>Get a custom logo designed for your business when you need a fresh brand mark.</p>
-          <a href="#contact" class="service-btn">Request Design</a>
-        </div>
         <p><em>Final pricing depends on scope, timeline, and the number of pages or assets needed.</em></p>
       </div>
     </div>
@@ -618,13 +619,13 @@
       <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
       <span class="sep">|</span>
       <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms of Service</a>
+      <span class="sep">|</span>
+      <a href="#" class="back-to-top" aria-label="Back to top">Back to Top ↑</a>
     </div>
     <p class="footer-copyright">© <span id="year"></span> Trigden Studio. All rights reserved.</p>
     <p class="footer-tagline">Designed &amp; Developed with purpose in Denver.</p>
   </footer>
   </main>
-
-  <a href="#" class="back-to-top" aria-label="Back to top">Back to Top ↑</a>
 
   <script>
     // Set current year in footer
