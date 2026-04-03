@@ -3359,6 +3359,24 @@ nav.scrolled {
 .stagger-children > :nth-child(5) { --stagger-delay: 0.4s; }
 .stagger-children > :nth-child(6) { --stagger-delay: 0.5s; }
 
+@media (max-width: 768px) {
+  .scroll-fade-in,
+  .scroll-slide-up,
+  .scroll-slide-left,
+  .scroll-slide-right,
+  .scroll-scale {
+    animation-duration: 0.46s;
+    animation-timing-function: ease-out;
+  }
+
+  .stagger-children > :nth-child(1) { --stagger-delay: 0s; }
+  .stagger-children > :nth-child(2) { --stagger-delay: 0.05s; }
+  .stagger-children > :nth-child(3) { --stagger-delay: 0.1s; }
+  .stagger-children > :nth-child(4) { --stagger-delay: 0.15s; }
+  .stagger-children > :nth-child(5) { --stagger-delay: 0.2s; }
+  .stagger-children > :nth-child(6) { --stagger-delay: 0.25s; }
+}
+
 /* Parallax effect for backgrounds */
 .parallax {
   background-attachment: fixed;

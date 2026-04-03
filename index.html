@@ -1015,10 +1015,16 @@ let t = (start - rect.top) / (start - end);
   });
 
   // Scroll animations - Intersection Observer
-  const observerOptions = {
-    threshold: 0.1,
-    rootMargin: '0px 0px -100px 0px'
-  };
+  const isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
+  const observerOptions = isMobileViewport
+    ? {
+        threshold: 0.02,
+        rootMargin: '0px 0px -32px 0px'
+      }
+    : {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+      };
 
   const scrollObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
@@ -1033,14 +1039,16 @@ let t = (start - rect.top) / (start - end);
           });
         }
       } else {
-        // Remove classes when element leaves viewport so animation can replay
-        entry.target.classList.remove('scroll-slide-left');
-        
-        if (entry.target.classList.contains('stagger-children')) {
-          const children = entry.target.querySelectorAll(':scope > *');
-          children.forEach(child => {
-            child.classList.remove('scroll-slide-left');
-          });
+        // Keep mobile reveals sticky so content doesn't keep re-popping while scrolling.
+        if (!isMobileViewport) {
+          entry.target.classList.remove('scroll-slide-left');
+
+          if (entry.target.classList.contains('stagger-children')) {
+            const children = entry.target.querySelectorAll(':scope > *');
+            children.forEach(child => {
+              child.classList.remove('scroll-slide-left');
+            });
+          }
         }
       }
     });
@@ -1071,13 +1079,22 @@ let t = (start - rect.top) / (start - end);
     scrollObserver.observe(el);
   });
 
-  // Parallax scrolling effect
-  window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    document.querySelectorAll('.parallax').forEach(el => {
-      el.style.backgroundPosition = `center ${scrolled * 0.5}px`;
-    });
-  });
+  // Parallax scrolling effect (desktop only for smoother mobile scrolling)
+  if (!isMobileViewport) {
+    let parallaxTicking = false;
+    window.addEventListener('scroll', () => {
+      if (parallaxTicking) return;
+
+      parallaxTicking = true;
+      window.requestAnimationFrame(() => {
+        const scrolled = window.pageYOffset;
+        document.querySelectorAll('.parallax').forEach(el => {
+          el.style.backgroundPosition = `center ${scrolled * 0.5}px`;
+        });
+        parallaxTicking = false;
+      });
+    }, { passive: true });
+  }
 
   // Entry intro sequence (3 logo pulses, then reveal website)
   (function () {
