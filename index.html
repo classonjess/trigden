@@ -915,7 +915,7 @@ let t = (start - rect.top) / (start - end);
     })();
   </script>
   <script>
-  // Force video load and play (with iOS fallback)
+  // Force video load and play (with iOS/Safari fallback)
   document.addEventListener('DOMContentLoaded', function() {
     const video = document.getElementById('hero-vid');
     const motionToggle = document.getElementById('hero-motion-toggle');
@@ -934,20 +934,8 @@ let t = (start - rect.top) / (start - end);
     } catch (e) {
     }
 
-    let allowKickstart = true;
-
-    const detachKickstartListeners = () => {
-      document.removeEventListener('touchstart', kickstartPlayback);
-      document.removeEventListener('click', kickstartPlayback);
-    };
-
-    const kickstartPlayback = () => {
-      if (!allowKickstart || !video.paused) return;
-      video.play().then(() => {
-        detachKickstartListeners();
-      }).catch(() => {
-      });
-    };
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let allowKickstart = !prefersReducedMotion;
 
     const setMotionToggleState = (isPaused) => {
       if (!motionToggle) return;
@@ -962,6 +950,31 @@ let t = (start - rect.top) / (start - end);
       }
     };
 
+    const detachKickstartListeners = () => {
+      document.removeEventListener('touchstart', kickstartPlayback);
+      document.removeEventListener('click', kickstartPlayback);
+      document.removeEventListener('visibilitychange', onVisibilityChange);
+      window.removeEventListener('pageshow', kickstartPlayback);
+      video.removeEventListener('canplay', kickstartPlayback);
+      video.removeEventListener('loadeddata', kickstartPlayback);
+    };
+
+    const kickstartPlayback = () => {
+      if (!allowKickstart || !video.paused || document.hidden) return;
+
+      video.play().then(() => {
+        setMotionToggleState(false);
+        detachKickstartListeners();
+      }).catch(() => {
+      });
+    };
+
+    const onVisibilityChange = () => {
+      if (!document.hidden) {
+        kickstartPlayback();
+      }
+    };
+
     const toggleMotion = () => {
       allowKickstart = false;
       detachKickstartListeners();
@@ -970,6 +983,7 @@ let t = (start - rect.top) / (start - end);
         video.play().then(() => {
           setMotionToggleState(false);
         }).catch(() => {
+          setMotionToggleState(true);
         });
       } else {
         video.pause();
@@ -977,20 +991,22 @@ let t = (start - rect.top) / (start - end);
       }
     };
 
-    video.load();
-    kickstartPlayback();
-
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReducedMotion) {
-      allowKickstart = false;
-      detachKickstartListeners();
       video.pause();
       setMotionToggleState(true);
     } else {
       setMotionToggleState(false);
-      // Keep listeners until playback actually succeeds; iOS can reject first attempts.
+      video.load();
+
+      // Safari can reject the first play call before media is ready; retry on media/visibility events.
       document.addEventListener('touchstart', kickstartPlayback, { passive: true });
       document.addEventListener('click', kickstartPlayback);
+      document.addEventListener('visibilitychange', onVisibilityChange);
+      window.addEventListener('pageshow', kickstartPlayback);
+      video.addEventListener('canplay', kickstartPlayback);
+      video.addEventListener('loadeddata', kickstartPlayback);
+
+      kickstartPlayback();
     }
 
     if (motionToggle) {
@@ -1080,12 +1096,14 @@ let t = (start - rect.top) / (start - end);
       }, 700);
     }
 
+    document.body.classList.add('intro-active');
+
     if (reduceMotion) {
-      finishIntro();
+      // Show static branded screen briefly, then snap away — no animation
+      window.setTimeout(finishIntro, 800);
       return;
     }
 
-    document.body.classList.add('intro-active');
     window.setTimeout(finishIntro, 2300);
   })();
 </script>
