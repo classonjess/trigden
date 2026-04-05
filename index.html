@@ -49,6 +49,7 @@
 
   <!-- Preload LCP image -->
   <link rel="preload" as="image" href="/images/trigdenlogo.png" />
+  <link rel="preload" as="image" href="/images/mobilefav.png" fetchpriority="high" />
   <!-- Favicon & webmanifest -->
   <!-- PNG fallbacks (uploaded) -->
   <link rel="icon" type="image/png" sizes="192x192" href="/images/mobilefav.png">
@@ -167,7 +168,7 @@
   <main id="main" role="main">
   <nav id="nav">
     <a href="#top" class="logo" aria-label="Trigden Studio home">
-      <img src="images/trigdenlogo.png" alt="Trigden Studio" />
+      <img src="images/trigdenlogo.png" alt="Trigden Studio" fetchpriority="high" />
     </a>
     <input type="checkbox" id="menu-toggle" class="menu-toggle" />
     <label for="menu-toggle" class="hamburger" aria-label="Toggle menu">
@@ -660,32 +661,61 @@
       }
     });
 
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 50) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
-      
-      // Update active nav link based on scroll position
-      const sections = document.querySelectorAll('section[id]');
-      const navLinks = document.querySelectorAll('.nav-links a');
-      
+    const sections = Array.from(document.querySelectorAll('section[id]'));
+    const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
+    let sectionMetrics = [];
+    let scrollTicking = false;
+
+    const updateSectionMetrics = () => {
+      const y = window.scrollY;
+      sectionMetrics = sections.map(section => {
+        const rect = section.getBoundingClientRect();
+        const top = rect.top + y - 100;
+        const bottom = top + rect.height;
+        return {
+          id: section.getAttribute('id'),
+          top,
+          bottom
+        };
+      });
+    };
+
+    const updateNavByScrollPosition = () => {
+      const y = window.scrollY;
+
+      nav.classList.toggle('scrolled', y > 50);
+
       let currentSection = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop - 100;
-        const sectionHeight = section.offsetHeight;
-        if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
-          currentSection = section.getAttribute('id');
+      for (const metric of sectionMetrics) {
+        if (y >= metric.top && y < metric.bottom) {
+          currentSection = metric.id || '';
         }
-      });
-      
+      }
+
       navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + currentSection) {
-          link.classList.add('active');
-        }
+        link.classList.toggle('active', link.getAttribute('href') === '#' + currentSection);
       });
+    };
+
+    const onScroll = () => {
+      if (scrollTicking) return;
+      scrollTicking = true;
+      requestAnimationFrame(() => {
+        updateNavByScrollPosition();
+        scrollTicking = false;
+      });
+    };
+
+    updateSectionMetrics();
+    updateNavByScrollPosition();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', () => {
+      updateSectionMetrics();
+      onScroll();
+    }, { passive: true });
+    window.addEventListener('load', () => {
+      updateSectionMetrics();
+      onScroll();
     });
 
     // Scroll-driven "Hi, I'm Jessica..." animation
@@ -777,14 +807,15 @@ let t = (start - rect.top) / (start - end);
       const delayStep = window.innerWidth <= 768 ? 0 : 320;
 
       resetWalkFrames(strip);
-      void strip.offsetWidth;
 
       const timers = [];
-      frames.forEach((frame, index) => {
-        const timerId = setTimeout(() => {
-          frame.classList.add('visible');
-        }, index * delayStep);
-        timers.push(timerId);
+      requestAnimationFrame(() => {
+        frames.forEach((frame, index) => {
+          const timerId = setTimeout(() => {
+            frame.classList.add('visible');
+          }, index * delayStep);
+          timers.push(timerId);
+        });
       });
 
       strip._walkTimers = timers;
