@@ -42,10 +42,13 @@
   <!-- Performance hints for hosted web fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  
-  <!-- Fonts -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;700&display=swap" />
+
+  <!-- Fonts — non-render-blocking; Playfair Display, Poppins, and DM Sans removed (unused) -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" /></noscript>
+
+  <!-- Preload LCP image -->
+  <link rel="preload" as="image" href="/images/trigdenlogo.png" />
   <!-- Favicon & webmanifest -->
   <!-- PNG fallbacks (uploaded) -->
   <link rel="icon" type="image/png" sizes="192x192" href="/images/mobilefav.png">
@@ -141,7 +144,7 @@
       <span class="entry-intro__shape entry-intro__shape--nine"></span>
     </div>
     <div class="entry-intro__content">
-      <img class="entry-intro__logo" src="images/trigdenlogo.png" alt="Trigden Studio" />
+      <img class="entry-intro__logo" src="images/trigdenlogo.png" alt="Trigden Studio" fetchpriority="high" />
       <p class="entry-intro__caption">Entering the studio</p>
     </div>
   </div>
@@ -183,7 +186,7 @@
   </nav>
 
 <section class="hero">
-  <video id="hero-vid" class="hero-video" autoplay muted defaultmuted loop playsinline webkit-playsinline preload="auto" poster="./images/mobilefav.png" disablepictureinpicture>
+  <video id="hero-vid" class="hero-video" autoplay muted defaultmuted loop playsinline webkit-playsinline preload="metadata" poster="./images/mobilefav.png" disablepictureinpicture>
       <source src="./video/website-banner-720.mp4" type="video/mp4" />
     </video>
 
