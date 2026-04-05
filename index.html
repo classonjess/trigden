@@ -339,9 +339,21 @@
     <div class="work-grid stagger-children">
       <a href="https://www.mra-designs.com/" target="_blank" rel="noopener noreferrer" class="work-card mra-card">
         <div class="work-image">
-          <!-- Example srcset: provide 1x and 2x variants when available -->
-          <!-- <img src="images/mra.png" srcset="images/mra.png 1x, images/mra@2x.png 2x" sizes="(max-width:600px) 100vw, 600px" alt="MRA Interior Design" loading="lazy" /> -->
-          <img src="images/mralandingpage.png" alt="MRA Interior Design landing page preview" loading="lazy" />
+          <picture>
+            <source
+              type="image/webp"
+              srcset="images/mralandingpage-600w.webp 600w, images/mralandingpage-1200w.webp 1200w"
+              sizes="(max-width: 768px) 50vw, 400px"
+            />
+            <img
+              src="images/mralandingpage.png"
+              alt="MRA Interior Design landing page preview"
+              loading="lazy"
+              decoding="async"
+              width="1200"
+              height="527"
+            />
+          </picture>
         </div>
         <div class="work-info" data-num="01">
           <h3>MRA Interior Design</h3>
@@ -356,9 +368,21 @@
       
       <a href="https://integritymedicalservice.com/" target="_blank" rel="noopener noreferrer" class="work-card integrity-card">
         <div class="work-image">
-          <!-- Example srcset: provide 1x and 2x variants when available -->
-          <!-- <img src="images/integrity.png" srcset="images/integrity.png 1x, images/integrity@2x.png 2x" sizes="(max-width:600px) 100vw, 600px" alt="Integrity Medical Service" loading="lazy" /> -->
-          <img src="images/integritylandingpage.png" alt="Integrity Medical Service landing page preview" loading="lazy" />
+          <picture>
+            <source
+              type="image/webp"
+              srcset="images/integritylandingpage-600w.webp 600w, images/integritylandingpage-1200w.webp 1200w"
+              sizes="(max-width: 768px) 50vw, 400px"
+            />
+            <img
+              src="images/integritylandingpage.png"
+              alt="Integrity Medical Service landing page preview"
+              loading="lazy"
+              decoding="async"
+              width="1200"
+              height="532"
+            />
+          </picture>
         </div>
         <div class="work-info" data-num="02">
           <h3>Integrity Medical Service</h3>
