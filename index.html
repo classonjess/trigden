@@ -48,8 +48,8 @@
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" /></noscript>
 
   <!-- Preload LCP image -->
-  <link rel="preload" as="image" href="/images/trigdenlogo.png" />
-  <link rel="preload" as="image" href="/images/mobilefav.png" fetchpriority="high" />
+  <link rel="preload" as="image" href="/images/trigdenlogo-520w.webp" imagesrcset="/images/trigdenlogo-520w.webp 520w, /images/trigdenlogo-1040w.webp 1040w" imagesizes="min(72vw, 520px)" type="image/webp" />
+  <link rel="preload" as="image" href="/images/mobilefav.webp" fetchpriority="high" type="image/webp" />
   <!-- Favicon & webmanifest -->
   <!-- PNG fallbacks (uploaded) -->
   <link rel="icon" type="image/png" sizes="192x192" href="/images/mobilefav.png">
@@ -145,7 +145,10 @@
       <span class="entry-intro__shape entry-intro__shape--nine"></span>
     </div>
     <div class="entry-intro__content">
-      <img class="entry-intro__logo" src="images/trigdenlogo.png" alt="Trigden Studio" fetchpriority="high" />
+      <picture>
+        <source type="image/webp" srcset="images/trigdenlogo-520w.webp 520w, images/trigdenlogo-1040w.webp 1040w" sizes="min(72vw, 520px)" />
+        <img class="entry-intro__logo" src="images/trigdenlogo.png" alt="Trigden Studio" fetchpriority="high" width="1040" height="167" />
+      </picture>
       <p class="entry-intro__caption">Entering the studio</p>
     </div>
   </div>
@@ -168,7 +171,10 @@
   <main id="main" role="main">
   <nav id="nav">
     <a href="#top" class="logo" aria-label="Trigden Studio home">
-      <img src="images/trigdenlogo.png" alt="Trigden Studio" fetchpriority="high" />
+      <picture>
+        <source type="image/webp" srcset="images/trigdenlogo-520w.webp 520w, images/trigdenlogo-1040w.webp 1040w" sizes="(max-width: 768px) 125px, 175px" />
+        <img src="images/trigdenlogo.png" alt="Trigden Studio" fetchpriority="high" width="520" height="84" />
+      </picture>
     </a>
     <input type="checkbox" id="menu-toggle" class="menu-toggle" />
     <label for="menu-toggle" class="hamburger" aria-label="Toggle menu">
@@ -187,7 +193,7 @@
   </nav>
 
 <section class="hero">
-  <video id="hero-vid" class="hero-video" autoplay muted defaultmuted loop playsinline webkit-playsinline preload="metadata" poster="./images/mobilefav.png" disablepictureinpicture>
+  <video id="hero-vid" class="hero-video" autoplay muted defaultmuted loop playsinline webkit-playsinline preload="metadata" poster="./images/mobilefav.webp" disablepictureinpicture>
       <source src="./video/website-banner-720.mp4" type="video/mp4" />
     </video>
 
@@ -685,62 +691,35 @@
       }
     });
 
-    const sections = Array.from(document.querySelectorAll('section[id]'));
     const navLinks = Array.from(document.querySelectorAll('.nav-links a'));
-    let sectionMetrics = [];
     let scrollTicking = false;
 
-    const updateSectionMetrics = () => {
-      const y = window.scrollY;
-      sectionMetrics = sections.map(section => {
-        const rect = section.getBoundingClientRect();
-        const top = rect.top + y - 100;
-        const bottom = top + rect.height;
-        return {
-          id: section.getAttribute('id'),
-          top,
-          bottom
-        };
-      });
-    };
-
-    const updateNavByScrollPosition = () => {
-      const y = window.scrollY;
-
-      nav.classList.toggle('scrolled', y > 50);
-
-      let currentSection = '';
-      for (const metric of sectionMetrics) {
-        if (y >= metric.top && y < metric.bottom) {
-          currentSection = metric.id || '';
+    // IntersectionObserver-based active section tracking (no getBoundingClientRect / forced reflow)
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('href') === '#' + id);
+          });
         }
-      }
-
-      navLinks.forEach(link => {
-        link.classList.toggle('active', link.getAttribute('href') === '#' + currentSection);
       });
-    };
+    }, { rootMargin: '-80px 0px -60% 0px', threshold: 0 });
+
+    document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
 
     const onScroll = () => {
       if (scrollTicking) return;
       scrollTicking = true;
       requestAnimationFrame(() => {
-        updateNavByScrollPosition();
+        nav.classList.toggle('scrolled', window.scrollY > 50);
         scrollTicking = false;
       });
     };
 
-    updateSectionMetrics();
-    updateNavByScrollPosition();
+    nav.classList.toggle('scrolled', window.scrollY > 50);
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', () => {
-      updateSectionMetrics();
-      onScroll();
-    }, { passive: true });
-    window.addEventListener('load', () => {
-      updateSectionMetrics();
-      onScroll();
-    });
+    window.addEventListener('resize', onScroll, { passive: true });
 
     // Scroll-driven "Hi, I'm Jessica..." animation
     (function() {
