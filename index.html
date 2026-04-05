@@ -709,18 +709,16 @@
 
     document.querySelectorAll('section[id]').forEach(s => sectionObserver.observe(s));
 
-    const onScroll = () => {
-      if (scrollTicking) return;
-      scrollTicking = true;
-      requestAnimationFrame(() => {
-        nav.classList.toggle('scrolled', window.scrollY > 50);
-        scrollTicking = false;
-      });
-    };
+    const heroSection = document.querySelector('.hero');
+    if (heroSection) {
+      const navStateObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          nav.classList.toggle('scrolled', !entry.isIntersecting);
+        });
+      }, { rootMargin: '-50px 0px 0px 0px', threshold: 0 });
 
-    nav.classList.toggle('scrolled', window.scrollY > 50);
-    window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll, { passive: true });
+      navStateObserver.observe(heroSection);
+    }
 
     // Scroll-driven "Hi, I'm Jessica..." animation
     (function() {
@@ -1141,23 +1139,6 @@
   document.querySelectorAll(animationTargets.join(', ')).forEach(el => {
     scrollObserver.observe(el);
   });
-
-  // Parallax scrolling effect (desktop only for smoother mobile scrolling)
-  if (!isMobileViewport) {
-    let parallaxTicking = false;
-    window.addEventListener('scroll', () => {
-      if (parallaxTicking) return;
-
-      parallaxTicking = true;
-      window.requestAnimationFrame(() => {
-        const scrolled = window.pageYOffset;
-        document.querySelectorAll('.parallax').forEach(el => {
-          el.style.backgroundPosition = `center ${scrolled * 0.5}px`;
-        });
-        parallaxTicking = false;
-      });
-    }, { passive: true });
-  }
 
   // Entry intro sequence (3 logo pulses, then reveal website)
   (function () {
