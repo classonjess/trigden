@@ -42,6 +42,7 @@
   <!-- Performance hints for hosted web fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://cdn-cookieyes.com" crossorigin />
 
   <link rel="stylesheet" href="style.css?v=20260326-21" />
 
@@ -739,7 +740,7 @@
       }
 
       // Skip animation on mobile
-      if (window.innerWidth <= 768) {
+      if (window.matchMedia('(max-width: 768px)').matches) {
         words.forEach(w => {
           w.style.transform = 'none';
           w.style.opacity = '1';
@@ -1165,7 +1166,7 @@
       return;
     }
 
-    const introDelay = window.innerWidth <= 768 ? 0 : 1200;
+    const introDelay = window.matchMedia('(max-width: 768px)').matches ? 0 : 1200;
     window.setTimeout(finishIntro, introDelay);
   })();
 </script>
