@@ -1181,61 +1181,90 @@ nav.scrolled {
   align-items: center;
   gap: 0;
   justify-content: flex-start;
-  width: 250px;
+  width: auto;
   max-width: 100%;
-  padding: 14px 28px;
-  padding-left: 32px;
+  padding: 11px 17px;
   margin-left: 0;
   box-sizing: border-box;
-  background: linear-gradient(135deg, #3ea7c6 0%, #2a7fa0 100%);
-  color: #ffffff;
+  background: linear-gradient(180deg, rgba(233, 241, 246, 0.84) 0%, rgba(219, 230, 237, 0.76) 100%);
+  color: #12222c;
   text-decoration: none;
-  border-radius: 50px;
-  border: 2px solid #2a7fa0;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.62);
   font-family: 'Montserrat', sans-serif;
-  font-weight: 600;
-  font-size: 15px;
-  letter-spacing: 3px;
+  font-weight: 700;
+  font-size: 12.5px;
+  letter-spacing: 0.09em;
   text-align: left;
   white-space: nowrap;
   text-transform: uppercase;
-  transition: all 0.35s ease;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease, color 0.22s ease;
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-    0 0 16px rgba(62, 167, 198, 0.3),
-    0 12px 28px rgba(42, 127, 160, 0.25);
+    inset 0 1px 0 rgba(255, 255, 255, 0.65),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.2),
+    0 8px 20px rgba(4, 16, 22, 0.18);
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
 }
 
 @media (min-width: 1025px) {
   .cta-button {
-    width: 220px;
-    padding: 12px 24px;
-    padding-left: 28px;
-    font-size: 14px;
-    letter-spacing: 2.6px;
+    padding: 12px 18px;
+    font-size: 12.5px;
+    letter-spacing: 0.085em;
   }
 }
 
 .cta-button::before {
   content: '';
   position: absolute;
-  inset: 1px;
-  border-radius: inherit;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.02) 100%);
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.38) 0%, rgba(255, 255, 255, 0.08) 42%, rgba(255, 255, 255, 0) 100%);
   pointer-events: none;
+  opacity: 1;
+}
+
+.cta-button::after {
+  content: none;
+  position: relative;
+  right: auto;
+  top: auto;
+  width: auto;
+  height: auto;
+  display: inline-block;
+  transform: none;
+  background: transparent;
+  color: #2f97ba;
+  border: 0;
+  border-radius: 0;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+  box-shadow: none;
+  flex: 0 0 auto;
+  transition: transform 0.22s ease, color 0.22s ease;
 }
 
 .cta-button:hover {
-  background: linear-gradient(135deg, #4db8d4 0%, #1e5e7a 100%);
-  border-color: #1e5e7a;
-  transform: translateY(-3px);
+  background: linear-gradient(180deg, rgba(242, 248, 252, 0.9) 0%, rgba(227, 238, 245, 0.82) 100%);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.8);
   box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.12) inset,
-    0 0 22px rgba(62, 167, 198, 0.4),
-    0 16px 40px rgba(30, 94, 122, 0.35);
-  color: #fff;
+    inset 0 1px 0 rgba(255, 255, 255, 0.78),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.26),
+    0 10px 24px rgba(4, 16, 22, 0.2);
+}
+
+.cta-button:hover::after {
+  transform: none;
+  color: inherit;
+}
+
+.cta-button:focus-visible {
+  outline: 2px solid rgba(137, 232, 255, 0.95);
+  outline-offset: 4px;
 }
 
 /* ===== INTRO SECTION ===== */
@@ -3749,11 +3778,22 @@ footer .footer-copyright {
   .cta-button {
     width: auto !important;
     min-width: 0 !important;
-    padding: 7px 10px !important;
-    padding-left: 10px !important;
-    font-size: 9.5px !important;
-    letter-spacing: 1.2px !important;
+    gap: 7px !important;
+    padding: 9px 12px !important;
+    font-size: 10px !important;
+    letter-spacing: 0.085em !important;
     line-height: 1.1 !important;
+    border-radius: 10px !important;
+  }
+
+  .cta-button::before {
+    inset: 0 !important;
+  }
+
+  .cta-button::after {
+    font-size: 13px !important;
+    width: auto !important;
+    height: auto !important;
   }
   
   .walking-container {
