@@ -407,7 +407,7 @@
 
       <article class="work-card hoodie-card" aria-label="Maverick Co. apparel logo project">
         <div class="work-image">
-          <img class="hoodie-main-image" src="images/3hoodiepreview-700w.webp" alt="Three hoodie colorways featuring the Maverick Co. logo" loading="lazy" width="700" height="233" />
+          <img class="hoodie-main-image" src="images/3hoodiepreview-350w.webp" srcset="images/3hoodiepreview-350w.webp 350w, images/3hoodiepreview-700w.webp 700w" sizes="(max-width: 768px) 100vw, 350px" alt="Three hoodie colorways featuring the Maverick Co. logo" loading="lazy" width="700" height="233" />
         </div>
         <div class="work-info" data-num="03">
           <h3>Maverick Co. Apparel Branding</h3>
@@ -761,7 +761,7 @@
 
       const lerp = (a, b, t) => a + (b - a) * t;
 
-      let sectionTop = section.offsetTop;
+      let sectionTop = 0;
       let ticking = false;
       let isVisible = false;
 
@@ -804,12 +804,17 @@
       }, { rootMargin: '200px 0px 200px 0px', threshold: 0 });
 
       visibilityObserver.observe(section);
-      applyProgress();
+      requestAnimationFrame(() => {
+        sectionTop = section.offsetTop;
+        applyProgress();
+      });
 
       window.addEventListener('scroll', onScroll, { passive: true });
       window.addEventListener('resize', () => {
-        sectionTop = section.offsetTop;
-        applyProgress();
+        requestAnimationFrame(() => {
+          sectionTop = section.offsetTop;
+          applyProgress();
+        });
       }, { passive: true });
     })();
 
