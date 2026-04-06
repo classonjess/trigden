@@ -44,7 +44,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdn-cookieyes.com" crossorigin />
 
-  <link rel="stylesheet" href="style.css?v=20260326-21" />
+  <link rel="stylesheet" href="style.css?v=20260405-9" />
 
   <!-- Fonts — non-render-blocking; Playfair Display, Poppins, and DM Sans removed (unused) -->
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
@@ -1171,8 +1171,22 @@
       return;
     }
 
-    const introDelay = window.matchMedia('(max-width: 768px)').matches ? 0 : 1200;
-    window.setTimeout(finishIntro, introDelay);
+    // Wait for the pulse animation to fully finish, then fade out
+    const logo = intro.querySelector('.entry-intro__logo');
+    let dismissed = false;
+    const dismiss = () => {
+      if (dismissed) return;
+      dismissed = true;
+      window.setTimeout(finishIntro, 300);
+    };
+
+    if (logo) {
+      logo.addEventListener('animationend', dismiss, { once: true });
+      // Fallback in case animationend never fires (e.g. hidden tab, slow device)
+      window.setTimeout(dismiss, 3500);
+    } else {
+      window.setTimeout(finishIntro, 2460);
+    }
   })();
 </script>
  </body>
