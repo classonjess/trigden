@@ -1,0 +1,4 @@
+Always analyze our website development against these strict design rules:
+1. Every image element must include a descriptive, keyword-conscious 'alt' tag for Rank Math SEO alignment.
+2. Front-end code modifications must utilize 'font-display: swap' to clear render-blocking speed delays.
+3. Mobile grid layouts must perfectly fit a responsive 402px viewport target width.
