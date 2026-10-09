@@ -44,8 +44,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdn-cookieyes.com" crossorigin />
 
-  <link rel="stylesheet" href="style.css?v=20261009-2" />
-  <script src="nav.js" defer></script>
+  <link rel="stylesheet" href="style.css?v=20260405-9" />
 
   <!-- Fonts — non-render-blocking; Playfair Display, Poppins, and DM Sans removed (unused) -->
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
@@ -88,22 +87,10 @@
         "logo": "https://trigdenstudio.com/images/trigdenlogo.png",
         "description": "Trigden Studio provides web design, website development, SEO, and branding for small businesses in Colorado.",
         "email": "hello@trigdenstudio.com",
-        "address": {
-          "@type": "PostalAddress",
-          "addressLocality": "Denver",
-          "addressRegion": "CO",
-          "addressCountry": "US"
+        "areaServed": {
+          "@type": "State",
+          "name": "Colorado"
         },
-        "areaServed": [
-          {
-            "@type": "City",
-            "name": "Denver"
-          },
-          {
-            "@type": "State",
-            "name": "Colorado"
-          }
-        ],
         "priceRange": "$$",
         "serviceType": [
           "Web design",
@@ -201,14 +188,7 @@
       <li><a href="#about">About</a></li>
       <li><a href="#process">Process</a></li>
       <li><a href="#work">Work</a></li>
-      <li class="nav-dropdown">
-        <a href="#services" class="nav-dropdown__toggle" aria-haspopup="true" aria-expanded="false" aria-controls="services-menu">Services<span class="nav-caret" aria-hidden="true"></span></a>
-        <ul class="nav-dropdown__menu" id="services-menu">
-          <li><a href="web-design.html">Web Design</a></li>
-          <li><a href="seo.html">SEO</a></li>
-          <li><a href="branding.html">Branding</a></li>
-        </ul>
-      </li>
+      <li><a href="#services">Services</a></li>
       <li><a href="#contact" class="nav-cta">Contact</a></li>
     </ul>
     <a href="#contact" class="nav-cta">Contact</a>
@@ -226,7 +206,7 @@
   
   <div class="hero-content">
     <h1><span class="hero-accent">Websites</span> Designed To Grow With Your Business.</h1>
-    <p>Trigden Studio, Denver. Design, development, and performance, built to convert.</p>
+    <p>Design, development, and performance, built to convert.</p>
     <a href="#contact" class="cta-button">
       Start a project
     </a>
@@ -251,6 +231,71 @@
               We build high-converting websites for growing businesses that need more than just a good-looking site.
             </p>
 
+            <p class="about-services-intro">How we help you grow</p>
+            
+            <div class="about-services-grid stagger-children" aria-label="Core services">
+              <a href="#services" class="about-service-card">
+                <div class="about-service-head">
+                  <h3>Web Design</h3>
+                  <span class="about-service-icon about-service-icon--web" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                      <rect x="3.5" y="4" width="17" height="14" rx="2"></rect>
+                      <path d="M3.5 8.5h17"></path>
+                      <path d="M7 11.5h4.2"></path>
+                      <path d="M7 14.2h6.8"></path>
+                      <rect x="14.5" y="10.8" width="4.2" height="4.2" rx="0.8"></rect>
+                      <path d="M10.2 20h3.6"></path>
+                    </svg>
+                  </span>
+                </div>
+                <p>Conversion-focused page design with clear messaging and polished visual direction.</p>
+              </a>
+              <a href="#services" class="about-service-card">
+                <div class="about-service-head">
+                  <h3>Development</h3>
+                  <span class="about-service-icon about-service-icon--dev" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                      <path d="M8 6L3.8 12 8 18"></path>
+                      <path d="M16 6l4.2 6-4.2 6"></path>
+                      <path d="M13.4 4.8l-2.8 14.4"></path>
+                    </svg>
+                  </span>
+                </div>
+                <p>Fast, responsive websites built for performance, reliability, and long-term scalability.</p>
+              </a>
+              <a href="#services" class="about-service-card">
+                <div class="about-service-head">
+                  <h3>Graphic &amp; Digital Design</h3>
+                  <span class="about-service-icon about-service-icon--design" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                      <path d="M6.2 18.7l2.6-.6 8.7-8.7a1.9 1.9 0 0 0-2.7-2.7L6.1 15.4z"></path>
+                      <path d="M13.7 7.9l2.4 2.4"></path>
+                      <path d="M5.2 19.4h13.6"></path>
+                    </svg>
+                  </span>
+                </div>
+                <p>Cohesive brand elements and supporting digital assets designed for consistency and trust.</p>
+              </a>
+              <a href="#services" class="about-service-card">
+                <div class="about-service-head">
+                  <h3>SEO &amp; Performance</h3>
+                  <span class="about-service-icon about-service-icon--seo" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                      <path d="M4 18.5h16"></path>
+                      <path d="M6.5 16v-3.2"></path>
+                      <path d="M10.5 16v-5"></path>
+                      <path d="M14.5 16v-7"></path>
+                      <path d="M6.5 9.8l3.8-1.8 3.6-2.9"></path>
+                      <path d="M13.9 5.1h2.9v2.9"></path>
+                      <circle cx="17.4" cy="13.1" r="2.8"></circle>
+                      <path d="M19.4 15.1l1.9 1.9"></path>
+                    </svg>
+                  </span>
+                </div>
+                <p>Optimization and structure that help your site rank, load fast, and convert more visitors.</p>
+              </a>
+            </div>
+          
           <div class="stats stagger-children">
             <div class="stat" style="gap: 0 !important;">
               <div class="stat-label" style="margin-top: 0 !important; padding-top: 0 !important; line-height: 1.2 !important; font-style: italic;">Based in Denver, serving clients nationwide.</div>
@@ -300,33 +345,6 @@
     </div>
     
     <div class="work-grid stagger-children">
-      <a href="https://aprillilesconsulting.com/" target="_blank" rel="noopener noreferrer" class="work-card april-card">
-        <div class="work-image">
-          <picture>
-            <source
-              type="image/webp"
-              srcset="images/april-liles-700.webp 700w, images/april-liles-1400.webp 1400w"
-              sizes="(max-width: 768px) 100vw, 400px"
-            />
-            <img
-              src="images/april-liles-1400.webp"
-              alt="April Liles Consulting homepage"
-              loading="lazy"
-              decoding="async"
-              width="1400"
-              height="681"
-            />
-          </picture>
-        </div>
-        <div class="work-info">
-          <h3>April Liles Consulting</h3>
-          <p>A consulting website for leadership, K–12 foodservice, and performance nutrition. Three practices, and a clear way to start a conversation.</p>
-          <div class="work-tags">
-            <span class="work-tag">Web Design</span>
-            <span class="work-tag">Development</span>
-          </div>
-        </div>
-      </a>
       <a href="https://www.mra-designs.com/" target="_blank" rel="noopener noreferrer" class="work-card mra-card">
         <div class="work-image">
           <picture>
@@ -467,57 +485,64 @@
     <div class="services-cta-container">
       <div class="services-cta-content">
         <h2 class="services-title">Services Built To Grow Your Business Online</h2>
-        <p class="services-intro">Websites, search, and brand visuals. Open a card to see what’s included.</p>
+        <p class="services-intro">We Design And Build High-Performing Websites, Improve Your Visibility On Search Engines, And Create Clean, Professional Visuals That Elevate Your Brand.</p>
       </div>
       
       <div class="services-visual">
-        <div class="services-cards" aria-label="Services">
+        <div class="services-cards" aria-label="Services and investment options">
           <article class="service-card service-card--webdev">
-            <a class="service-card-link" href="web-design.html">
-              <h3>Web Design &amp; Development</h3>
-              <p>Custom websites that look polished, load fast, and give visitors a clear next step.</p>
-              <ul class="service-features">
-                <li>Up to 5 custom pages</li>
-                <li>Mobile responsive design</li>
-                <li>Basic SEO setup</li>
-                <li>Contact form integration</li>
-                <li>Launch in 4 weeks or less</li>
-              </ul>
-              <p class="service-note-webdev">Need a larger site? Ask for a custom quote.</p>
-              <span class="service-more">View web design</span>
-            </a>
+            <h3>Web Design &amp; Development</h3>
+            <div class="service-tier">Starting at $1,500+</div>
+            <p>Custom websites that look great, load fast, and convert visitors.</p>
+            <ul class="service-features">
+              <li>Up to 5 custom pages</li>
+              <li>Mobile responsive design</li>
+              <li>Basic SEO setup</li>
+              <li>Contact form integration</li>
+              <li>Project launch in 4 weeks or less</li>
+            </ul>
+            <p class="service-note-webdev" style="font-size: 0.8em; color: #b0b0b0; margin-top: 12px; margin-bottom: 10px;">Need a larger site? Contact us for a custom quote on websites with more than 5 pages.</p>
+            <a href="#contact" class="service-btn">Get Started</a>
           </article>
 
           <article class="service-card service-card--seo">
-            <a class="service-card-link" href="seo.html">
-              <h3>SEO &amp; Performance</h3>
-              <p>Search setup that helps Google understand the site and helps the pages load faster.</p>
-              <ul class="service-features">
-                <li>On-page SEO setup</li>
-                <li>Keyword optimization</li>
-                <li>Meta titles &amp; descriptions</li>
-                <li>Page speed improvements</li>
-              </ul>
-              <span class="service-more">View SEO</span>
-            </a>
+            <h3>SEO (Search Engine Optimization)</h3>
+            <div class="service-tier">Starting at $499</div>
+            <p>Boost your Google rankings and attract more customers.</p>
+            <ul class="service-features">
+              <li>On-page SEO setup</li>
+              <li>Keyword optimization</li>
+              <li>Meta titles &amp; descriptions</li>
+              <li>Page speed improvements</li>
+            </ul>
+            <a href="#contact" class="service-btn">Get Started</a>
           </article>
 
-          <article class="service-card service-card--brand">
-            <a class="service-card-link" href="branding.html">
-              <h3>Graphic &amp; Digital Design</h3>
-              <p>Logos and the pieces that carry them, from cards and social graphics to banners.</p>
-              <ul class="service-features">
-                <li>Logo design</li>
-                <li>Business cards</li>
-                <li>Social media graphics</li>
-                <li>Marketing materials</li>
-              </ul>
-              <span class="service-more">View branding</span>
-            </a>
+          <article class="service-card">
+            <h3>Graphic &amp; Digital Design</h3>
+            <div class="service-tier">Starting at $150</div>
+            <p>Creative visuals for your brand &amp; marketing.</p>
+            <ul class="service-features">
+              <li>Business cards</li>
+              <li>Social media graphics</li>
+              <li>Website banners</li>
+              <li>Marketing materials</li>
+            </ul>
+            <a href="#contact" class="service-btn">Request Design</a>
           </article>
+
+          <div class="services-addon-card">
+            <h3>Need a Logo Design?</h3>
+            <div class="service-tier">$400</div>
+            <p>Get a custom logo designed for your business when you need a fresh brand mark.</p>
+            <a href="#contact" class="service-btn">Request Design</a>
+          </div>
         </div>
       </div>
 
+      <div class="services-pricing-note">
+        <p><em>Final pricing depends on scope, timeline, and the number of pages or assets needed.</em></p>
+      </div>
     </div>
   </section>
 
@@ -564,7 +589,7 @@
           </div>
           <div class="contact-point">
             <span class="contact-point__label">Based In</span>
-            <span class="contact-point__value">Denver, Colorado</span>
+            <span class="contact-point__value">Colorado</span>
           </div>
           <div class="contact-point">
             <span class="contact-point__label">Response Time</span>
@@ -626,13 +651,6 @@
     <div class="footer-pill">
       <p>Stay fearless and have <span id="rotating-article">a</span> <span class="rotating-word">fantastic</span> <span id="current-day">day</span>.</p>
     </div>
-    <div class="footer-links footer-services">
-      <a href="web-design.html">Web Design</a>
-      <span class="sep">|</span>
-      <a href="seo.html">SEO</a>
-      <span class="sep">|</span>
-      <a href="branding.html">Branding</a>
-    </div>
     <div class="footer-links">
       <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
       <span class="sep">|</span>
@@ -663,7 +681,6 @@
 
     mobileNavLinks.forEach(link => {
       link.addEventListener('click', () => {
-        if (link.classList.contains('nav-dropdown__toggle')) return;
         if (window.innerWidth <= 768 && menuToggle) {
           menuToggle.checked = false;
         }
