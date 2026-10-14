@@ -1489,3 +1489,10 @@ html:has(.gd-page) {
   .gd-hero .gd-mock { height: 170px; }
   .gd-hero .gd-mock__real-art { height: 120px; flex-basis: 120px; }
 }
+
+@media (max-width: 767px) {
+  .gd-hero h1 { max-width: none; font-size: clamp(24px, 6.8vw, 29px); line-height: 1.2; letter-spacing: -.035em; }
+  .gd-hero h1 .gd-title-line { display: block; white-space: nowrap; }
+  .gd-hero__visual { width: 100%; max-width: none; margin: 0; padding: 0; }
+  .gd-hero .gd-board { width: 100%; margin: 0; }
+}

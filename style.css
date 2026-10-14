@@ -6082,3 +6082,23 @@ footer.site-footer {
 .site-footer .footer-studio-nav h2 a:hover { color: #9aefff; }
 .site-footer .footer-studio-nav h2 a:focus-visible { outline: 2px solid #9aefff; outline-offset: 4px; }
 @media (max-width: 767px) { .site-footer .footer-studio-nav h2 a { min-height: 44px; align-items: center; } }
+
+/* The original header logo stays above the open menu, without duplicating artwork. */
+@media (max-width: 768px) {
+  #nav:has(.menu-toggle:checked) .logo { position: relative; z-index: 1001; }
+  #nav .nav-links { justify-content: flex-start !important; padding: 88px 22px 28px !important; gap: 8px !important; }
+  #nav .nav-links > li { flex: 0 0 auto; padding: 4px 0 !important; }
+  #nav .nav-links > li > a { min-height: 44px; }
+  #nav .nav-links .nav-cta { margin-top: 6px !important; }
+  #nav .nav-links .nav-cta-arrow { display: none; }
+  #nav .nav-dropdown__menu li { padding: 0 !important; }
+  .site-footer .footer-studio-nav h2 { min-height: 44px; display: flex; align-items: center; }
+  .site-footer .footer-studio-nav h2 a { min-height: 44px; display: inline-flex; align-items: center; }
+}
+/* One short animation system; remove the animation itself after completion so hover wins. */
+.site-reveal { animation: cardEnter .48s cubic-bezier(.2,.65,.3,1) var(--reveal-delay, 0s) backwards; }
+@keyframes cardEnter {
+  from { opacity: .2; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) { .site-reveal { animation: none !important; } }

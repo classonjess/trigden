@@ -846,3 +846,9 @@
   .about-page section.about-founder { padding-top: 40px; }
   .about-page section.about-cta { padding-bottom: 36px; }
 }
+
+@media (max-width: 767px) {
+  .about-page .about-hero__lead { margin-bottom: 16px; }
+  .about-page .about-hero__scroll { margin-top: 0; }
+  .about-page section.about-founder { padding-top: 32px; }
+}

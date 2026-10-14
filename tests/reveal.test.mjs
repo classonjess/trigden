@@ -11,7 +11,7 @@ test('reveal skips unsupported browsers and reduced motion without touching cont
 });
 test('nested blocks animate individually with capped stagger and unobserve after reveal',()=>{
   const parent={};const classes=[];const delays=[];
-  const children=Array.from({length:5},()=>({parentElement:parent,contains:()=>false,classList:{add:c=>classes.push(c)},style:{setProperty:(k,v)=>delays.push(v)}}));
+  const children=Array.from({length:5},()=>({parentElement:parent,contains:()=>false,addEventListener(){},classList:{add:c=>classes.push(c)},style:{setProperty:(k,v)=>delays.push(v)}}));
   const section={contains:e=>children.includes(e)};
   const observed=[],unobserved=[];let callback;
   function Observer(cb){callback=cb;this.observe=e=>observed.push(e);this.unobserve=e=>unobserved.push(e);}
@@ -22,12 +22,14 @@ test('nested blocks animate individually with capped stagger and unobserve after
   assert.deepEqual(unobserved,children);assert.equal(delays[0],'0s');assert.equal(delays[4],delays[3]);
 });
 
-test('mobile reveal starts before viewport entry without delayed hiding',()=>{
+test('mobile cards reveal once at viewport entry with a subtle stagger',()=>{
   let callback, options, delay, unobserved=0;
-  const card={parentElement:{},contains:()=>false,classList:{add(){}},style:{setProperty:(key,value)=>delay=value}};
+  const card={parentElement:{},contains:()=>false,addEventListener(){},classList:{add(){}},style:{setProperty:(key,value)=>delay=value}};
   function Observer(cb,opts){callback=cb;options=opts;this.observe=()=>{};this.unobserve=()=>unobserved++;}
   runInNewContext(script,{window:{IntersectionObserver:true},IntersectionObserver:Observer,matchMedia:q=>({matches:q.includes('max-width')}),document:{querySelectorAll:()=>[card]}});
-  assert.equal(options.rootMargin,'0px 0px 96px 0px');
+  assert.equal(options.rootMargin,'0px');
+  assert.equal(options.threshold,.04);
   callback([{target:card,isIntersecting:false}]);assert.equal(unobserved,0);
   callback([{target:card,isIntersecting:true}]);assert.equal(unobserved,1);assert.equal(delay,'0s');
+  callback([{target:card,isIntersecting:true}]);assert.equal(unobserved,1);
 });

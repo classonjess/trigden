@@ -1,26 +1,30 @@
-// Shared homepage-style block reveal. Content remains visible without JavaScript.
+// Enhance cards only. Content is visible before this script and without motion support.
 (() => {
   if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-  const mobile = matchMedia('(max-width: 768px)').matches;
   const selectors = [
-    'main section', '.policy-page section',
-    '.home-service-card', '.about-service-card', '.service-card', '.support-card', '.process-card', '.work-card',
-    'main article', '.about-values > *', '.about-process > *',
-    '.wm-cats > li', '.wm-why__list > li', '.wm-out > li',
-    '.gd-why__list > li', '.web-steps > *', '.inquiry-card'
+    '.home-service-card', '.about-service-card', '.service-card', '.support-card',
+    '.process-card', '.work-card', '.testimonial-card', '.about-highlight',
+    '.about-values > *', '.about-process > *', '.web-benefit', '.web-steps > *',
+    '.web-price-panel', '.wm-cats > li', '.wm-out > li', '.wm-care-card',
+    '.gd-cats > li', '.gd-shot', '.gd-price', '.seo-package'
   ].join(',');
   const candidates = Array.from(document.querySelectorAll(selectors));
-  // Animate the individual blocks when present, rather than animating their parent too.
   const targets = candidates.filter(el => !candidates.some(child => child !== el && el.contains(child)));
+  const seen = new WeakSet();
   const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-      if (!entry.isIntersecting) return;
+      if (!entry.isIntersecting || seen.has(entry.target)) return;
       const el = entry.target;
-      const siblings = targets.filter(other => other.parentElement === el.parentElement);
-      el.style.setProperty('--reveal-delay', `${mobile ? 0 : Math.min(siblings.indexOf(el), 3) * 0.1}s`);
-      el.classList.add('site-reveal');
+      seen.add(el);
       observer.unobserve(el);
+      const siblings = targets.filter(other => other.parentElement === el.parentElement);
+      el.style.setProperty('--reveal-delay', `${Math.min(siblings.indexOf(el), 3) * 0.065}s`);
+      el.classList.add('site-reveal');
+      // Return full control to the original hover styles after this one entrance.
+      el.addEventListener('animationend', event => {
+        if (event.target === el && event.animationName === 'cardEnter') el.classList.remove('site-reveal');
+      });
     });
-  }, { threshold: 0.02, rootMargin: mobile ? '0px 0px 96px 0px' : '0px 0px -32px 0px' });
+  }, { threshold: 0.04, rootMargin: '0px' });
   targets.forEach(el => observer.observe(el));
 })();
