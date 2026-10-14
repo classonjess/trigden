@@ -25,9 +25,22 @@
       '.web-faq__list > details', '.wm-faq__list > details', '.seo-faq__list > details', '.gd-faq__list > details',
       '.policy-page section', '.policy-header', '.about-hero__copy', 'main > .about-hero > .about-wrap'
     ].join(',');
-    const candidates = Array.from(document.querySelectorAll(selectors)).filter(el => !el.hidden);
+    // Pick up future cards too, without mistaking card headings/media for cards.
+    const extraCards = Array.from(document.querySelectorAll('main [class]')).filter(el =>
+      Array.from(el.classList).some(name => /(?:^|[-_])card$/.test(name))
+    );
+    const excluded = '[hidden], dialog, [role="dialog"], .gd-lightbox, #entry-intro, nav, .hero-video, .work-mini-preview';
+    const candidates = [...new Set([...document.querySelectorAll(selectors), ...extraCards])]
+      .filter(el => !el.hidden && !el.closest(excluded));
     // Animate meaningful blocks once, not both a block and its nested content.
-    const targets = candidates.filter(el => !candidates.some(child => child !== el && el.contains(child)));
+    const blocks = candidates.filter(el => !candidates.some(child => child !== el && el.contains(child)));
+    // Photos already inside an animated card/illustration move with that block.
+    // Standalone photos receive the same effect; logos, video posters, thumbnail
+    // controls and lightbox images retain their existing interactive behavior.
+    const photos = Array.from(document.querySelectorAll('main img'))
+      .filter(el => !el.closest(excluded + ', .logo, .site-footer') &&
+        !blocks.some(block => block.contains(el)));
+    const targets = [...blocks, ...photos];
     const siblingCounts = new Map();
     targets.forEach(el => siblingCounts.set(el.parentElement, (siblingCounts.get(el.parentElement) || 0) + 1));
     const waiting = new Set();

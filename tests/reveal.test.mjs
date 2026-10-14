@@ -3,11 +3,11 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
 const script=readFileSync(new URL('../reveal.js',import.meta.url),'utf8');
-function setup({reduced=false,unsupported=false,intro=false,top=1000,fail=false}={}) {
+function setup({reduced=false,unsupported=false,intro=false,top=1000,fail=false,photos=false}={}) {
  const observers=[],listeners=new Map(),documentListeners=new Map(),timers=new Map();let motion,next=0;
- const parent={},cards=Array.from({length:4},()=>({hidden:false,parentElement:parent,contains:()=>false,classes:new Set(),animations:[],getBoundingClientRect:()=>({top,bottom:top+200,height:200})}));
+ const parent={},cards=Array.from({length:4},()=>({hidden:false,parentElement:parent,contains:()=>false,closest:()=>null,classes:new Set(),animations:[],getBoundingClientRect:()=>({top,bottom:top+200,height:200})}));
  cards.forEach(card=>{
-  card.classList={add:n=>card.classes.add(n),remove:n=>card.classes.delete(n)};
+  card.classList={add:n=>card.classes.add(n),remove:n=>card.classes.delete(n),[Symbol.iterator]:()=>card.classes.values()};
   card.animate=(frames,options)=>{
    if(fail)throw Error('Animation unavailable');
    let resolve,reject;const finished=new Promise((a,b)=>{resolve=a;reject=b});
@@ -15,12 +15,13 @@ function setup({reduced=false,unsupported=false,intro=false,top=1000,fail=false}
    card.animations.push(animation);return animation;
   };
  });
+ if(photos)cards[0].contains=el=>el===cards[2];
  function Observer(callback,options){Object.assign(this,{callback,options,observed:[],unobserved:[],observe:el=>this.observed.push(el),unobserve:el=>this.unobserved.push(el),disconnect:()=>this.disconnected=true});observers.push(this);}
  const win={innerHeight:900,addEventListener:(n,f)=>listeners.set(n,f)};
  if(!unsupported)win.IntersectionObserver=Observer;
  function Element(){};Element.prototype.animate=()=>{};
  function KeyframeEffect(){};KeyframeEffect.prototype.composite='replace';
- runInNewContext(script,{window:win,Element,KeyframeEffect,IntersectionObserver:Observer,matchMedia:()=>({matches:reduced,addEventListener:(n,f)=>motion=f}),document:{documentElement:{scrollHeight:10000},getElementById:()=>intro?{}:null,querySelectorAll:()=>cards,addEventListener:(n,f)=>documentListeners.set(n,f)},setTimeout:(f,ms)=>{timers.set(++next,{f,ms});return next},clearTimeout:id=>timers.delete(id)});
+ runInNewContext(script,{window:win,Element,KeyframeEffect,IntersectionObserver:Observer,matchMedia:()=>({matches:reduced,addEventListener:(n,f)=>motion=f}),document:{documentElement:{scrollHeight:10000},getElementById:()=>intro?{}:null,querySelectorAll:selector=>selector==='main [class]'?[]:selector==='main img'?(photos?cards.slice(2):[]):(photos?cards.slice(0,2):cards),addEventListener:(n,f)=>documentListeners.set(n,f)},setTimeout:(f,ms)=>{timers.set(++next,{f,ms});return next},clearTimeout:id=>timers.delete(id)});
  const entry=(card,{top=876,height=200,visible=24,intersects=true}={})=>({target:card,isIntersecting:intersects,rootBounds:{height:900},boundingClientRect:{top,bottom:top+height,height},intersectionRect:{height:visible}});
  return {cards,observers,listeners,timers,entry,motion:()=>motion({matches:true}),flush:async()=>{for(let i=0;i<8;i++)await Promise.resolve();}};
 }
@@ -66,4 +67,13 @@ test('CSS contains no scroll timelines or independent translation animation',()=
 
 test('observer upper root spans the page so fast jumps cannot skip entry entirely',()=>{
  const h=setup();assert.equal(h.observers[0].options.rootMargin,'10000px 0px 0px 0px');
+});
+
+test('standalone photos reveal individually while photos inside cards share their card reveal',()=>{
+ const h=setup({photos:true});
+ assert(h.cards[0].classes.has('scroll-reveal'));
+ assert.equal(h.cards[2].classes.size,0);
+ assert(h.cards[3].classes.has('scroll-reveal'));
+ h.observers[0].callback([h.entry(h.cards[3])]);
+ assert.equal(h.cards[3].animations.length,2);
 });
