@@ -43,11 +43,11 @@
     const targets = [...blocks, ...photos];
     const siblingCounts = new Map();
     targets.forEach(el => siblingCounts.set(el.parentElement, (siblingCounts.get(el.parentElement) || 0) + 1));
-    // Match the deployed site's slideLeft animation and responsive timing.
+    // Fade and gently slide upward, with shorter motion on small screens.
     const mobile = matchMedia('(max-width: 768px)').matches;
-    const duration = mobile ? 460 : 800;
-    const inset = mobile ? 32 : 100;
-    const threshold = mobile ? .02 : .1;
+    const duration = mobile ? 700 : 850;
+    const inset = mobile ? 24 : 48;
+    const threshold = .12;
     const waiting = new Set();
     const running = new Map();
     const seen = new WeakSet();
@@ -74,12 +74,12 @@
       const run = { animations: [], timeout: null };
       running.set(el, run);
       try {
-        const timing = { duration, delay, easing: 'ease-out', fill: 'both' };
+        const timing = { duration, delay, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'both' };
         // Separate effects let opacity replace its base value while translation
         // adds to live CSS transforms (including hover), without capturing them.
         run.animations.push(el.animate([{ opacity: 0 }, { opacity: 1 }], timing));
         run.animations.push(el.animate(
-          [{ transform: 'translateX(-40px)' }, { transform: 'translateX(0)' }],
+          [{ transform: 'translateY(18px)' }, { transform: 'translateY(0)' }],
           { ...timing, composite: 'add' }
         ));
         // A background tab or interrupted animation must never strand content.
@@ -97,16 +97,14 @@
         if (seen.has(el)) return;
         if (entry.boundingClientRect.bottom <= 0) { finish(el); return; }
         const height = Math.max(0, window.innerHeight - inset);
-        // Normalize the live threshold for blocks taller than the usable viewport.
+        // Tall blocks trigger after a small part of the viewport is filled.
         if (!entry.isIntersecting || entry.intersectionRect.height <
             Math.min(entry.boundingClientRect.height, height) * threshold) return;
         const group = siblingCounts.get(el.parentElement) > 1 ? el.parentElement : el;
         const order = groups.get(group) || 0;
         groups.set(group, order + 1);
-        // Live desktop groups use 100ms steps; mobile service/support
-        // cards use 120ms steps (other mobile groups have no delay).
-        const card = el.matches('.home-service-card, .about-service-card, .service-card, .support-card');
-        const delay = mobile ? (card ? Math.min(order, 2) * 120 : 0) : Math.min(order, 5) * 100;
+        // Short, bounded staggering keeps cards, photos and contact groups coordinated.
+        const delay = Math.min(order, 2) * 70;
         reveal(el, delay);
       });
     }, {

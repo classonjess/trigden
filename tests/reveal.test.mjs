@@ -35,18 +35,18 @@ test('init arms below-fold content immediately; even partially visible content n
 test('intro defers measurements and reveal setup until completion',()=>{
  const h=setup({intro:true});assert.equal(h.observers.length,0);h.listeners.get('trigden:intro-done')();assert.equal(h.observers.length,1);
 });
-test('live desktop entry uses an 800ms ease-out fade and additive left slide',()=>{
- const h=setup(),card=h.cards[0],o=h.observers[0];o.callback([h.entry(card,{visible:19})]);assert.equal(card.animations.length,0);
+test('desktop reveal fades and slides upward with smooth easing',()=>{
+ const h=setup(),card=h.cards[0],o=h.observers[0];o.callback([h.entry(card,{visible:23})]);assert.equal(card.animations.length,0);
  o.callback([h.entry(card)]);assert.equal(card.animations.length,2);assert(o.unobserved.includes(card));
- assert.equal(card.animations[0].options.duration,800);assert.equal(card.animations[0].options.easing,'ease-out');
- assert.equal(card.animations[1].options.composite,'add');assert.equal(card.animations[1].frames[0].transform,'translateX(-40px)');
+ assert.equal(card.animations[0].options.duration,850);assert.equal(card.animations[0].options.easing,'cubic-bezier(0.22, 1, 0.36, 1)');
+ assert.equal(card.animations[1].options.composite,'add');assert.equal(card.animations[1].frames[0].transform,'translateY(18px)');
  assert.equal(h.listeners.has('scroll'),false);assert.equal(h.listeners.has('resize'),false);
 });
 test('tall elements trigger relative to viewport height',()=>{
- const h=setup(),c=h.cards[0],o=h.observers[0];o.callback([h.entry(c,{height:3000,visible:80})]);assert.equal(c.animations.length,2);
+ const h=setup(),c=h.cards[0],o=h.observers[0];o.callback([h.entry(c,{height:3000,visible:103})]);assert.equal(c.animations.length,2);
 });
-test('desktop stagger matches live 100ms steps',()=>{
- const h=setup();h.observers[0].callback(h.cards.map(c=>h.entry(c)));assert.deepEqual(h.cards.map(c=>c.animations[0].options.delay),[0,100,200,300]);
+test('stagger stays subtle and never exceeds 140ms',()=>{
+ const h=setup();h.observers[0].callback(h.cards.map(c=>h.entry(c)));assert.deepEqual(h.cards.map(c=>c.animations[0].options.delay),[0,70,140,140]);
 });
 test('completed reveals clear effects and never replay when scrolling back',async()=>{
  const h=setup(),c=h.cards[0],o=h.observers[0];o.callback([h.entry(c)]);c.animations.forEach(a=>a.resolve());await h.flush();
@@ -66,7 +66,7 @@ test('CSS contains no scroll timelines or independent translation animation',()=
 });
 
 test('observer upper root spans the page so fast jumps cannot skip entry entirely',()=>{
- const h=setup();assert.equal(h.observers[0].options.rootMargin,'10000px 0px -100px 0px');
+ const h=setup();assert.equal(h.observers[0].options.rootMargin,'10000px 0px -48px 0px');
 });
 
 test('standalone photos reveal individually while photos inside cards share their card reveal',()=>{
@@ -78,9 +78,9 @@ test('standalone photos reveal individually while photos inside cards share thei
  assert.equal(h.cards[3].animations.length,2);
 });
 
-test('live mobile uses 460ms and 120ms card staggering with a 32px inset',()=>{
- const h=setup({mobile:true});h.observers[0].callback(h.cards.map(c=>h.entry(c,{visible:4})));
- assert.equal(h.observers[0].options.rootMargin,'10000px 0px -32px 0px');
- assert.deepEqual(h.cards.map(c=>c.animations[0].options.delay),[0,120,240,240]);
- assert(h.cards.every(c=>c.animations[0].options.duration===460));
+test('mobile uses 700ms and bounded 70ms staggering with a 24px inset',()=>{
+ const h=setup({mobile:true});h.observers[0].callback(h.cards.map(c=>h.entry(c,{visible:24})));
+ assert.equal(h.observers[0].options.rootMargin,'10000px 0px -24px 0px');
+ assert.deepEqual(h.cards.map(c=>c.animations[0].options.delay),[0,70,140,140]);
+ assert(h.cards.every(c=>c.animations[0].options.duration===700));
 });
