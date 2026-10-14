@@ -5,9 +5,9 @@ import {runInNewContext} from 'node:vm';
 const script=readFileSync(new URL('../reveal.js',import.meta.url),'utf8');
 test('reveal skips unsupported browsers and reduced motion without touching content',()=>{
   for(const reduced of [false,true]) {
-    runInNewContext(script,{window:{},matchMedia:()=>({matches:reduced}),document:{querySelectorAll(){throw new Error('Content must remain untouched');}}});
+    runInNewContext(script,{getComputedStyle:()=>({transform:"none"}),window:{},matchMedia:()=>({matches:reduced}),document:{querySelectorAll(){throw new Error('Content must remain untouched');}}});
   }
-  runInNewContext(script,{window:{IntersectionObserver:true},matchMedia:()=>({matches:true}),document:{querySelectorAll(){throw new Error('Content must remain untouched');}}});
+  runInNewContext(script,{getComputedStyle:()=>({transform:"none"}),window:{IntersectionObserver:true},matchMedia:()=>({matches:true}),document:{querySelectorAll(){throw new Error('Content must remain untouched');}}});
 });
 test('nested blocks animate individually with capped stagger and unobserve after reveal',()=>{
   const parent={};const classes=[];const delays=[];
@@ -15,7 +15,7 @@ test('nested blocks animate individually with capped stagger and unobserve after
   const section={contains:e=>children.includes(e)};
   const observed=[],unobserved=[];let callback;
   function Observer(cb){callback=cb;this.observe=e=>observed.push(e);this.unobserve=e=>unobserved.push(e);}
-  runInNewContext(script,{window:{IntersectionObserver:true},IntersectionObserver:Observer,matchMedia:()=>({matches:false}),document:{querySelectorAll:()=>[section,...children]}});
+  runInNewContext(script,{getComputedStyle:()=>({transform:"none"}),window:{IntersectionObserver:true},IntersectionObserver:Observer,matchMedia:()=>({matches:false}),document:{querySelectorAll:()=>[section,...children]}});
   assert.deepEqual(observed,children);
   callback(children.map(target=>({target,isIntersecting:true})));
   assert.equal(classes.length,5);assert(classes.every(c=>c==='site-reveal'));
@@ -26,9 +26,9 @@ test('mobile cards reveal once at viewport entry with a subtle stagger',()=>{
   let callback, options, delay, unobserved=0;
   const card={parentElement:{},contains:()=>false,addEventListener(){},classList:{add(){}},style:{setProperty:(key,value)=>delay=value}};
   function Observer(cb,opts){callback=cb;options=opts;this.observe=()=>{};this.unobserve=()=>unobserved++;}
-  runInNewContext(script,{window:{IntersectionObserver:true},IntersectionObserver:Observer,matchMedia:q=>({matches:q.includes('max-width')}),document:{querySelectorAll:()=>[card]}});
+  runInNewContext(script,{getComputedStyle:()=>({transform:"none"}),window:{IntersectionObserver:true},IntersectionObserver:Observer,matchMedia:q=>({matches:q.includes('max-width')}),document:{querySelectorAll:()=>[card]}});
   assert.equal(options.rootMargin,'0px');
-  assert.equal(options.threshold,.08);
+  assert.equal(options.threshold,.18);
   callback([{target:card,isIntersecting:false}]);assert.equal(unobserved,0);
   callback([{target:card,isIntersecting:true}]);assert.equal(unobserved,1);assert.equal(delay,'0s');
   callback([{target:card,isIntersecting:true}]);assert.equal(unobserved,1);
@@ -39,8 +39,28 @@ test('entrance completion releases hover styles, without allowing replay',()=>{
   let callback, finish, removed=0, added=0;
   const card={parentElement:{},contains:()=>false,addEventListener:(name,fn)=>finish=fn,classList:{add(){added++},remove(){removed++}},style:{setProperty(){}}};
   function Observer(cb){callback=cb;this.observe=()=>{};this.unobserve=()=>{};}
-  runInNewContext(script,{window:{IntersectionObserver:true},IntersectionObserver:Observer,matchMedia:()=>({matches:false}),document:{querySelectorAll:()=>[card]}});
+  runInNewContext(script,{getComputedStyle:()=>({transform:"none"}),window:{IntersectionObserver:true},IntersectionObserver:Observer,matchMedia:()=>({matches:false}),document:{querySelectorAll:()=>[card]}});
   callback([{target:card,isIntersecting:true}]);
   finish({target:card,animationName:'cardEnter'});assert.equal(removed,1);
   callback([{target:card,isIntersecting:true}]);assert.equal(added,1);
+});
+
+
+test('cards entering separately are not delayed by earlier grid members',()=>{
+  let callback;
+  const parent={},delays=[];
+  const cards=Array.from({length:2},()=>({parentElement:parent,contains:()=>false,addEventListener(){},classList:{add(){}},style:{setProperty:(key,value)=>{if(key==='--reveal-delay')delays.push(value)}}}));
+  function Observer(cb){callback=cb;this.observe=()=>{};this.unobserve=()=>{};}
+  runInNewContext(script,{getComputedStyle:()=>({transform:'none'}),window:{IntersectionObserver:true},IntersectionObserver:Observer,matchMedia:()=>({matches:false}),document:{querySelectorAll:()=>cards}});
+  cards.forEach(target=>callback([{target,isIntersecting:true}]));
+  assert.deepEqual(delays,['0s','0s']);
+});
+
+test('scaled illustrations retain their underlying transform during entrance',()=>{
+  let callback;const properties={};
+  const card={parentElement:{},contains:()=>false,addEventListener(){},classList:{add(){}},style:{setProperty:(key,value)=>properties[key]=value}};
+  function Observer(cb){callback=cb;this.observe=()=>{};this.unobserve=()=>{};}
+  runInNewContext(script,{getComputedStyle:()=>({transform:'matrix(0.76, 0, 0, 0.76, 0, 0)'}),window:{IntersectionObserver:true},IntersectionObserver:Observer,matchMedia:()=>({matches:false}),document:{querySelectorAll:()=>[card]}});
+  callback([{target:card,isIntersecting:true}]);
+  assert.equal(properties['--reveal-base-transform'],'matrix(0.76, 0, 0, 0.76, 0, 0)');
 });

@@ -331,7 +331,7 @@ html:has(.seo-page) {
   align-items: baseline;
   justify-content: space-between;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 22px;
 }
 
 .seo-dash__head p {

@@ -5956,10 +5956,10 @@ footer.site-footer {
   .site-footer .footer-studio-nav h2 a { min-height: 44px; display: inline-flex; align-items: center; }
 }
 /* One short animation system; remove the animation itself after completion so hover wins. */
-.site-reveal { animation: cardEnter 1s cubic-bezier(.22,1,.36,1) var(--reveal-delay, 0s) backwards; }
+.site-reveal { animation: cardEnter .9s cubic-bezier(.22,1,.36,1) var(--reveal-delay, 0s) backwards; }
 @keyframes cardEnter {
-  from { opacity: 0; transform: translateY(24px); }
-  to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(28px) var(--reveal-base-transform, translateY(0)); }
+  to { opacity: 1; transform: translateY(0) var(--reveal-base-transform, translateY(0)); }
 }
 @media (prefers-reduced-motion: reduce) { .site-reveal { animation: none !important; } }
 
