@@ -5948,20 +5948,31 @@ footer.site-footer {
   #nav .nav-links { justify-content: flex-start !important; padding: 64px 28px 28px !important; gap: 12px !important; }
   #nav .nav-links > li { flex: 0 0 auto; padding: 0 !important; }
   #nav .nav-links > li > a { min-height: 44px; }
-  #nav .nav-links .nav-cta { margin: 0 !important; padding: 4px 10px !important; min-height: 44px; border-radius: 999px !important; }
+  #nav .nav-links .nav-cta { margin: 0 !important; padding: 3px 16px 4px !important; min-height: 44px; border-radius: 999px !important; }
   #nav .nav-links > li > a { padding-left: 0 !important; }
   #nav .nav-links .nav-cta-arrow { display: none; }
   #nav .nav-dropdown__menu li { padding: 0 !important; }
   .site-footer .footer-studio-nav h2 { min-height: 44px; display: flex; align-items: center; }
   .site-footer .footer-studio-nav h2 a { min-height: 44px; display: inline-flex; align-items: center; }
 }
-/* One short animation system; remove the animation itself after completion so hover wins. */
-.site-reveal { animation: cardEnter .9s cubic-bezier(.22,1,.36,1) var(--reveal-delay, 0s) backwards; }
-@keyframes cardEnter {
-  from { opacity: 0; transform: translateY(28px) var(--reveal-base-transform, translateY(0)); }
-  to { opacity: 1; transform: translateY(0) var(--reveal-base-transform, translateY(0)); }
+/* Scroll progress controls opacity and the independent translate property.
+   Existing transforms/hover styles remain untouched; no permanent will-change. */
+.scroll-reveal {
+  opacity: calc(.25 + .75 * var(--scroll-reveal-progress, 0));
+  translate: 0 calc(20px * (1 - var(--scroll-reveal-progress, 0)));
 }
-@media (prefers-reduced-motion: reduce) { .site-reveal { animation: none !important; } }
+.scroll-reveal--native {
+  animation: scrollReveal linear both;
+  animation-timeline: view(block);
+  animation-range: entry 0px entry 150px;
+}
+@keyframes scrollReveal {
+  from { opacity: .25; translate: 0 20px; }
+  to { opacity: 1; translate: 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal { opacity: 1; translate: none; animation: none; }
+}
 
 @media (max-width: 767px) {
   .site-footer .footer-studio-grid { row-gap: 22px; }
