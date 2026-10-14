@@ -1,69 +1,42 @@
-/* Homepage-only studio/services composition. Other sections retain their refinements. */
-#studio.studio-services {
-  display: block;
-  padding: 80px 40px !important;
-  background: transparent !important;
-  border-bottom: 1px solid rgba(62, 167, 198, .08);
-}
-.studio-services__layout {
-  max-width: 1200px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: minmax(0, .85fr) minmax(0, 1.4fr);
-  gap: 56px;
-  align-items: start;
-}
-.studio-services__intro { padding-top: 8px; text-align: left; }
-.studio-services__eyebrow {
-  color: var(--accent);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: .13em;
-  margin-bottom: 20px;
-}
-.studio-services__intro h2 {
-  max-width: 10ch;
-  font-size: clamp(36px, 4vw, 52px);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -.035em;
-  color: var(--text);
-  margin-bottom: 24px;
-}
-.studio-services__intro h2 span { color: var(--accent); }
-.studio-services__lead { max-width: 36ch; font-size: 17px; line-height: 1.75; color: var(--text-muted); margin-bottom: 24px; }
-.studio-services__intro .about-page-link { display: inline-flex; align-items: center; min-height: 44px; }
-.studio-services__location { max-width: 34ch; margin-top: 20px; color: var(--text-muted); font-size: 13px; line-height: 1.65; font-style: italic; }
+/* Compact homepage overview; dedicated service pages retain all package details. */
+#studio.studio-services { display: block; padding: 56px 40px !important; background: transparent !important; border-bottom: 1px solid rgba(62,167,198,.08); }
+.studio-services__layout { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 28px; }
+.studio-services__intro { text-align: center; }
+.studio-services__eyebrow { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .13em; margin-bottom: 12px; }
+.studio-services__intro h2 { font-size: clamp(30px,3.2vw,42px); line-height: 1.15; letter-spacing: -.035em; margin: 0 auto 14px; color: var(--text); }
+.studio-services__intro h2 span, .home-studio-intro h2 span { color: var(--accent); }
+.studio-services__lead { max-width: 64ch; margin: 0 auto; font-size: 16px; line-height: 1.6; color: var(--text-muted); }
 .studio-services__catalog { min-width: 0; scroll-margin-top: var(--anchor-offset); }
-#studio .home-services-grid {
-  max-width: none;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-auto-rows: 1fr;
-  gap: 18px;
-}
-#studio .home-service-card { height: 100%; padding: 24px 22px; }
-#studio .home-service-card h3 { font-size: 20px; line-height: 1.25; margin-bottom: 12px; }
-#studio .home-service-card .service-tier { margin-bottom: 12px; }
-#studio .home-service-card p { font-size: 14px; line-height: 1.65; margin-bottom: 18px; }
-#studio .home-service-card .about-service-link { align-self: flex-start; margin-top: auto; }
-#studio .services-pricing-note { margin-top: 18px; }
-@media (max-width: 1024px) {
-  .studio-services__layout { grid-template-columns: 1fr; gap: 36px; max-width: 960px; }
-  .studio-services__intro { padding-top: 0; }
-  .studio-services__intro h2 { max-width: 16ch; font-size: clamp(36px, 5vw, 46px); }
-  .studio-services__lead { max-width: 56ch; margin-bottom: 16px; }
-  .studio-services__location { max-width: none; margin-top: 12px; }
-}
+#studio .home-services-grid { max-width: none; grid-template-columns: repeat(4,minmax(0,1fr)); grid-auto-rows: 1fr; gap: 16px; }
+#studio .home-service-card { width: 100%; min-width: 0; height: 100%; padding: 22px 20px; text-align: left; align-items: flex-start; }
+#studio .home-service-card .about-service-icon { margin-bottom: 14px; }
+#studio .home-service-card h3 { width: 100%; font-size: 20px; line-height: 1.25; margin: 0 0 10px; white-space: normal; }
+#studio .home-service-card p { padding: 0; margin: 0 0 14px; font-size: 14px; line-height: 1.55; }
+#studio .home-service-card .about-service-link { margin-top: auto; padding: 0; min-height: 32px; height: auto; color: var(--accent); font-size: 13px; line-height: 1.4; background: transparent; border-radius: 0; box-shadow: none; align-items: center; }
+#studio .home-service-card:hover .about-service-link, #studio .home-service-card:focus-visible .about-service-link { color: #6fd6f0; background: transparent; box-shadow: none; }
+.home-services-cta { display: flex; justify-content: center; margin-top: 24px; }
+.home-services-cta .service-btn { margin: 0; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
+.home-studio-intro { padding: 48px 24px; }
+.home-studio-intro__copy { max-width: 760px; margin: 0 auto; text-align: center; }
+.home-studio-intro h2 { font-size: clamp(30px,3vw,40px); line-height: 1.15; margin-bottom: 16px; }
+.home-studio-intro .studio-services__lead { margin-bottom: 12px; }
+.home-studio-intro .about-page-link { min-height: 44px; display: inline-flex; align-items: center; }
+.home-studio-intro .studio-services__location { margin-top: 10px; color: var(--text-muted); font-size: 13px; line-height: 1.6; }
+@media (max-width: 1024px) { #studio .home-services-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media (max-width: 768px) {
-  #studio.studio-services { padding: 48px 20px !important; }
-  .studio-services__layout { gap: 28px; }
-  .studio-services__eyebrow { margin-bottom: 16px; }
-  .studio-services__intro h2 { margin-bottom: 20px; }
-  .studio-services__lead { font-size: 16px; line-height: 1.7; }
+  #studio.studio-services { padding: 40px 20px !important; }
+  .studio-services__layout { gap: 24px; }
+  #studio .home-services-grid { gap: 16px 12px; row-gap: 16px !important; }
+  #studio .home-service-card { padding: 18px 16px; }
+  #studio .home-service-card h3 { font-size: 17px; line-height: 1.3; }
+  #studio .home-service-card p { font-size: 14px; }
+  #studio .home-service-card .about-service-icon { margin-bottom: 12px; }
+  #studio .home-service-card .about-service-link { font-size: 12px; min-height: 24px; }
+  .studio-services__intro h2 { font-size: 30px; }
+  .studio-services__lead { font-size: 15px; }
+  .home-studio-intro { padding: 40px 20px; }
 }
-@media (max-width: 520px) {
-  #studio .home-services-grid { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 16px; }
-}
+@media (max-width: 359px) { #studio .home-services-grid { grid-template-columns: 1fr; grid-auto-rows: auto; } }
 
 /* Content determines card height; screenshot pixels retain their original ratio. */
 #work .work-card { height: auto; min-height: 0; align-items: center; }
@@ -104,49 +77,10 @@
   #work .work-image { padding: 12px !important; }
 }
 
-/* Mobile cards fit their content column, with a consistent left-aligned rhythm. */
-@media (max-width: 768px) {
-  #studio .home-service-card {
-    width: 100%;
-    min-width: 0;
-    height: auto;
-    padding: 22px 20px;
-    align-items: flex-start;
-    text-align: left;
-    box-sizing: border-box;
-  }
-  #studio .home-service-card h3 {
-    width: 100%;
-    padding: 0;
-    text-align: left;
-    font-size: 19px;
-    line-height: 1.3;
-    margin: 0 0 12px;
-  }
-  #studio .home-service-card p { padding: 0; margin: 0 0 18px; font-size: 14px; line-height: 1.6; }
-  #studio .home-service-card .service-tier {
-    max-width: 100%;
-    white-space: normal;
-    font-size: 12px;
-    letter-spacing: .05em;
-  }
-  #studio .home-service-card .about-service-link { min-height: 44px; padding: 8px 15px; font-size: 13px; }
-  .studio-services__intro h2 { font-size: 34px; max-width: 16ch; }
-  .studio-services__eyebrow { letter-spacing: .09em; }
-}
 @media (max-width: 768px) and (hover: none) {
   #studio .home-service-card:hover { transform: none; }
 }
 @media (max-width: 768px) {
-  #studio .home-service-card .about-service-link {
-    min-height: 0;
-    height: 32px;
-    padding: 6px 12px;
-    font-size: 12px;
-    line-height: 1.2;
-    box-shadow: none;
-  }
-  /* The entire service card is the link, so this smaller pill remains easy to tap. */
   .hero .cta-button {
     isolation: isolate;
     height: 44px;
@@ -173,22 +107,8 @@
   }
   .hero .cta-button::after { display: none; }
 }
-@media (max-width: 768px) {
-  #studio .home-service-card .service-tier {
-    min-height: 0;
-    padding: 3px 8px;
-    font-size: 12px;
-    line-height: 1.25;
-    letter-spacing: 0;
-  }
-  #studio .studio-services__lead { margin-bottom: 4px; }
-  #studio .studio-services__intro .about-page-link { margin-top: 0; font-size: 14px; }
-  #studio .studio-services__location { margin-top: 4px; font-size: 12px; line-height: 1.5; }
-}
-
 /* More breathing room between stacked homepage cards on phones. */
 @media (max-width: 768px) {
-  #studio .home-services-grid,
   #process .process-grid,
   #work .work-grid,
   #testimonials .testimonials-grid { row-gap: 28px; }
@@ -203,8 +123,6 @@
   #studio .home-service-card h3 { margin-bottom: 10px; }
   #studio .home-service-card p { margin-bottom: 16px; }
 }
-#studio .services-pricing-note { text-align: left; margin-top: 16px; }
-#studio .services-pricing-note p { font-size: 12px; line-height: 1.6; }
 #process .process-card { padding: 22px; gap: 10px; }
 #process .process-number { width: 48px; height: 48px; font-size: 18px; margin-bottom: 2px; }
 #work .work-info { display: flex; flex-direction: column; gap: 0; }
@@ -231,11 +149,6 @@
   #testimonials .testimonial-meta { flex-wrap: wrap; gap: 12px; padding-top: 16px; }
   #top .hero::before { background: linear-gradient(90deg,rgba(3,12,19,.48),rgba(3,12,19,.2) 55%,transparent 85%); }
 }
-@media (min-width: 1025px) {
-  .studio-services__layout { max-width: 1320px; grid-template-columns: minmax(0, .65fr) minmax(0, 1.6fr); gap: 40px; }
-}
-#studio .services-pricing-note { width: 100%; max-width: none; margin-left: 0; margin-right: 0; text-align: center; }
-#studio .services-pricing-note p { max-width: none; margin-left: auto; margin-right: auto; text-align: center; }
 
 @media (max-width: 767px) {
   #contact #interest-label { font-size: 14px !important; letter-spacing: .04em !important; }
