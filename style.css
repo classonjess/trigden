@@ -5970,3 +5970,5 @@ footer.site-footer {
 }
 /* A portfolio preview without a live destination retains its original card treatment. */
 .work-card.mra-card { cursor: default; }
+/* Hidden portfolio projects never reserve a grid/flex slot. */
+.work-card[hidden], .gd-shot[hidden] { display: none !important; }

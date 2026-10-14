@@ -844,7 +844,7 @@
   .about-page .about-mockup { width: 100%; max-width: 300px; margin: 0 auto; }
   .about-page .about-hero__grid { row-gap: 24px; }
   .about-page section.about-founder { padding-top: 40px; }
-  .about-page section.about-cta { padding-bottom: 36px; }
+  .about-page section.about-cta { padding-top: 50px; padding-bottom: 36px; }
 }
 
 @media (max-width: 767px) {

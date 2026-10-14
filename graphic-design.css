@@ -1496,3 +1496,9 @@ html:has(.gd-page) {
   .gd-hero__visual { width: 100%; max-width: none; margin: 0; padding: 0; }
   .gd-hero .gd-board { width: 100%; margin: 0; }
 }
+/* Center the final two visible projects while the MRA showcase is paused. */
+@media (min-width: 1025px) {
+  .gd-gallery:has(> .gd-shot[hidden]) { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  .gd-gallery:has(> .gd-shot[hidden]) > .gd-shot { grid-column: span 2; }
+  .gd-gallery:has(> .gd-shot[hidden]) > .gd-shot:nth-child(5) { grid-column: 2 / span 2; }
+}

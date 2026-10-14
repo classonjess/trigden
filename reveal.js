@@ -5,12 +5,12 @@
     '.home-service-card', '.about-service-card', '.service-card', '.support-card',
     '.process-card', '.work-card', '.testimonial-card', '.about-highlight',
     '.about-hero__visual', '.about-founder__copy', '.about-founder__photo-wrap',
-    '.about-beyond__copy', '.about-beyond__collage', '.contact-details', '.contact-secondary', '.inquiry-card',
+    '.about-beyond__copy', '.about-collage__cell', '.contact-details', '.contact-secondary', '.inquiry-card',
     '.seo-hero__visual', '.about-values > *', '.about-process > *', '.web-benefit', '.web-steps > *',
     '.web-included', '.web-price-panel', '.wm-cats > li', '.wm-out > li', '.wm-care-card',
     '.gd-cats > li', '.gd-shot', '.gd-offer', '.seo-package'
   ].join(',');
-  const candidates = Array.from(document.querySelectorAll(selectors));
+  const candidates = Array.from(document.querySelectorAll(selectors)).filter(el => !el.hidden);
   const targets = candidates.filter(el => !candidates.some(child => child !== el && el.contains(child)));
   const seen = new WeakSet();
   const observer = new IntersectionObserver(entries => {
