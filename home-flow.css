@@ -168,3 +168,14 @@
 @media (min-width: 1440px) {
   #studio .studio-services__intro > .studio-services__lead { max-width: 100%; }
 }
+
+/* A compact personal welcome between the video and service overview. */
+.home-welcome { padding: 44px 24px; }
+.home-welcome__content { max-width: 800px; margin: 0 auto; text-align: center; }
+.home-welcome__content h2 { max-width: 34ch; margin: 0 auto 16px; font-size: clamp(28px,2.5vw,36px); line-height: 1.2; letter-spacing: -.035em; color: var(--text); }
+.home-welcome__content > p:last-child { max-width: 64ch; margin: 0 auto; font-size: 16px; line-height: 1.65; color: var(--text-muted); }
+@media (max-width: 768px) {
+  .home-welcome { padding: 32px 20px; }
+  .home-welcome__content h2 { font-size: 27px; margin-bottom: 14px; }
+  .home-welcome__content > p:last-child { font-size: 15px; line-height: 1.6; }
+}

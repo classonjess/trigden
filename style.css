@@ -5996,16 +5996,20 @@ footer.site-footer {
 .work-image { border-radius: 19px 0 0 19px; }
 @media (max-width: 768px) { .work-image { border-radius: 19px 19px 0 0; } }
 
-/* A compact outlined CTA in the mobile menu only. */
+/* The mobile contact destination follows the same rhythm as its navigation peers. */
 @media (max-width: 768px) {
   #nav .nav-links > li > a.nav-cta {
-    display: inline-flex !important; align-items: center; justify-content: center;
-    width: fit-content; min-width: 44px; min-height: 44px; padding: 8px 10px !important;
-    margin: 12px 0 0 !important; border-radius: 11px !important;
-    border: 1px solid var(--accent) !important; color: var(--accent) !important;
+    display: inline-flex !important; align-items: center; justify-content: flex-start;
+    width: auto; min-width: 44px; min-height: 44px; padding: 0 !important;
+    margin: 0 !important; border-radius: 0 !important;
+    border: 0 !important; color: var(--accent) !important;
     background: transparent !important; box-shadow: none;
+    font-family: 'Montserrat', sans-serif; font-size: 16px !important;
+    font-weight: 500; line-height: 1.6;
   }
   #nav .nav-links > li > a.nav-cta:hover, #nav .nav-links > li > a.nav-cta:focus-visible {
-    background: rgba(62,167,198,.08) !important; box-shadow: none;
+    background: transparent !important; box-shadow: none;
   }
+  #nav .nav-links .nav-cta .nav-cta-arrow { display: inline-block; margin-left: 6px; font-size: .9em; }
 }
+@media (max-width: 375px) { #nav .nav-links > li > a.nav-cta { font-size: 17px !important; } }
