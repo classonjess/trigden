@@ -29,7 +29,7 @@
   <meta name="theme-color" content="#0b1113" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="style.css?v=footer-rhythm7" />
+  <link rel="stylesheet" href="style.css?v=mobile-review6" />
   <link rel="stylesheet" href="website-maintenance.css?v=launch-safety1" />
   <script src="nav.js?v=launch-safety1" defer></script>
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
@@ -132,10 +132,10 @@
   ]
 }
   </script>
-  <script src="/reveal.js?v=launch-fixes3" defer></script>
+  <script src="/reveal.js?v=mobile-review6" defer></script>
   <script src="/footer-message.js?v=3" defer></script>
   <link rel="stylesheet" href="/card-spacing.css?v=1" />
-  <link rel="stylesheet" href="/eyebrow-type.css?v=1" />
+  <link rel="stylesheet" href="/eyebrow-type.css?v=mobile-review6" />
   <link rel="stylesheet" href="/pill-sizing.css?v=2" />
   <link rel="stylesheet" href="/mobile-hero-buttons.css?v=1" />
   <script src="form-safety.js?v=1"></script>
@@ -190,7 +190,7 @@
     <header class="wm-hero">
       <div class="wm-wrap wm-hero__stage">
         <div class="wm-hero__copy">
-          <p class="services-eyebrow">Website Maintenance &amp; Support · Denver &amp; Nationwide</p>
+          <p class="services-eyebrow studio-eyebrow">Website Maintenance &amp; Support</p>
           <h1>Keep Your Website Running <span class="wm-accent">Smoothly.</span></h1>
           <p class="wm-lead">Keep your website updated and running smoothly with ongoing maintenance and support. Available for websites we build and qualifying existing websites.</p>
           <ul class="wm-hero__facts">
@@ -246,7 +246,7 @@
     <section class="wm-section wm-included" id="included" aria-labelledby="included-heading">
       <div class="wm-wrap">
         <div class="wm-section__head">
-          <p class="services-eyebrow">What we take care of</p>
+          <p class="services-eyebrow studio-eyebrow">What we take care of</p>
           <h2 id="included-heading">What’s Included in Website Maintenance</h2>
           <p class="wm-section__lede">Essential Care covers routine updates and basic monthly checks. Growth Care adds minor content edits, basic performance and broken-link checks, and priority scheduling. Services depend on your platform and setup.</p>
         </div>
@@ -299,7 +299,7 @@
 
     <section class="wm-section wm-plans" aria-labelledby="plans-heading">
       <div class="wm-wrap" id="plans">
-        <div class="wm-care-heading"><p class="services-eyebrow">Website Maintenance &amp; Care</p><h2 id="plans-heading">Your Website Doesn’t Stop at Launch. Neither Do We.</h2></div>
+        <div class="wm-care-heading"><p class="services-eyebrow studio-eyebrow">Website Maintenance &amp; Care</p><h2 id="plans-heading">Your Website Doesn’t Stop at Launch. Neither Do We.</h2></div>
         <div class="wm-care-grid">
           <article class="wm-care-card">
           <h3>Essential Care</h3>
@@ -311,7 +311,7 @@
           <li>Basic website health check</li>
           <li>Contact form testing</li>
           </ul>
-          <a href="#inquiry" class="wm-btn wm-btn--fill">Explore Monthly Maintenance</a>
+          <a href="#inquiry" class="wm-btn wm-btn--fill" data-maintenance-plan="Essential Care">Request a Maintenance Quote</a>
           </article>
           <article class="wm-care-card">
           <h3>Growth Care</h3>
@@ -324,7 +324,7 @@
           <li>Basic broken-link check</li>
           <li>Priority scheduling</li>
           </ul>
-          <a href="#inquiry" class="wm-btn wm-btn--fill">Request a Maintenance Quote →</a>
+          <a href="#inquiry" class="wm-btn wm-btn--fill" data-maintenance-plan="Growth Care">Request a Maintenance Quote →</a>
           </article>
           </div>
         <p class="wm-care-disclaimer">Maintenance is optional and billed monthly. Existing websites require a technical review before acceptance, and a one-time setup fee may apply. Included services depend on the website platform and setup. Unused editing time does not roll over. Hosting, domain renewals, premium licenses, major changes, and additional development work are billed separately.</p>
@@ -334,7 +334,7 @@
     <section class="wm-section wm-excluded" aria-labelledby="excluded-heading">
       <div class="wm-wrap">
         <div class="wm-section__head">
-          <p class="services-eyebrow">Scope</p>
+          <p class="services-eyebrow studio-eyebrow">Scope</p>
           <h2 id="excluded-heading">What’s Not Included</h2>
           <p class="wm-section__lede">Maintenance keeps a live site cared for. It is not a redesign or a new build.</p>
         </div>
@@ -375,7 +375,7 @@
       <div class="wm-wrap">
         <div class="wm-faq">
           <div class="wm-section__head">
-            <p class="services-eyebrow">FAQ</p>
+            <p class="services-eyebrow studio-eyebrow">FAQ</p>
             <h2 id="faq-heading">Frequently Asked Questions</h2>
           </div>
           <div class="wm-faq__list">
@@ -393,7 +393,7 @@
       <div class="wm-wrap">
         <div class="wm-inquiry" id="inquiry">
           <div class="wm-inquiry__copy">
-            <p class="services-eyebrow">Maintenance inquiry</p>
+            <p class="services-eyebrow studio-eyebrow">Maintenance inquiry</p>
             <h2 id="inquiry-heading">Ready for Steady Website Care?</h2>
             <p>Tell me about the site and what you need help with. I’ll follow up with a quote and a clear next step.</p>
             <ol class="wm-next">
@@ -451,6 +451,8 @@
                 <select id="inquiry-help" name="help_needed" required aria-required="true">
                   <option value="" selected disabled>Select one</option>
                   <option value="Monthly Website Maintenance">Monthly Website Maintenance</option>
+                  <option value="Essential Care">Essential Care — Monthly Website Maintenance</option>
+                  <option value="Growth Care">Growth Care — Monthly Website Maintenance</option>
                   <option value="Website Updates &amp; Backup Checks">Website Updates &amp; Backup Checks</option>
                   <option value="Website Fixes &amp; Troubleshooting">Website Fixes &amp; Troubleshooting</option>
                   <option value="Content Updates">Content Updates</option>
@@ -508,6 +510,12 @@
         const target = document.getElementById(targetId);
         if (!target) return;
         event.preventDefault();
+        const plan = link.dataset.maintenancePlan;
+        if (plan) {
+          const help = document.getElementById('inquiry-help');
+          help.value = plan;
+          help.setCustomValidity('');
+        }
         target.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' });
         history.replaceState(null, '', `#${targetId}`);
       });

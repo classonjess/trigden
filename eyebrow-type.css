@@ -1,15 +1,12 @@
+/* All eyebrow labels share the Services overview reference; colors stay page-specific. */
 :root { --eyebrow-size: 12px; --eyebrow-weight: 600; --eyebrow-tracking: .07em; }
-/* Eyebrows are supporting labels, consistently smaller than page headings. */
-body :is(.services-eyebrow, .about-eyebrow, .contact-eyebrow, .studio-services__eyebrow) {
+body .studio-eyebrow {
   font-size: var(--eyebrow-size) !important;
   font-weight: var(--eyebrow-weight) !important;
   line-height: 1.5 !important;
   letter-spacing: var(--eyebrow-tracking) !important;
+  margin-bottom: 16px !important;
+  overflow-wrap: break-word;
 }
-@media (max-width: 768px) {
-  body :is(.services-eyebrow, .about-eyebrow, .contact-eyebrow, .studio-services__eyebrow) { letter-spacing: .045em !important; }
-}
-
-@media (max-width: 767px) {
-  body :is(.services-eyebrow, .about-eyebrow, .contact-eyebrow, .studio-services__eyebrow) { font-size: 11px !important; letter-spacing: .02em !important; margin-bottom: 16px !important; overflow-wrap: break-word; }
-}
+@media (max-width: 768px) { :root { --eyebrow-tracking: .045em; } }
+@media (max-width: 767px) { :root { --eyebrow-size: 11px; --eyebrow-tracking: .02em; } }

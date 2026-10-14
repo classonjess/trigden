@@ -28,7 +28,7 @@ test('mobile cards reveal once at viewport entry with a subtle stagger',()=>{
   function Observer(cb,opts){callback=cb;options=opts;this.observe=()=>{};this.unobserve=()=>unobserved++;}
   runInNewContext(script,{window:{IntersectionObserver:true},IntersectionObserver:Observer,matchMedia:q=>({matches:q.includes('max-width')}),document:{querySelectorAll:()=>[card]}});
   assert.equal(options.rootMargin,'0px');
-  assert.equal(options.threshold,.04);
+  assert.equal(options.threshold,.08);
   callback([{target:card,isIntersecting:false}]);assert.equal(unobserved,0);
   callback([{target:card,isIntersecting:true}]);assert.equal(unobserved,1);assert.equal(delay,'0s');
   callback([{target:card,isIntersecting:true}]);assert.equal(unobserved,1);
