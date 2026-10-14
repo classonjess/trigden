@@ -3203,18 +3203,6 @@ nav.scrolled {
     margin-bottom: 12px;
   }
 
-  .service-card.scroll-slide-left:nth-child(1) {
-    animation-delay: 0s;
-  }
-
-  .service-card.scroll-slide-left:nth-child(2) {
-    animation-delay: 0.12s;
-  }
-
-  .service-card.scroll-slide-left:nth-child(3) {
-    animation-delay: 0.24s;
-  }
-
   .service-icon {
     width: 40px;
     height: 40px;
@@ -3761,104 +3749,6 @@ nav.scrolled {
   .response-time {
     font-size: 12px !important;
   }
-}
-
-/* ===== SCROLL ANIMATIONS ===== */
-
-/* Hide elements before animation triggers */
-.stagger-children > * {
-  opacity: 0;
-  transform: translateX(-40px);
-}
-
-.process-section,
-.work-section,
-.services-cta-section,
-.contact-section,
-.about-section {
-  opacity: 0;
-}
-
-.scroll-fade-in {
-  opacity: 0;
-  animation: fadeIn 0.8s ease-out forwards;
-}
-
-.scroll-slide-up {
-  opacity: 0;
-  transform: translateY(40px);
-  animation: slideUp 0.8s ease-out forwards;
-}
-
-.scroll-slide-left {
-  opacity: 0;
-  transform: translateX(-40px);
-  animation: slideLeft 0.8s ease-out forwards;
-}
-
-.scroll-slide-right {
-  opacity: 0;
-  transform: translateX(40px);
-  animation: slideRight 0.8s ease-out forwards;
-}
-
-.scroll-scale {
-  opacity: 0;
-  transform: scale(0.9);
-  animation: scaleIn 0.8s ease-out forwards;
-}
-
-@keyframes slideUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideLeft {
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes slideRight {
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@keyframes scaleIn {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* Stagger children animations */
-.stagger-children > * {
-  animation-delay: var(--stagger-delay, 0s);
-}
-
-.stagger-children > :nth-child(1) { --stagger-delay: 0s; }
-.stagger-children > :nth-child(2) { --stagger-delay: 0.1s; }
-.stagger-children > :nth-child(3) { --stagger-delay: 0.2s; }
-.stagger-children > :nth-child(4) { --stagger-delay: 0.3s; }
-.stagger-children > :nth-child(5) { --stagger-delay: 0.4s; }
-.stagger-children > :nth-child(6) { --stagger-delay: 0.5s; }
-
-@media (max-width: 768px) {
-  .scroll-fade-in,
-  .scroll-slide-up,
-  .scroll-slide-left,
-  .scroll-slide-right,
-  .scroll-scale {
-    animation-duration: 0.46s;
-    animation-timing-function: ease-out;
-  }
-
-  .stagger-children > * { --stagger-delay: 0s; }
 }
 
 /* Parallax effect for backgrounds */
@@ -4605,18 +4495,6 @@ footer .footer-copyright {
     padding: 22px 18px 20px;
     text-align: left;
     min-width: 0;
-  }
-
-  .support-card.scroll-slide-left:nth-child(1) {
-    animation-delay: 0s;
-  }
-
-  .support-card.scroll-slide-left:nth-child(2) {
-    animation-delay: 0.12s;
-  }
-
-  .support-card.scroll-slide-left:nth-child(3) {
-    animation-delay: 0.24s;
   }
 
   .support-icon {
@@ -5822,7 +5700,6 @@ body.intro-active .cky-consent-container {
 @media (prefers-reduced-motion: reduce) {
   .entry-intro { display: none; pointer-events: none; }
   body.intro-active { overflow: auto; }
-  .branding-page .scroll-slide-left { animation: none; transform: none; opacity: 1; }
 }
 .hamburger { border: 0; padding: 0; background: transparent; color: #fff; font: inherit; }
 @media (max-width: 768px) {
@@ -5840,7 +5717,6 @@ body.intro-active .cky-consent-container {
 }
 /* Progressive enhancement: scroll effects must never be required to read content. */
 .process-section, .work-section, .services-cta-section, .contact-section, .about-section,
-.stagger-children > * { opacity: 1; }
 .entry-intro__logo { animation: introLogoPulse .65s ease-in-out 1; }
 /* Branding uses light type; retain its dark sections after reveal fallback. */
 .branding-page .services-cta-section,
@@ -5861,26 +5737,7 @@ body.intro-active .cky-consent-container {
   .nav-dropdown.nav-ready.is-open .nav-dropdown__menu { display: block; }
 }
 
-/* Shared once-per-block motion matches the homepage's slide-left reveal. */
-.site-reveal { animation: siteBlockReveal .8s ease-out var(--reveal-delay, 0s) backwards; }
-@keyframes siteBlockReveal {
-  from { opacity: 0; transform: translateX(-40px); }
-  to { opacity: 1; transform: translateX(0); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .site-reveal { animation: none; }
-}
-/* Unobserved content must remain in its natural position. */
-.stagger-children > *:not(.site-reveal) { transform: none; }
-
-/* Revealed blocks return to their natural layout after the animation finishes. */
-.stagger-children > * { transform: none; }
 @media (max-width: 768px) {
-  .site-reveal { animation: mobileBlockReveal .32s ease-out; }
-  @keyframes mobileBlockReveal {
-    from { opacity: 0; transform: translateY(12px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
   .hero .cta-button {
     min-height: 44px;
     height: 44px;
@@ -6085,11 +5942,13 @@ footer.site-footer {
 
 /* The original header logo stays above the open menu, without duplicating artwork. */
 @media (max-width: 768px) {
+  #nav { padding-inline: 20px !important; }
+  #nav .hamburger { margin-right: -11px !important; }
   #nav:has(.menu-toggle:checked) .logo { position: relative; z-index: 1001; }
-  #nav .nav-links { justify-content: flex-start !important; padding: 64px 16px 28px !important; gap: 8px !important; }
-  #nav .nav-links > li { flex: 0 0 auto; padding: 4px 0 !important; }
+  #nav .nav-links { justify-content: flex-start !important; padding: 64px 28px 28px !important; gap: 12px !important; }
+  #nav .nav-links > li { flex: 0 0 auto; padding: 0 !important; }
   #nav .nav-links > li > a { min-height: 44px; }
-  #nav .nav-links .nav-cta { margin: 6px 0 0 !important; padding: 6px 10px !important; min-height: 44px; }
+  #nav .nav-links .nav-cta { margin: 0 !important; padding: 4px 10px !important; min-height: 44px; border-radius: 999px !important; }
   #nav .nav-links > li > a { padding-left: 0 !important; }
   #nav .nav-links .nav-cta-arrow { display: none; }
   #nav .nav-dropdown__menu li { padding: 0 !important; }
@@ -6097,9 +5956,9 @@ footer.site-footer {
   .site-footer .footer-studio-nav h2 a { min-height: 44px; display: inline-flex; align-items: center; }
 }
 /* One short animation system; remove the animation itself after completion so hover wins. */
-.site-reveal { animation: cardEnter .72s cubic-bezier(.2,.65,.3,1) var(--reveal-delay, 0s) backwards; }
+.site-reveal { animation: cardEnter 1s cubic-bezier(.22,1,.36,1) var(--reveal-delay, 0s) backwards; }
 @keyframes cardEnter {
-  from { opacity: .15; transform: translateY(16px); }
+  from { opacity: 0; transform: translateY(24px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) { .site-reveal { animation: none !important; } }

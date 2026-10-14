@@ -4,7 +4,9 @@
   const selectors = [
     '.home-service-card', '.about-service-card', '.service-card', '.support-card',
     '.process-card', '.work-card', '.testimonial-card', '.about-highlight',
-    '.about-values > *', '.about-process > *', '.web-benefit', '.web-steps > *',
+    '.about-hero__visual', '.about-founder__copy', '.about-founder__photo-wrap',
+    '.about-beyond__copy', '.about-beyond__collage', '.contact-details', '.contact-secondary', '.inquiry-card',
+    '.seo-hero__visual', '.about-values > *', '.about-process > *', '.web-benefit', '.web-steps > *',
     '.web-included', '.web-price-panel', '.wm-cats > li', '.wm-out > li', '.wm-care-card',
     '.gd-cats > li', '.gd-shot', '.gd-offer', '.seo-package'
   ].join(',');
@@ -18,7 +20,7 @@
       seen.add(el);
       observer.unobserve(el);
       const siblings = targets.filter(other => other.parentElement === el.parentElement);
-      el.style.setProperty('--reveal-delay', `${Math.min(siblings.indexOf(el), 3) * 0.1}s`);
+      el.style.setProperty('--reveal-delay', `${Math.min(siblings.indexOf(el), 3) * 0.14}s`);
       el.classList.add('site-reveal');
       // Return full control to the original hover styles after this one entrance.
       el.addEventListener('animationend', event => {

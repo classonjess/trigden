@@ -19,7 +19,7 @@ test('nested blocks animate individually with capped stagger and unobserve after
   assert.deepEqual(observed,children);
   callback(children.map(target=>({target,isIntersecting:true})));
   assert.equal(classes.length,5);assert(classes.every(c=>c==='site-reveal'));
-  assert.deepEqual(unobserved,children);assert.equal(delays[0],'0s');assert.equal(delays[4],delays[3]);
+  assert.deepEqual(unobserved,children);assert.equal(delays[0],'0s');assert.equal(delays[1],'0.14s');assert.equal(delays[4],delays[3]);
 });
 
 test('mobile cards reveal once at viewport entry with a subtle stagger',()=>{
@@ -32,4 +32,15 @@ test('mobile cards reveal once at viewport entry with a subtle stagger',()=>{
   callback([{target:card,isIntersecting:false}]);assert.equal(unobserved,0);
   callback([{target:card,isIntersecting:true}]);assert.equal(unobserved,1);assert.equal(delay,'0s');
   callback([{target:card,isIntersecting:true}]);assert.equal(unobserved,1);
+});
+
+
+test('entrance completion releases hover styles, without allowing replay',()=>{
+  let callback, finish, removed=0, added=0;
+  const card={parentElement:{},contains:()=>false,addEventListener:(name,fn)=>finish=fn,classList:{add(){added++},remove(){removed++}},style:{setProperty(){}}};
+  function Observer(cb){callback=cb;this.observe=()=>{};this.unobserve=()=>{};}
+  runInNewContext(script,{window:{IntersectionObserver:true},IntersectionObserver:Observer,matchMedia:()=>({matches:false}),document:{querySelectorAll:()=>[card]}});
+  callback([{target:card,isIntersecting:true}]);
+  finish({target:card,animationName:'cardEnter'});assert.equal(removed,1);
+  callback([{target:card,isIntersecting:true}]);assert.equal(added,1);
 });
