@@ -26,7 +26,8 @@
     }, 250);
   }
   intro.querySelector('.entry-intro__logo')?.addEventListener('animationend', dismiss, { once: true });
-  fallback = setTimeout(dismiss, 1100);
+  // Three 650ms pulses take 1950ms; fallback must allow all three to finish.
+  fallback = setTimeout(dismiss, 2200);
   window.addEventListener('pagehide', dismiss, { once: true });
   window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', event => {
     if (event.matches) dismiss();
