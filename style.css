@@ -6010,6 +6010,7 @@ footer.site-footer {
   #nav .nav-links > li > a.nav-cta:hover, #nav .nav-links > li > a.nav-cta:focus-visible {
     background: transparent !important; box-shadow: none;
   }
-  #nav .nav-links .nav-cta .nav-cta-arrow { display: inline-block; margin-left: 6px; font-size: .9em; }
+  #nav .nav-links .nav-cta .nav-cta-arrow { display: none; }
+  #nav .nav-links > li:has(> .nav-cta) { margin-top: -12px !important; }
 }
 @media (max-width: 375px) { #nav .nav-links > li > a.nav-cta { font-size: 17px !important; } }

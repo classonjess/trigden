@@ -1,5 +1,5 @@
 /* Compact homepage overview; dedicated service pages retain all package details. */
-#studio.studio-services { display: block; padding: 56px 40px !important; background: transparent !important; border-bottom: 1px solid rgba(62,167,198,.08); }
+#studio.studio-services { display: block; padding: 44px 40px !important; background: transparent !important; border-bottom: 1px solid rgba(62,167,198,.08); }
 .studio-services__layout { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 28px; }
 .studio-services__intro { text-align: center; }
 .studio-services__eyebrow { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .13em; margin-bottom: 12px; }
@@ -22,7 +22,7 @@
 .home-studio-intro .studio-services__location { margin-top: 10px; color: var(--text-muted); font-size: 13px; line-height: 1.6; }
 @media (max-width: 1024px) { #studio .home-services-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
 @media (max-width: 768px) {
-  #studio.studio-services { padding: 40px 20px !important; }
+  #studio.studio-services { padding: 32px 20px !important; }
   .studio-services__layout { gap: 24px; }
   #studio .home-services-grid { gap: 16px 12px; row-gap: 16px !important; }
   #studio .home-service-card { padding: 18px 16px; }
@@ -164,18 +164,12 @@
 }
 @media (prefers-reduced-motion: reduce) { #top .hero-video { transition: none; } }
 
-/* Give the homepage overview sentence room on wide screens only. */
-@media (min-width: 1440px) {
-  #studio .studio-services__intro > .studio-services__lead { max-width: 100%; }
-}
-
-/* A compact personal welcome between the video and service overview. */
-.home-welcome { padding: 44px 24px; }
-.home-welcome__content { max-width: 800px; margin: 0 auto; text-align: center; }
+/* The welcome and services share one uninterrupted background and boundary. */
+.home-welcome__content { max-width: 800px; margin: 0 auto 70px; text-align: center; }
 .home-welcome__content h2 { max-width: 34ch; margin: 0 auto 16px; font-size: clamp(28px,2.5vw,36px); line-height: 1.2; letter-spacing: -.035em; color: var(--text); }
 .home-welcome__content > p:last-child { max-width: 64ch; margin: 0 auto; font-size: 16px; line-height: 1.65; color: var(--text-muted); }
 @media (max-width: 768px) {
-  .home-welcome { padding: 32px 20px; }
+  .home-welcome__content { margin-bottom: 50px; }
   .home-welcome__content h2 { font-size: 27px; margin-bottom: 14px; }
   .home-welcome__content > p:last-child { font-size: 15px; line-height: 1.6; }
 }
