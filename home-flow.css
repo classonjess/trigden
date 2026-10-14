@@ -173,3 +173,10 @@
   .home-welcome__content h2 { margin-bottom: 14px; }
   .home-welcome__content > p:last-child { font-size: 15px; line-height: 1.6; }
 }
+
+/* Widen only the desktop paragraph, retaining the welcome heading's text measure. */
+@media (min-width: 1025px) {
+  .home-welcome__content { max-width: 1000px; }
+  .home-welcome__content h2 { max-width: min(34ch, 800px); }
+  .home-welcome__content > p:last-child { max-width: 1000px; }
+}
