@@ -2222,9 +2222,11 @@ nav.scrolled {
   border-radius: 2px;
 }
 
-.section-header h2 {
+.section-header h2,
+#welcome-title {
   font-size: 48px;
   font-weight: 800;
+  line-height: 1.6;
   margin-bottom: 16px;
   letter-spacing: -0.02em;
 }
@@ -3961,6 +3963,7 @@ footer .footer-copyright {
   .intro-title,
   .about-content h2,
   .section-header h2,
+  #welcome-title,
   .services-title,
   .contact-content h2 {
     font-size: 30px !important;
@@ -4659,6 +4662,7 @@ footer .footer-copyright {
   .intro-title,
   .about-content h2,
   .section-header h2,
+  #welcome-title,
   .services-title,
   .contact-content h2 {
     font-size: 26px !important;
