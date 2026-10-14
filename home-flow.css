@@ -14,8 +14,6 @@
 #studio .home-service-card p { padding: 0; margin: 0 0 14px; font-size: 14px; line-height: 1.55; }
 #studio .home-service-card .about-service-link { margin-top: auto; padding: 0; min-height: 32px; height: auto; color: var(--accent); font-size: 13px; line-height: 1.4; background: transparent; border-radius: 0; box-shadow: none; align-items: center; }
 #studio .home-service-card:hover .about-service-link, #studio .home-service-card:focus-visible .about-service-link { color: #6fd6f0; background: transparent; box-shadow: none; }
-.home-services-cta { display: flex; justify-content: center; margin-top: 24px; }
-.home-services-cta .service-btn { margin: 0; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
 .home-studio-intro { padding: 48px 24px; }
 .home-studio-intro__copy { max-width: 760px; margin: 0 auto; text-align: center; }
 .home-studio-intro h2 { font-size: clamp(30px,3vw,40px); line-height: 1.15; margin-bottom: 16px; }
@@ -165,3 +163,8 @@
   #contact .contact-form { gap: 18px; }
 }
 @media (prefers-reduced-motion: reduce) { #top .hero-video { transition: none; } }
+
+/* Give the homepage overview sentence room on wide screens only. */
+@media (min-width: 1440px) {
+  #studio .studio-services__intro > .studio-services__lead { max-width: 100%; }
+}

@@ -6000,7 +6000,7 @@ footer.site-footer {
 @media (max-width: 768px) {
   #nav .nav-links > li > a.nav-cta {
     display: inline-flex !important; align-items: center; justify-content: center;
-    width: fit-content; min-height: 44px; padding: 8px 16px !important;
+    width: fit-content; min-width: 44px; min-height: 44px; padding: 8px 10px !important;
     margin: 12px 0 0 !important; border-radius: 11px !important;
     border: 1px solid var(--accent) !important; color: var(--accent) !important;
     background: transparent !important; box-shadow: none;
