@@ -5876,7 +5876,7 @@ body.intro-active .cky-consent-container {
 /* Revealed blocks return to their natural layout after the animation finishes. */
 .stagger-children > * { transform: none; }
 @media (max-width: 768px) {
-  .site-reveal { animation-name: mobileBlockReveal; }
+  .site-reveal { animation: mobileBlockReveal .32s ease-out; }
   @keyframes mobileBlockReveal {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }

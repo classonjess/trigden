@@ -837,3 +837,12 @@
 
 /* Let the closing invitation read across a wider measure. */
 .about-cta p.about-cta__lead { max-width: 820px; }
+
+/* Final phone proportions, retaining the original desktop composition. */
+@media (max-width: 767px) {
+  .about-page .about-hero__visual { width: min(100%, 300px); margin: 0 auto; }
+  .about-page .about-mockup { width: 100%; max-width: 300px; margin: 0 auto; }
+  .about-page .about-hero__grid { row-gap: 24px; }
+  .about-page section.about-founder { padding-top: 40px; }
+  .about-page section.about-cta { padding-bottom: 36px; }
+}

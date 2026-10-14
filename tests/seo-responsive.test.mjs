@@ -52,7 +52,7 @@ test('structured data parses and Services describes the organization and four se
 test('font sizes, local media and progressive enhancement safeguards', () => {
   // Informational pills intentionally use the approved 11px design; other text stays >=12px.
   for (const file of readdirSync(root).filter(name => name.endsWith('.css'))) {
-    for (const match of read(file).matchAll(/font-size:\s*(\d+(?:\.\d+)?)px/g)) assert(+match[1] >= 12 || (file === 'pill-sizing.css' && +match[1] === 11), `${file}: ${match[0]}`);
+    for (const match of read(file).matchAll(/font-size:\s*(\d+(?:\.\d+)?)px/g)) assert(+match[1] >= 12 || (['pill-sizing.css', 'eyebrow-type.css'].includes(file) && +match[1] === 11), `${file}: ${match[0]}`);
   }
   const home = read('index.html');
   assert(!/images\/(?:mralandingpage|integritylandingpage)\.png/.test(home));

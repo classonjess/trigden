@@ -10,5 +10,5 @@ body :is(.services-eyebrow, .about-eyebrow, .contact-eyebrow, .studio-services__
 }
 
 @media (max-width: 767px) {
-  body :is(.services-eyebrow, .about-eyebrow, .contact-eyebrow, .studio-services__eyebrow) { font-size: 12px !important; letter-spacing: .025em !important; }
+  body :is(.services-eyebrow, .about-eyebrow, .contact-eyebrow, .studio-services__eyebrow) { font-size: 11px !important; letter-spacing: .02em !important; margin-bottom: 16px !important; overflow-wrap: break-word; }
 }

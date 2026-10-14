@@ -1,6 +1,7 @@
 // Shared homepage-style block reveal. Content remains visible without JavaScript.
 (() => {
   if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const mobile = matchMedia('(max-width: 768px)').matches;
   const selectors = [
     'main section', '.policy-page section',
     '.home-service-card', '.about-service-card', '.service-card', '.support-card', '.process-card', '.work-card',
@@ -16,10 +17,10 @@
       if (!entry.isIntersecting) return;
       const el = entry.target;
       const siblings = targets.filter(other => other.parentElement === el.parentElement);
-      el.style.setProperty('--reveal-delay', `${Math.min(siblings.indexOf(el), 3) * 0.1}s`);
+      el.style.setProperty('--reveal-delay', `${mobile ? 0 : Math.min(siblings.indexOf(el), 3) * 0.1}s`);
       el.classList.add('site-reveal');
       observer.unobserve(el);
     });
-  }, { threshold: 0.02, rootMargin: '0px 0px -32px 0px' });
+  }, { threshold: 0.02, rootMargin: mobile ? '0px 0px 96px 0px' : '0px 0px -32px 0px' });
   targets.forEach(el => observer.observe(el));
 })();

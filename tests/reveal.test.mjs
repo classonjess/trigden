@@ -21,3 +21,13 @@ test('nested blocks animate individually with capped stagger and unobserve after
   assert.equal(classes.length,5);assert(classes.every(c=>c==='site-reveal'));
   assert.deepEqual(unobserved,children);assert.equal(delays[0],'0s');assert.equal(delays[4],delays[3]);
 });
+
+test('mobile reveal starts before viewport entry without delayed hiding',()=>{
+  let callback, options, delay, unobserved=0;
+  const card={parentElement:{},contains:()=>false,classList:{add(){}},style:{setProperty:(key,value)=>delay=value}};
+  function Observer(cb,opts){callback=cb;options=opts;this.observe=()=>{};this.unobserve=()=>unobserved++;}
+  runInNewContext(script,{window:{IntersectionObserver:true},IntersectionObserver:Observer,matchMedia:q=>({matches:q.includes('max-width')}),document:{querySelectorAll:()=>[card]}});
+  assert.equal(options.rootMargin,'0px 0px 96px 0px');
+  callback([{target:card,isIntersecting:false}]);assert.equal(unobserved,0);
+  callback([{target:card,isIntersecting:true}]);assert.equal(unobserved,1);assert.equal(delay,'0s');
+});

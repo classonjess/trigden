@@ -9,3 +9,10 @@
     row-gap: 28px !important;
   }
 }
+
+/* FAQ separation is quieter than the general mobile card rhythm. */
+@media (max-width: 767px) {
+  :is(.web-faq__list, .seo-faq__list, .gd-faq__list) { row-gap: 21px !important; }
+  /* Maintenance uses joined divider rows, so reduce its internal vertical space. */
+  .wm-faq__list summary { padding-block: 14px; }
+}
