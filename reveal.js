@@ -43,6 +43,11 @@
     const targets = [...blocks, ...photos];
     const siblingCounts = new Map();
     targets.forEach(el => siblingCounts.set(el.parentElement, (siblingCounts.get(el.parentElement) || 0) + 1));
+    // Match the deployed site's slideLeft animation and responsive timing.
+    const mobile = matchMedia('(max-width: 768px)').matches;
+    const duration = mobile ? 460 : 800;
+    const inset = mobile ? 32 : 100;
+    const threshold = mobile ? .02 : .1;
     const waiting = new Set();
     const running = new Map();
     const seen = new WeakSet();
@@ -69,16 +74,16 @@
       const run = { animations: [], timeout: null };
       running.set(el, run);
       try {
-        const timing = { duration: 850, delay, easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fill: 'both' };
+        const timing = { duration, delay, easing: 'ease-out', fill: 'both' };
         // Separate effects let opacity replace its base value while translation
         // adds to live CSS transforms (including hover), without capturing them.
         run.animations.push(el.animate([{ opacity: 0 }, { opacity: 1 }], timing));
         run.animations.push(el.animate(
-          [{ transform: 'translateY(18px)' }, { transform: 'translateY(0)' }],
+          [{ transform: 'translateX(-40px)' }, { transform: 'translateX(0)' }],
           { ...timing, composite: 'add' }
         ));
         // A background tab or interrupted animation must never strand content.
-        run.timeout = setTimeout(() => finish(el), 850 + delay + 150);
+        run.timeout = setTimeout(() => finish(el), duration + delay + 150);
         Promise.all(run.animations.map(animation => animation.finished))
           .then(() => finish(el), () => finish(el));
       } catch (_) { finish(el); }
@@ -91,21 +96,24 @@
         const el = entry.target;
         if (seen.has(el)) return;
         if (entry.boundingClientRect.bottom <= 0) { finish(el); return; }
-        const height = window.innerHeight;
-        // Tall sections need only 12% of a viewport, not 12% of their full height.
+        const height = Math.max(0, window.innerHeight - inset);
+        // Normalize the live threshold for blocks taller than the usable viewport.
         if (!entry.isIntersecting || entry.intersectionRect.height <
-            Math.min(entry.boundingClientRect.height, height) * .12) return;
+            Math.min(entry.boundingClientRect.height, height) * threshold) return;
         const group = siblingCounts.get(el.parentElement) > 1 ? el.parentElement : el;
         const order = groups.get(group) || 0;
         groups.set(group, order + 1);
-        // At most 140ms, even for long grids; never accumulate delays offscreen.
-        reveal(el, Math.min(order, 2) * 70);
+        // Live desktop groups use 100ms steps; mobile service/support
+        // cards use 120ms steps (other mobile groups have no delay).
+        const card = el.matches('.home-service-card, .about-service-card, .service-card, .support-card');
+        const delay = mobile ? (card ? Math.min(order, 2) * 120 : 0) : Math.min(order, 5) * 100;
+        reveal(el, delay);
       });
     }, {
       // Extend only the upper boundary through the document: a fast jump from
       // below to above the viewport still crosses into this observer's root.
       // Otherwise an element can stay non-intersecting at both sampled frames.
-      rootMargin: `${Math.max(document.documentElement.scrollHeight, window.innerHeight)}px 0px 0px 0px`,
+      rootMargin: `${Math.max(document.documentElement.scrollHeight, window.innerHeight)}px 0px -${inset}px 0px`,
       threshold: Array.from({ length: 101 }, (_, i) => i / 100)
     });
 

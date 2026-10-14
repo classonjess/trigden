@@ -3,9 +3,9 @@ import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
 const script=readFileSync(new URL('../reveal.js',import.meta.url),'utf8');
-function setup({reduced=false,unsupported=false,intro=false,top=1000,fail=false,photos=false}={}) {
+function setup({reduced=false,unsupported=false,intro=false,top=1000,fail=false,photos=false,mobile=false}={}) {
  const observers=[],listeners=new Map(),documentListeners=new Map(),timers=new Map();let motion,next=0;
- const parent={},cards=Array.from({length:4},()=>({hidden:false,parentElement:parent,contains:()=>false,closest:()=>null,classes:new Set(),animations:[],getBoundingClientRect:()=>({top,bottom:top+200,height:200})}));
+ const parent={},cards=Array.from({length:4},()=>({hidden:false,parentElement:parent,contains:()=>false,closest:()=>null,matches:()=>true,classes:new Set(),animations:[],getBoundingClientRect:()=>({top,bottom:top+200,height:200})}));
  cards.forEach(card=>{
   card.classList={add:n=>card.classes.add(n),remove:n=>card.classes.delete(n),[Symbol.iterator]:()=>card.classes.values()};
   card.animate=(frames,options)=>{
@@ -21,7 +21,7 @@ function setup({reduced=false,unsupported=false,intro=false,top=1000,fail=false,
  if(!unsupported)win.IntersectionObserver=Observer;
  function Element(){};Element.prototype.animate=()=>{};
  function KeyframeEffect(){};KeyframeEffect.prototype.composite='replace';
- runInNewContext(script,{window:win,Element,KeyframeEffect,IntersectionObserver:Observer,matchMedia:()=>({matches:reduced,addEventListener:(n,f)=>motion=f}),document:{documentElement:{scrollHeight:10000},getElementById:()=>intro?{}:null,querySelectorAll:selector=>selector==='main [class]'?[]:selector==='main img'?(photos?cards.slice(2):[]):(photos?cards.slice(0,2):cards),addEventListener:(n,f)=>documentListeners.set(n,f)},setTimeout:(f,ms)=>{timers.set(++next,{f,ms});return next},clearTimeout:id=>timers.delete(id)});
+ runInNewContext(script,{window:win,Element,KeyframeEffect,IntersectionObserver:Observer,matchMedia:query=>({matches:query.includes('max-width')?mobile:reduced,addEventListener:(n,f)=>motion=f}),document:{documentElement:{scrollHeight:10000},getElementById:()=>intro?{}:null,querySelectorAll:selector=>selector==='main [class]'?[]:selector==='main img'?(photos?cards.slice(2):[]):(photos?cards.slice(0,2):cards),addEventListener:(n,f)=>documentListeners.set(n,f)},setTimeout:(f,ms)=>{timers.set(++next,{f,ms});return next},clearTimeout:id=>timers.delete(id)});
  const entry=(card,{top=876,height=200,visible=24,intersects=true}={})=>({target:card,isIntersecting:intersects,rootBounds:{height:900},boundingClientRect:{top,bottom:top+height,height},intersectionRect:{height:visible}});
  return {cards,observers,listeners,timers,entry,motion:()=>motion({matches:true}),flush:async()=>{for(let i=0;i<8;i++)await Promise.resolve();}};
 }
@@ -35,18 +35,18 @@ test('init arms below-fold content immediately; even partially visible content n
 test('intro defers measurements and reveal setup until completion',()=>{
  const h=setup({intro:true});assert.equal(h.observers.length,0);h.listeners.get('trigden:intro-done')();assert.equal(h.observers.length,1);
 });
-test('12 percent entry starts an 850ms opacity and additive transform reveal',()=>{
- const h=setup(),card=h.cards[0],o=h.observers[0];o.callback([h.entry(card,{visible:23})]);assert.equal(card.animations.length,0);
+test('live desktop entry uses an 800ms ease-out fade and additive left slide',()=>{
+ const h=setup(),card=h.cards[0],o=h.observers[0];o.callback([h.entry(card,{visible:19})]);assert.equal(card.animations.length,0);
  o.callback([h.entry(card)]);assert.equal(card.animations.length,2);assert(o.unobserved.includes(card));
- assert.equal(card.animations[0].options.duration,850);assert.equal(card.animations[0].options.easing,'cubic-bezier(0.22, 1, 0.36, 1)');
- assert.equal(card.animations[1].options.composite,'add');assert.equal(card.animations[1].frames[0].transform,'translateY(18px)');
+ assert.equal(card.animations[0].options.duration,800);assert.equal(card.animations[0].options.easing,'ease-out');
+ assert.equal(card.animations[1].options.composite,'add');assert.equal(card.animations[1].frames[0].transform,'translateX(-40px)');
  assert.equal(h.listeners.has('scroll'),false);assert.equal(h.listeners.has('resize'),false);
 });
 test('tall elements trigger relative to viewport height',()=>{
- const h=setup(),c=h.cards[0],o=h.observers[0];o.callback([h.entry(c,{height:3000,visible:108})]);assert.equal(c.animations.length,2);
+ const h=setup(),c=h.cards[0],o=h.observers[0];o.callback([h.entry(c,{height:3000,visible:80})]);assert.equal(c.animations.length,2);
 });
-test('grid stagger is 70ms and capped at 140ms',()=>{
- const h=setup();h.observers[0].callback(h.cards.map(c=>h.entry(c)));assert.deepEqual(h.cards.map(c=>c.animations[0].options.delay),[0,70,140,140]);
+test('desktop stagger matches live 100ms steps',()=>{
+ const h=setup();h.observers[0].callback(h.cards.map(c=>h.entry(c)));assert.deepEqual(h.cards.map(c=>c.animations[0].options.delay),[0,100,200,300]);
 });
 test('completed reveals clear effects and never replay when scrolling back',async()=>{
  const h=setup(),c=h.cards[0],o=h.observers[0];o.callback([h.entry(c)]);c.animations.forEach(a=>a.resolve());await h.flush();
@@ -66,7 +66,7 @@ test('CSS contains no scroll timelines or independent translation animation',()=
 });
 
 test('observer upper root spans the page so fast jumps cannot skip entry entirely',()=>{
- const h=setup();assert.equal(h.observers[0].options.rootMargin,'10000px 0px 0px 0px');
+ const h=setup();assert.equal(h.observers[0].options.rootMargin,'10000px 0px -100px 0px');
 });
 
 test('standalone photos reveal individually while photos inside cards share their card reveal',()=>{
@@ -76,4 +76,11 @@ test('standalone photos reveal individually while photos inside cards share thei
  assert(h.cards[3].classes.has('scroll-reveal'));
  h.observers[0].callback([h.entry(h.cards[3])]);
  assert.equal(h.cards[3].animations.length,2);
+});
+
+test('live mobile uses 460ms and 120ms card staggering with a 32px inset',()=>{
+ const h=setup({mobile:true});h.observers[0].callback(h.cards.map(c=>h.entry(c,{visible:4})));
+ assert.equal(h.observers[0].options.rootMargin,'10000px 0px -32px 0px');
+ assert.deepEqual(h.cards.map(c=>c.animations[0].options.delay),[0,120,240,240]);
+ assert(h.cards.every(c=>c.animations[0].options.duration===460));
 });
