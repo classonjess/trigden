@@ -257,6 +257,7 @@
   </nav>
 
 <section class="hero">
+  <img class="hero-video hero-poster" src="./images/hero-video-poster.webp" alt="" aria-hidden="true" fetchpriority="high" />
   <video id="hero-vid" class="hero-video" muted defaultmuted loop playsinline webkit-playsinline preload="none" poster="./images/hero-video-poster.webp" disablepictureinpicture></video>
 
   <button type="button" class="hero-motion-toggle" id="hero-motion-toggle" aria-controls="hero-vid" aria-label="Pause background video" aria-pressed="false">
@@ -531,6 +532,7 @@
       </div>
 
       <div class="contact-card">
+        <p class="contact-card-intro">Tell me a little about your project to get started.</p>
         <form class="contact-form" id="contact-form" action="https://formspree.io/f/xreaqvyn" method="POST" novalidate>
           <input type="hidden" name="_subject" value="New Project Inquiry - Trigden Studio" />
           <input type="hidden" name="_replyto" id="contact-replyto" value="" />
@@ -601,7 +603,7 @@
       <a href="/index.html">Home</a><a href="/about.html">About</a><a href="/services.html">Services</a><a href="/contact.html">Contact</a>
     </nav>
     <nav class="footer-studio-nav" aria-label="Footer services">
-      <h2>Services</h2>
+      <h2><a href="/services.html">Services</a></h2>
       <a href="/web-design.html">Web Design &amp; Development</a>
       <a href="/website-maintenance.html">Website Maintenance &amp; Support</a>
       <a href="/seo.html">SEO &amp; Performance</a>
@@ -1003,6 +1005,10 @@
     const video = document.getElementById('hero-vid');
     const motionToggle = document.getElementById('hero-motion-toggle');
     if (!video) return;
+
+    // Keep the still visible until a decoded video frame is actually playing.
+    video.addEventListener('playing', () => video.classList.add('is-ready'));
+    video.addEventListener('error', () => video.classList.remove('is-ready'));
 
     video.muted = true;
     video.defaultMuted = true;

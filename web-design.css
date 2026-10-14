@@ -1264,3 +1264,10 @@ html:has(.web-page) {
 @media (max-width: 767px) {
   .web-page .web-price-panel { padding: 26px 22px; }
 }
+
+.web-faq p a { color: #9aefff; text-decoration: underline; text-underline-offset: .2em; }
+.web-faq p a:hover { color: #dff9ff; }
+.web-faq p a:focus-visible { outline: 2px solid #9aefff; outline-offset: 3px; }
+@media (max-width: 767px) {
+  .web-hero__art { width: min(100%, 300px); min-height: 0; margin: 0 auto; padding: 4px 16px 24px 0; }
+}

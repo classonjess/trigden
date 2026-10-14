@@ -8,3 +8,7 @@ body :is(.services-eyebrow, .about-eyebrow, .contact-eyebrow, .studio-services__
 @media (max-width: 768px) {
   body :is(.services-eyebrow, .about-eyebrow, .contact-eyebrow, .studio-services__eyebrow) { letter-spacing: .045em !important; }
 }
+
+@media (max-width: 767px) {
+  body :is(.services-eyebrow, .about-eyebrow, .contact-eyebrow, .studio-services__eyebrow) { font-size: 12px !important; letter-spacing: .025em !important; }
+}

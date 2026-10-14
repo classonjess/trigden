@@ -1190,3 +1190,17 @@ html:has(.seo-page) {
 @media (max-width: 767px) {
   .seo-package .seo-check li:nth-child(2) { border-top: 1px solid rgba(126,231,255,.14); }
 }
+
+@media (max-width: 767px) {
+  .seo-hero__stage { row-gap: 24px; }
+  .seo-hero__visual { width: min(100%, 300px); margin: 0 auto; }
+  .seo-dash { padding-inline: 12px; }
+  .seo-dash__head { flex-wrap: wrap; gap: 4px; }
+}
+@media (max-width: 767px) {
+  .seo-hero .seo-dash__charts { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); }
+  .seo-hero .seo-dash svg { max-height: 110px; }
+  .seo-hero .seo-dash__metrics { gap: 6px; }
+  .seo-hero .seo-dash__metrics > div { padding: 8px 6px; }
+  .seo-hero .seo-dash__metrics strong { font-size: 16px; }
+}

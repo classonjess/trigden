@@ -1117,3 +1117,11 @@ html:has(.wm-page) {
   .wm-care-card .wm-btn { max-width: 100%; }
 }
 .wm-plans #plans { scroll-margin-top: 96px; }
+
+@media (max-width: 767px) {
+  .wm-page .wm-included { padding: 40px 0; }
+  .wm-included .wm-wrap { width: auto; margin-inline: 22px; }
+  .wm-included .wm-section__head { margin-bottom: 24px; }
+  .wm-included .wm-section__lede { margin-bottom: 0; }
+  .wm-included .wm-cats { margin-top: 0; padding-left: 0; }
+}

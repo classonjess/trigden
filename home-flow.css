@@ -240,3 +240,15 @@
 @media (max-width: 767px) {
   #contact #interest-label { font-size: 14px !important; letter-spacing: .04em !important; }
 }
+
+/* Retain the existing still while media decodes; loading never gates content. */
+#top .hero-video { background: url('/images/hero-video-poster.webp') center / cover no-repeat; opacity: 0; transition: opacity .35s ease; }
+#top .hero-poster { opacity: .98; transition: none; }
+#top .hero-video.is-ready { opacity: .98; }
+#contact .contact-card-intro { margin: 0 0 20px; color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+@media (max-width: 767px) {
+  #top .hero-content { position: relative; top: 24px; }
+  #contact .contact-card { padding-top: 24px; }
+  #contact .contact-form { gap: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { #top .hero-video { transition: none; } }
