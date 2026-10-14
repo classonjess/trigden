@@ -1,0 +1,242 @@
+/* Homepage-only studio/services composition. Other sections retain their refinements. */
+#studio.studio-services {
+  display: block;
+  padding: 80px 40px !important;
+  background: transparent !important;
+  border-bottom: 1px solid rgba(62, 167, 198, .08);
+}
+.studio-services__layout {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, .85fr) minmax(0, 1.4fr);
+  gap: 56px;
+  align-items: start;
+}
+.studio-services__intro { padding-top: 8px; text-align: left; }
+.studio-services__eyebrow {
+  color: var(--accent);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .13em;
+  margin-bottom: 20px;
+}
+.studio-services__intro h2 {
+  max-width: 10ch;
+  font-size: clamp(36px, 4vw, 52px);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -.035em;
+  color: var(--text);
+  margin-bottom: 24px;
+}
+.studio-services__intro h2 span { color: var(--accent); }
+.studio-services__lead { max-width: 36ch; font-size: 17px; line-height: 1.75; color: var(--text-muted); margin-bottom: 24px; }
+.studio-services__intro .about-page-link { display: inline-flex; align-items: center; min-height: 44px; }
+.studio-services__location { max-width: 34ch; margin-top: 20px; color: var(--text-muted); font-size: 13px; line-height: 1.65; font-style: italic; }
+.studio-services__catalog { min-width: 0; scroll-margin-top: var(--anchor-offset); }
+#studio .home-services-grid {
+  max-width: none;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 18px;
+}
+#studio .home-service-card { height: 100%; padding: 24px 22px; }
+#studio .home-service-card h3 { font-size: 20px; line-height: 1.25; margin-bottom: 12px; }
+#studio .home-service-card .service-tier { margin-bottom: 12px; }
+#studio .home-service-card p { font-size: 14px; line-height: 1.65; margin-bottom: 18px; }
+#studio .home-service-card .about-service-link { align-self: flex-start; margin-top: auto; }
+#studio .services-pricing-note { margin-top: 18px; }
+@media (max-width: 1024px) {
+  .studio-services__layout { grid-template-columns: 1fr; gap: 36px; max-width: 960px; }
+  .studio-services__intro { padding-top: 0; }
+  .studio-services__intro h2 { max-width: 16ch; font-size: clamp(36px, 5vw, 46px); }
+  .studio-services__lead { max-width: 56ch; margin-bottom: 16px; }
+  .studio-services__location { max-width: none; margin-top: 12px; }
+}
+@media (max-width: 768px) {
+  #studio.studio-services { padding: 48px 20px !important; }
+  .studio-services__layout { gap: 28px; }
+  .studio-services__eyebrow { margin-bottom: 16px; }
+  .studio-services__intro h2 { margin-bottom: 20px; }
+  .studio-services__lead { font-size: 16px; line-height: 1.7; }
+}
+@media (max-width: 520px) {
+  #studio .home-services-grid { grid-template-columns: 1fr; grid-auto-rows: auto; gap: 16px; }
+}
+
+/* Content determines card height; screenshot pixels retain their original ratio. */
+#work .work-card { height: auto; min-height: 0; align-items: center; }
+#work .work-image {
+  height: auto !important;
+  min-height: 0;
+  padding: 16px !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+#work .work-image img {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+}
+#work .hoodie-card .work-image img { max-height: 220px !important; }
+#work .work-info { padding: 20px 24px !important; overflow: visible; flex: 1; min-width: 0; }
+#work .work-info p { margin-bottom: 14px; }
+#work .work-grid { gap: 24px; }
+#process { padding-top: 56px !important; padding-bottom: 64px; }
+#process .section-header { margin-bottom: 32px; }
+#process .process-grid { max-width: 1200px; padding-left: 0; padding-right: 0; align-items: stretch; }
+#process .process-card { min-height: 0; padding: 24px; gap: 12px; }
+#process .process-number { flex-shrink: 0; margin-bottom: 4px; }
+@media (max-width: 768px) {
+  #process { padding-top: 40px !important; padding-bottom: 48px; }
+  #process .section-header { margin-bottom: 28px; }
+  #process .process-card { padding: 22px; gap: 10px; }
+  #work .work-info { padding: 20px !important; }
+}
+@media (max-width: 680px) {
+  #work .work-card { align-items: stretch; }
+  #work .work-image { padding: 12px !important; }
+}
+
+/* Mobile cards fit their content column, with a consistent left-aligned rhythm. */
+@media (max-width: 768px) {
+  #studio .home-service-card {
+    width: 100%;
+    min-width: 0;
+    height: auto;
+    padding: 22px 20px;
+    align-items: flex-start;
+    text-align: left;
+    box-sizing: border-box;
+  }
+  #studio .home-service-card h3 {
+    width: 100%;
+    padding: 0;
+    text-align: left;
+    font-size: 19px;
+    line-height: 1.3;
+    margin: 0 0 12px;
+  }
+  #studio .home-service-card p { padding: 0; margin: 0 0 18px; font-size: 14px; line-height: 1.6; }
+  #studio .home-service-card .service-tier {
+    max-width: 100%;
+    white-space: normal;
+    font-size: 12px;
+    letter-spacing: .05em;
+  }
+  #studio .home-service-card .about-service-link { min-height: 44px; padding: 8px 15px; font-size: 13px; }
+  .studio-services__intro h2 { font-size: 34px; max-width: 16ch; }
+  .studio-services__eyebrow { letter-spacing: .09em; }
+}
+@media (max-width: 768px) and (hover: none) {
+  #studio .home-service-card:hover { transform: none; }
+}
+@media (max-width: 768px) {
+  #studio .home-service-card .about-service-link {
+    min-height: 0;
+    height: 32px;
+    padding: 6px 12px;
+    font-size: 12px;
+    line-height: 1.2;
+    box-shadow: none;
+  }
+  /* The entire service card is the link, so this smaller pill remains easy to tap. */
+  .hero .cta-button {
+    isolation: isolate;
+    height: 44px;
+    min-height: 44px;
+    padding: 0 10px !important;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0 !important;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .hero .cta-button::before {
+    content: '';
+    position: absolute;
+    inset: 6px 0 !important;
+    border-radius: 7px;
+    background: linear-gradient(180deg, #e9f1f6, #dbe6ed);
+    border: 1px solid rgba(255,255,255,.6);
+    opacity: 1;
+    z-index: -1;
+    transform: none;
+  }
+  .hero .cta-button::after { display: none; }
+}
+@media (max-width: 768px) {
+  #studio .home-service-card .service-tier {
+    min-height: 0;
+    padding: 3px 8px;
+    font-size: 12px;
+    line-height: 1.25;
+    letter-spacing: 0;
+  }
+  #studio .studio-services__lead { margin-bottom: 4px; }
+  #studio .studio-services__intro .about-page-link { margin-top: 0; font-size: 14px; }
+  #studio .studio-services__location { margin-top: 4px; font-size: 12px; line-height: 1.5; }
+}
+
+/* More breathing room between stacked homepage cards on phones. */
+@media (max-width: 768px) {
+  #studio .home-services-grid,
+  #process .process-grid,
+  #work .work-grid,
+  #testimonials .testimonials-grid { row-gap: 28px; }
+}
+
+/* Focused homepage polish. */
+#top .hero::before { background: linear-gradient(90deg, rgba(3,12,19,.56), rgba(3,12,19,.28) 42%, rgba(3,12,19,0) 72%); }
+@media (min-width: 1025px) {
+  #top .hero { min-height: 90svh; }
+  .studio-services__intro { align-self: center; }
+  #studio .home-service-card { padding: 22px; }
+  #studio .home-service-card h3 { margin-bottom: 10px; }
+  #studio .home-service-card p { margin-bottom: 16px; }
+}
+#studio .services-pricing-note { text-align: left; margin-top: 16px; }
+#studio .services-pricing-note p { font-size: 12px; line-height: 1.6; }
+#process .process-card { padding: 22px; gap: 10px; }
+#process .process-number { width: 48px; height: 48px; font-size: 18px; margin-bottom: 2px; }
+#work .work-info { display: flex; flex-direction: column; gap: 0; }
+#work .project-action { display: inline-flex; align-items: center; align-self: flex-start; min-height: 44px; margin-top: 12px; color: var(--accent); font-size: 13px; font-weight: 600; text-decoration: none; }
+#maverick-designs { scroll-margin-top: 100px; }
+#testimonials .testimonials-grid { max-width: 1200px; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; align-items: stretch; }
+#testimonials .testimonial-card { padding: 28px; display: flex; flex-direction: column; }
+#testimonials .testimonial-quote { font-size: 17px; line-height: 1.65; margin-bottom: 12px; }
+#testimonials .testimonial-meta { margin-top: auto; padding-top: 24px; align-items: flex-start; }
+#testimonials .testimonial-proof { justify-items: start; }
+#testimonials .testimonial-stars { font-size: 12px; letter-spacing: .1em; }
+#testimonials .testimonial-verified { font-size: 12px; letter-spacing: 0; text-transform: none; }
+.testimonial-review summary { display: flex; align-items: center; width: fit-content; min-height: 44px; cursor: pointer; color: var(--accent); font-size: 13px; font-weight: 600; }
+.testimonial-review summary::after { content: '+'; margin-left: 8px; }
+.testimonial-review[open] summary::after { content: '−'; }
+.testimonial-review p { padding-top: 12px; color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+#contact .contact-welcome { font-size: 15px; line-height: 1.7; color: var(--text-muted); margin: 16px 0 28px; }
+#contact .contact-points { gap: 24px; }
+@media (max-width: 768px) {
+  #process .process-card { padding: 20px; }
+  #testimonials .testimonials-grid { grid-template-columns: 1fr; gap: 28px; }
+  #testimonials .testimonial-card { padding: 22px; }
+  #testimonials .testimonial-quote { font-size: 16px; }
+  #testimonials .testimonial-meta { flex-wrap: wrap; gap: 12px; padding-top: 16px; }
+  #top .hero::before { background: linear-gradient(90deg,rgba(3,12,19,.48),rgba(3,12,19,.2) 55%,transparent 85%); }
+}
+@media (min-width: 1025px) {
+  .studio-services__layout { max-width: 1320px; grid-template-columns: minmax(0, .65fr) minmax(0, 1.6fr); gap: 40px; }
+}
+#studio .services-pricing-note { width: 100%; max-width: none; margin-left: 0; margin-right: 0; text-align: center; }
+#studio .services-pricing-note p { max-width: none; margin-left: auto; margin-right: auto; text-align: center; }
+
+@media (max-width: 767px) {
+  #contact #interest-label { font-size: 14px !important; letter-spacing: .04em !important; }
+}

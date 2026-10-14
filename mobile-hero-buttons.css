@@ -1,0 +1,20 @@
+/* Shared compact service-page hero actions; desktop styles remain unchanged. */
+@media (max-width: 767px) {
+  body :is(.web-hero__actions, .seo-hero__actions, .gd-hero__actions, .wm-hero__actions) {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 10px;
+  }
+  body :is(.web-hero .web-btn, .seo-hero .seo-btn, .gd-hero .gd-btn, .wm-hero .wm-btn, .services-overview-hero__cta) {
+    flex: 0 1 auto;
+    width: fit-content;
+    max-width: 100%;
+    min-height: 44px;
+    padding: 8px 14px;
+    font-size: 13px;
+    line-height: 1.3;
+    letter-spacing: 0;
+    text-align: center;
+  }
+}

@@ -1,0 +1,6 @@
+# Scope indexing protection to the Pages hostname, never the custom domain.
+https://:project.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.:project.pages.dev/*
+  X-Robots-Tag: noindex

@@ -1,0 +1,11 @@
+/* Consistent breathing room between mobile content cards; never form fields or navigation. */
+@media (max-width: 768px) {
+  :is(.home-services-grid, .process-grid, .work-grid, .testimonials-grid,
+      .about-services-grid, .services-cards, .services-visual-grid, .services-support-cards,
+      .about-founder__highlights, .web-benefits__list, .web-pricing__grid, .web-steps,
+      .web-care__grid, .web-faq__list, .seo-why__list, .seo-cats, .seo-faq__list,
+      .gd-why__list, .gd-cats, .gd-gallery, .gd-faq__list,
+      .wm-why__list, .wm-cats, .wm-out) {
+    row-gap: 28px !important;
+  }
+}

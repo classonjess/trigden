@@ -1,0 +1,10 @@
+/* Eyebrows are supporting labels, consistently smaller than page headings. */
+body :is(.services-eyebrow, .about-eyebrow, .contact-eyebrow, .studio-services__eyebrow) {
+  font-size: 12px !important;
+  font-weight: 600 !important;
+  line-height: 1.5 !important;
+  letter-spacing: .07em !important;
+}
+@media (max-width: 768px) {
+  body :is(.services-eyebrow, .about-eyebrow, .contact-eyebrow, .studio-services__eyebrow) { letter-spacing: .045em !important; }
+}

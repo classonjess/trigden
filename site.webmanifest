@@ -7,7 +7,7 @@
   "theme_color": "#0b1113",
   "icons": [
     {
-      "src": "/images/mobilefav.png",
+      "src": "https://trigdenstudio.com/images/mobilefav.png",
       "sizes": "296x284",
       "type": "image/png"
     }
