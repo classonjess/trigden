@@ -3,6 +3,8 @@
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   if (reduced.matches || !('IntersectionObserver' in window) ||
       typeof CSS === 'undefined' || !CSS.supports('translate', '0px 1px')) return;
+  function start() {
+  if (reduced.matches) return;
   const selectors = [
     '.home-service-card', '.about-service-card', '.service-card', '.support-card',
     '.process-card', '.work-card', '.testimonial-card', '.about-highlight',
@@ -99,7 +101,7 @@
         return;
       }
       const old = states.get(el);
-      const offset = old ? 20 * (1 - old.progress) : 0;
+      const offset = 20 * (1 - (old ? old.progress : 0));
       const top = entry.boundingClientRect.top - offset;
       const distance = window.innerHeight - top;
       // Above-the-fold/already-visible blocks never flash back to low opacity.
@@ -117,7 +119,19 @@
       }
     });
   }, { threshold: 0, rootMargin: '0px 0px 50px 0px' });
-  targets.forEach(el => observer.observe(el));
+  // Read the untransformed geometry in one batch before arming any target.
+  const positions = targets.map(el => [el, el.getBoundingClientRect()]);
+  positions.forEach(([el, rect]) => {
+    if (rect.top < window.innerHeight) { finish(el); return; }
+    el.classList.add('scroll-reveal');
+    if (native) {
+      el.classList.add('scroll-reveal--native');
+      completion.observe(el);
+    } else {
+      states.set(el, { top: rect.top + window.scrollY, progress: 0 });
+    }
+    observer.observe(el);
+  });
 
   reduced.addEventListener?.('change', event => {
     if (!event.matches) return;
@@ -133,4 +147,8 @@
     window.removeEventListener('scroll', schedule);
     window.removeEventListener('resize', resize);
   });
+  }
+  if (document.getElementById('entry-intro')) {
+    window.addEventListener('trigden:intro-done', start, { once: true });
+  } else start();
 })();

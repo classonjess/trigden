@@ -9,4 +9,26 @@
   }
   if (!window.trigdenShouldPlayIntro) document.body.classList.remove('intro-active');
   template.remove();
+  const intro = document.getElementById('entry-intro');
+  if (!intro) { document.body.classList.remove('intro-active'); return; }
+  document.body.classList.add('intro-active');
+  let dismissed = false;
+  let fallback;
+  function dismiss() {
+    if (dismissed) return;
+    dismissed = true;
+    clearTimeout(fallback);
+    intro.classList.add('is-exiting');
+    document.body.classList.remove('intro-active');
+    setTimeout(() => {
+      intro.remove();
+      window.dispatchEvent(new Event('trigden:intro-done'));
+    }, 250);
+  }
+  intro.querySelector('.entry-intro__logo')?.addEventListener('animationend', dismiss, { once: true });
+  fallback = setTimeout(dismiss, 1100);
+  window.addEventListener('pagehide', dismiss, { once: true });
+  window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', event => {
+    if (event.matches) dismiss();
+  });
 })();

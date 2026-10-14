@@ -21,7 +21,10 @@
       document.documentElement.classList.add('skip-entry-intro');
       if (document.body) document.body.classList.remove('intro-active');
       var overlay = document.getElementById('entry-intro');
-      if (overlay) overlay.remove();
+      if (overlay) {
+        overlay.remove();
+        window.dispatchEvent(new Event('trigden:intro-done'));
+      }
     }
     if (skip) clearIntro();
     window.addEventListener('pagehide', clearIntro);
@@ -257,7 +260,7 @@
   </nav>
 
 <section class="hero">
-  <img class="hero-video hero-poster" src="./images/hero-video-poster.webp" alt="" aria-hidden="true" fetchpriority="high" />
+  <img class="hero-video hero-poster" src="./images/hero-video-poster.webp" alt="" aria-hidden="true" fetchpriority="high"  width="1280" height="720" />
   <video id="hero-vid" class="hero-video" muted defaultmuted loop playsinline webkit-playsinline preload="none" poster="./images/hero-video-poster.webp" disablepictureinpicture></video>
 
   <button type="button" class="hero-motion-toggle" id="hero-motion-toggle" aria-controls="hero-vid" aria-label="Pause background video" aria-pressed="false">
@@ -359,7 +362,7 @@
     <div class="work-grid">
       <a href="https://aprillilesconsulting.com/" target="_blank" rel="noopener noreferrer" class="work-card april-card">
         <div class="work-image">
-          <img
+          <span class="work-image-shadow"><img
             src="images/april-liles-1400.webp"
             srcset="images/april-liles-700.webp 700w, images/april-liles-1400.webp 1400w"
             sizes="(max-width: 768px) 100vw, 400px"
@@ -368,7 +371,7 @@
             decoding="async"
             width="1400"
             height="681"
-          />
+          /></span>
         </div>
         <div class="work-info" data-num="01">
           <h3>April Liles Consulting</h3>
@@ -384,7 +387,7 @@
       <!-- Temporarily hidden until the MRA website launches; retain project and assets. -->
       <article class="work-card mra-card" aria-label="MRA Interior Design project" hidden data-live-url="https://www.mra-interiors.com/">
         <div class="work-image">
-          <img
+          <span class="work-image-shadow"><img
             src="images/mralandingpage-600w.webp"
             srcset="images/mralandingpage-320w.webp 320w, images/mralandingpage-600w.webp 600w, images/mralandingpage-1200w.webp 1200w"
             sizes="(max-width: 768px) 45vw, 400px"
@@ -393,7 +396,7 @@
             decoding="async"
             width="1200"
             height="527"
-          />
+          /></span>
         </div>
         <div class="work-info" data-num="02">
           <h3>MRA Interior Design</h3>
@@ -408,7 +411,7 @@
       
       <a href="https://integritymedicalservice.com/" target="_blank" rel="noopener noreferrer" class="work-card integrity-card">
         <div class="work-image">
-          <img
+          <span class="work-image-shadow"><img
             src="images/integritylandingpage-600w.webp"
             srcset="images/integritylandingpage-600w.webp 600w, images/integritylandingpage-1200w.webp 1200w"
             sizes="(max-width: 768px) 50vw, 400px"
@@ -417,7 +420,7 @@
             decoding="async"
             width="1200"
             height="532"
-          />
+          /></span>
         </div>
         <div class="work-info" data-num="03">
           <h3>Integrity Medical Service</h3>
@@ -435,7 +438,7 @@
 
       <article class="work-card hoodie-card" aria-label="Maverick Co. apparel logo project">
         <div class="work-image">
-          <img class="hoodie-main-image" src="images/3hoodiepreview-350w.webp" srcset="images/3hoodiepreview-350w.webp 350w, images/3hoodiepreview-700w.webp 700w" sizes="(max-width: 768px) 100vw, 350px" alt="Three hoodie colorways featuring the Maverick Co. logo" loading="lazy" width="700" height="233" />
+          <span class="work-image-shadow"><img class="hoodie-main-image" src="images/3hoodiepreview-350w.webp" srcset="images/3hoodiepreview-350w.webp 350w, images/3hoodiepreview-700w.webp 700w" sizes="(max-width: 768px) 100vw, 350px" alt="Three hoodie colorways featuring the Maverick Co. logo" loading="lazy" width="700" height="233" /></span>
         </div>
         <div class="work-info" data-num="04">
           <h3>Maverick Co. Apparel Branding</h3>
@@ -1125,52 +1128,6 @@
     }
   });
 
-  // Brief intro; release pointer input immediately when the fade starts.
-  (function () {
-    const intro = document.getElementById('entry-intro');
-    if (!intro || !window.trigdenShouldPlayIntro) {
-      document.body.classList.remove('intro-active');
-      if (intro) intro.remove();
-      return;
-    }
-
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function finishIntro() {
-      if (!intro || intro.classList.contains('is-exiting')) return;
-      intro.classList.add('is-exiting');
-      document.body.classList.remove('intro-active');
-
-      window.setTimeout(() => {
-        intro.remove();
-      }, 250);
-    }
-
-    document.body.classList.add('intro-active');
-
-    if (reduceMotion) {
-      // Skip the intro entirely for reduced motion.
-      finishIntro();
-      return;
-    }
-
-    // Wait for the pulse animation to fully finish, then fade out
-    const logo = intro.querySelector('.entry-intro__logo');
-    let dismissed = false;
-    const dismiss = () => {
-      if (dismissed) return;
-      dismissed = true;
-      finishIntro();
-    };
-
-    if (logo) {
-      logo.addEventListener('animationend', dismiss, { once: true });
-      // Fallback in case animationend never fires (e.g. hidden tab, slow device)
-      window.setTimeout(dismiss, 1100);
-    } else {
-      window.setTimeout(finishIntro, 1100);
-    }
-  })();
 </script>
  </body>
 </html>

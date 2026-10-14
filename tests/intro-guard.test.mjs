@@ -7,8 +7,8 @@ const script=html.match(/<script id="entry-intro-guard">([\s\S]*?)<\/script>/)[1
 function landing({hash='',referrer='',type='navigate',seen=false,cookie='',reduced=false,blocked=false}={}){
  const events={};const classes=new Set();let removed=false;let locked=true;
  const document={referrer,cookie,documentElement:{classList:{add:c=>classes.add(c)}},body:{classList:{remove:()=>locked=false}},getElementById:()=>({remove:()=>removed=true})};
- const window={addEventListener:(name,fn)=>events[name]=fn};
- runInNewContext(script,{window,document,location:{hash,origin:'https://trigdenstudio.com'},matchMedia:()=>({matches:reduced}),performance:{getEntriesByType:()=>[{type}]},sessionStorage:{getItem(){if(blocked)throw Error('blocked');return seen?'1':null;},setItem(){}},URL});
+ const window={dispatchEvent(){},addEventListener:(name,fn)=>events[name]=fn};
+ runInNewContext(script,{window,document,location:{hash,origin:'https://trigdenstudio.com'},matchMedia:()=>({matches:reduced}),performance:{getEntriesByType:()=>[{type}]},Event:class {constructor(type){this.type=type}},sessionStorage:{getItem(){if(blocked)throw Error('blocked');return seen?'1':null;},setItem(){}},URL});
  return {window,events,classes,state:()=>({removed,locked})};
 }
 test('only fresh unfragmented landing plays; all skipped paths unlock before paint',()=>{

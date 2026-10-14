@@ -4,16 +4,16 @@ import {readFileSync} from 'node:fs';
 import {runInNewContext} from 'node:vm';
 const script=readFileSync(new URL('../reveal.js',import.meta.url),'utf8');
 
-function setup({native=false,reduced=false,unsupported=false}={}) {
+function setup({native=false,reduced=false,unsupported=false,intro=false,top=900}={}) {
   const observers=[],listeners=new Map(),frames=new Map();let next=0,onMotion;
-  const cards=Array.from({length:2},()=>({hidden:false,contains:()=>false,parentElement:{},classes:new Set(),properties:new Map(),getBoundingClientRect:()=>({top:900,bottom:1100})}));
+  const cards=Array.from({length:2},()=>({hidden:false,contains:()=>false,parentElement:{},classes:new Set(),properties:new Map(),getBoundingClientRect:()=>({top,bottom:top+200})}));
   cards.forEach(card=>{card.classList={add:(...names)=>names.forEach(n=>card.classes.add(n)),remove:(...names)=>names.forEach(n=>card.classes.delete(n))};card.style={setProperty:(k,v)=>card.properties.set(k,v),removeProperty:k=>card.properties.delete(k)};});
   function Observer(callback,options){this.callback=callback;this.options=options;this.observed=[];this.unobserved=[];this.observe=el=>this.observed.push(el);this.unobserve=el=>this.unobserved.push(el);this.disconnect=()=>this.disconnected=true;observers.push(this);}
   const win={innerHeight:900,scrollY:0,addEventListener:(name,fn)=>listeners.set(name,fn),removeEventListener:name=>listeners.delete(name)};
   if(!unsupported)win.IntersectionObserver=Observer;
-  const context={window:win,IntersectionObserver:Observer,CSS:{supports:prop=>prop==='translate'||native},matchMedia:()=>({matches:reduced,addEventListener:(name,fn)=>onMotion=fn}),document:{querySelectorAll:()=>cards},requestAnimationFrame:fn=>{frames.set(++next,fn);return next},cancelAnimationFrame:id=>frames.delete(id)};
+  const context={window:win,IntersectionObserver:Observer,CSS:{supports:prop=>prop==='translate'||native},matchMedia:()=>({matches:reduced,addEventListener:(name,fn)=>onMotion=fn}),document:{getElementById:()=>intro?{}:null,querySelectorAll:()=>cards},requestAnimationFrame:fn=>{frames.set(++next,fn);return next},cancelAnimationFrame:id=>frames.delete(id)};
   runInNewContext(script,context);
-  const entry=(card,top=900,isIntersecting=true)=>({target:card,isIntersecting,boundingClientRect:{top,bottom:top+200}});
+  const entry=(card,top=900,isIntersecting=true)=>({target:card,isIntersecting,boundingClientRect:{top:top+20,bottom:top+220}});
   const entrance=()=>observers.find(o=>o.options.rootMargin==='0px 0px 50px 0px');
   const flush=()=>{const batch=[...frames.values()];frames.clear();batch.forEach(fn=>fn());};
   return {cards,win,observers,listeners,frames,entry,entrance,flush,motion:()=>onMotion({matches:true})};
@@ -67,4 +67,16 @@ test('individual translate preserves existing transform and hover styling',()=>{
   const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
   const reveal=css.slice(css.indexOf('.scroll-reveal {'),css.indexOf('@media (prefers-reduced-motion: reduce)',css.indexOf('.scroll-reveal {')));
   assert.match(reveal,/translate:/);assert.doesNotMatch(reveal,/\btransform:/);assert.doesNotMatch(css,/cardEnter|\.site-reveal/);
+});
+
+test('below-viewport cards are armed synchronously before observer callbacks',()=>{
+ const h=setup();assert(h.cards.every(c=>c.classes.has('scroll-reveal')));
+});
+
+test('intro gates all measurements and class changes until removal event',()=>{
+ const h=setup({intro:true});assert.equal(h.observers.length,0);assert(h.cards.every(c=>!c.classes.size));
+ h.listeners.get('trigden:intro-done')();assert(h.cards.every(c=>c.classes.has('scroll-reveal')));
+});
+test('partially visible targets finish immediately without ever dimming',()=>{
+ const h=setup({top:890});assert(h.cards.every(c=>!c.classes.size));assert.equal(h.entrance().unobserved.length,2);
 });
