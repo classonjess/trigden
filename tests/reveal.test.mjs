@@ -36,10 +36,10 @@ test('intro defers measurements and reveal setup until completion',()=>{
  const h=setup({intro:true});assert.equal(h.observers.length,0);h.listeners.get('trigden:intro-done')();assert.equal(h.observers.length,1);
 });
 test('desktop reveal fades and slides upward with smooth easing',()=>{
- const h=setup(),card=h.cards[0],o=h.observers[0];o.callback([h.entry(card,{visible:23})]);assert.equal(card.animations.length,0);
+ const h=setup(),card=h.cards[0],o=h.observers[0];o.callback([h.entry(card,{visible:0,intersects:false})]);assert.equal(card.animations.length,0);
  o.callback([h.entry(card)]);assert.equal(card.animations.length,2);assert(o.unobserved.includes(card));
- assert.equal(card.animations[0].options.duration,850);assert.equal(card.animations[0].options.easing,'cubic-bezier(0.22, 1, 0.36, 1)');
- assert.equal(card.animations[1].options.composite,'add');assert.equal(card.animations[1].frames[0].transform,'translateY(18px)');
+ assert.equal(card.animations[0].options.duration,1000);assert.equal(card.animations[0].options.easing,'cubic-bezier(0.22, 1, 0.36, 1)');
+ assert.equal(card.animations[1].options.composite,'add');assert.equal(card.animations[1].frames[0].transform,'translateY(40px)');
  assert.equal(h.listeners.has('scroll'),false);assert.equal(h.listeners.has('resize'),false);
 });
 test('tall elements trigger relative to viewport height',()=>{
@@ -66,7 +66,7 @@ test('CSS contains no scroll timelines or independent translation animation',()=
 });
 
 test('observer upper root spans the page so fast jumps cannot skip entry entirely',()=>{
- const h=setup();assert.equal(h.observers[0].options.rootMargin,'10000px 0px -48px 0px');
+ const h=setup();assert.equal(h.observers[0].options.rootMargin,'10000px 0px -135px 0px');
 });
 
 test('standalone photos reveal individually while photos inside cards share their card reveal',()=>{
@@ -78,9 +78,9 @@ test('standalone photos reveal individually while photos inside cards share thei
  assert.equal(h.cards[3].animations.length,2);
 });
 
-test('mobile uses 700ms and bounded 70ms staggering with a 24px inset',()=>{
+test('mobile uses the same full 40px rise and 1000ms timing',()=>{
  const h=setup({mobile:true});h.observers[0].callback(h.cards.map(c=>h.entry(c,{visible:24})));
- assert.equal(h.observers[0].options.rootMargin,'10000px 0px -24px 0px');
+ assert.equal(h.observers[0].options.rootMargin,'10000px 0px -135px 0px');
  assert.deepEqual(h.cards.map(c=>c.animations[0].options.delay),[0,70,140,140]);
- assert(h.cards.every(c=>c.animations[0].options.duration===700));
+ assert(h.cards.every(c=>c.animations[0].options.duration===1000));
 });

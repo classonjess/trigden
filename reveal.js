@@ -43,11 +43,9 @@
     const targets = [...blocks, ...photos];
     const siblingCounts = new Map();
     targets.forEach(el => siblingCounts.set(el.parentElement, (siblingCounts.get(el.parentElement) || 0) + 1));
-    // Fade and gently slide upward, with shorter motion on small screens.
-    const mobile = matchMedia('(max-width: 768px)').matches;
-    const duration = mobile ? 700 : 850;
-    const inset = mobile ? 24 : 48;
-    const threshold = .12;
+    // Start in the bottom 15% of the viewport, leaving the full rise visible.
+    const duration = 1000;
+    const inset = Math.round(window.innerHeight * .15);
     const waiting = new Set();
     const running = new Map();
     const seen = new WeakSet();
@@ -79,7 +77,7 @@
         // adds to live CSS transforms (including hover), without capturing them.
         run.animations.push(el.animate([{ opacity: 0 }, { opacity: 1 }], timing));
         run.animations.push(el.animate(
-          [{ transform: 'translateY(18px)' }, { transform: 'translateY(0)' }],
+          [{ transform: 'translateY(40px)' }, { transform: 'translateY(0)' }],
           { ...timing, composite: 'add' }
         ));
         // A background tab or interrupted animation must never strand content.
@@ -96,10 +94,8 @@
         const el = entry.target;
         if (seen.has(el)) return;
         if (entry.boundingClientRect.bottom <= 0) { finish(el); return; }
-        const height = Math.max(0, window.innerHeight - inset);
-        // Tall blocks trigger after a small part of the viewport is filled.
-        if (!entry.isIntersecting || entry.intersectionRect.height <
-            Math.min(entry.boundingClientRect.height, height) * threshold) return;
+        // An entry edge works equally for short cards and viewport-tall blocks.
+        if (!entry.isIntersecting) return;
         const group = siblingCounts.get(el.parentElement) > 1 ? el.parentElement : el;
         const order = groups.get(group) || 0;
         groups.set(group, order + 1);
@@ -112,7 +108,7 @@
       // below to above the viewport still crosses into this observer's root.
       // Otherwise an element can stay non-intersecting at both sampled frames.
       rootMargin: `${Math.max(document.documentElement.scrollHeight, window.innerHeight)}px 0px -${inset}px 0px`,
-      threshold: Array.from({ length: 101 }, (_, i) => i / 100)
+      threshold: 0
     });
 
     // Batch geometry reads before writes. Already-visible blocks never dim.
