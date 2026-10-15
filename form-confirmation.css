@@ -1,0 +1,53 @@
+/* Shared, success-only replacement; existing form layouts remain unchanged. */
+.inquiry-submitted[hidden] { display: none !important; }
+.inquiry-confirmation {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  align-self: start;
+  padding: clamp(32px, 4vw, 56px) clamp(20px, 3vw, 36px);
+  border: 1px solid #d2e3ea;
+  border-radius: 22px;
+  background: linear-gradient(155deg, #fff 65%, #f0f7fa);
+  box-shadow: 0 14px 38px rgba(16, 36, 44, .06);
+  text-align: center;
+  color: #18323d;
+  font-family: 'Inter', -apple-system, sans-serif;
+}
+.inquiry-confirmation__check {
+  display: grid;
+  place-items: center;
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 20px;
+  border: 1px solid rgba(36, 107, 131, .24);
+  border-radius: 50%;
+  background: rgba(62, 167, 198, .09);
+  color: #246b83;
+}
+.inquiry-confirmation__check::after {
+  content: '';
+  width: 18px;
+  height: 10px;
+  margin-top: -5px;
+  border-left: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-45deg);
+}
+.inquiry-confirmation h2 {
+  margin: 0 0 12px;
+  color: #122b36;
+  font-size: clamp(25px, 2.4vw, 32px);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -.025em;
+}
+.inquiry-confirmation h2:focus-visible { outline: 2px solid #246b83; outline-offset: 6px; border-radius: 4px; }
+.inquiry-confirmation p {
+  max-width: 380px;
+  margin: 0 auto;
+  color: #52636b;
+  font-size: 16px;
+  line-height: 1.65;
+}
+.inquiry-card > .inquiry-confirmation { padding: 24px 0; background: transparent; border: 0; box-shadow: none; }
