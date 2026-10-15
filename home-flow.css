@@ -180,3 +180,10 @@
   .home-welcome__content h2 { max-width: min(34ch, 800px); }
   .home-welcome__content > p:last-child { max-width: 1000px; }
 }
+
+/* Let the studio summary fit naturally on one centered line on desktop. */
+@media (min-width: 1200px) {
+  .home-studio-intro__copy { max-width: 1200px; }
+  .home-studio-intro .studio-services__lead { max-width: 100%; }
+  .home-studio-intro h2 { max-width: 760px; margin-left: auto; margin-right: auto; }
+}
