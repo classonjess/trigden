@@ -1,0 +1,14 @@
+/* Compact informational labels; interactive buttons are deliberately excluded. */
+body :is(.service-tier, .work-tag, .wm-dash__pill, .gd-mock__tag,
+         .gd-hero__facts > li, .seo-hero__facts > li, .wm-hero__facts > li) {
+  min-height: 0 !important;
+  height: auto;
+  padding: 2px 8px !important;
+  font-size: 11px !important;
+  line-height: 1.35 !important;
+  font-weight: 600 !important;
+  letter-spacing: .015em !important;
+  max-width: 100%;
+  white-space: normal;
+}
+body :is(.gd-hero__facts, .seo-hero__facts, .wm-hero__facts, .work-tags) { gap: 6px; }

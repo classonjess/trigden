@@ -1,0 +1,189 @@
+/* Compact homepage overview; dedicated service pages retain all package details. */
+#studio.studio-services { display: block; padding: 80px 40px !important; background: transparent !important; border-bottom: 1px solid rgba(62,167,198,.08); }
+.studio-services__layout { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 28px; }
+.studio-services__intro { text-align: center; }
+.studio-services__eyebrow { color: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .13em; margin-bottom: 12px; }
+.studio-services__intro h2 { font-size: clamp(30px,3.2vw,42px); line-height: 1.15; letter-spacing: -.035em; margin: 0 auto 14px; color: var(--text); }
+.studio-services__intro h2 span, .home-studio-intro h2 span { color: var(--accent); }
+.studio-services__lead { max-width: 64ch; margin: 0 auto; font-size: 16px; line-height: 1.6; color: var(--text-muted); }
+.studio-services__catalog { min-width: 0; scroll-margin-top: var(--anchor-offset); }
+#studio .home-services-grid { max-width: none; grid-template-columns: repeat(4,minmax(0,1fr)); grid-auto-rows: 1fr; gap: 16px; }
+#studio .home-service-card { width: 100%; min-width: 0; height: 100%; padding: 22px 20px; text-align: left; align-items: flex-start; }
+#studio .home-service-card .about-service-icon { margin-bottom: 14px; }
+#studio .home-service-card h3 { width: 100%; font-size: 20px; line-height: 1.25; margin: 0 0 10px; white-space: normal; }
+#studio .home-service-card p { padding: 0; margin: 0 0 4px; font-size: 14px; line-height: 1.55; }
+#studio .home-service-card .about-service-link { margin-top: auto; padding: 0; min-height: 32px; height: auto; color: var(--accent); font-size: 13px; line-height: 1.4; background: transparent; border-radius: 0; box-shadow: none; align-items: center; }
+#studio .home-service-card:hover .about-service-link, #studio .home-service-card:focus-visible .about-service-link { color: #6fd6f0; background: transparent; box-shadow: none; }
+.home-studio-intro { padding: 48px 24px; }
+.home-studio-intro__copy { max-width: 760px; margin: 0 auto; text-align: center; }
+.home-studio-intro h2 { font-size: clamp(30px,3vw,40px); line-height: 1.15; margin-bottom: 16px; }
+.home-studio-intro .studio-services__lead { margin-bottom: 12px; }
+.home-studio-intro .about-page-link { min-height: 44px; display: inline-flex; align-items: center; }
+.home-studio-intro .studio-services__location { margin-top: 10px; color: var(--text-muted); font-size: 13px; line-height: 1.6; }
+@media (max-width: 1024px) { #studio .home-services-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 768px) {
+  #studio.studio-services { padding: 52px 20px !important; }
+  .studio-services__layout { gap: 24px; }
+  #studio .home-services-grid { gap: 16px 12px; row-gap: 16px !important; }
+  #studio .home-service-card { padding: 18px 16px; }
+  #studio .home-service-card h3 { font-size: 17px; line-height: 1.3; }
+  #studio .home-service-card p { font-size: 14px; }
+  #studio .home-service-card .about-service-icon { margin-bottom: 12px; }
+  #studio .home-service-card .about-service-link { font-size: 12px; min-height: 24px; }
+  .studio-services__intro h2 { font-size: 30px; }
+  .studio-services__lead { font-size: 15px; }
+  .home-studio-intro { padding: 40px 20px; }
+}
+@media (max-width: 359px) { #studio .home-services-grid { grid-template-columns: 1fr; grid-auto-rows: auto; } }
+
+/* Content determines card height; screenshot pixels retain their original ratio. */
+#work .work-card { height: auto; min-height: 0; align-items: center; }
+#work .work-image {
+  height: auto !important;
+  min-height: 0;
+  padding: 16px !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+#work .work-image img {
+  display: block;
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+  transform: none !important;
+}
+#work .hoodie-card .work-image img { max-height: 220px !important; }
+#work .work-info { padding: 20px 24px !important; overflow: visible; flex: 1; min-width: 0; }
+#work .work-info p { margin-bottom: 14px; }
+#work .work-grid { gap: 24px; }
+#process { padding-top: 56px !important; padding-bottom: 64px; }
+#process .section-header { margin-bottom: 32px; }
+#process .process-grid { max-width: 1200px; padding-left: 0; padding-right: 0; align-items: stretch; }
+#process .process-card { min-height: 0; padding: 24px; gap: 12px; }
+#process .process-number { flex-shrink: 0; margin-bottom: 4px; }
+@media (max-width: 768px) {
+  #process { padding-top: 40px !important; padding-bottom: 48px; }
+  #process .section-header { margin-bottom: 28px; }
+  #process .process-card { padding: 22px; gap: 10px; }
+  #work .work-info { padding: 20px !important; }
+}
+@media (max-width: 680px) {
+  #work .work-card { align-items: stretch; }
+  #work .work-image { padding: 12px !important; }
+}
+
+@media (max-width: 768px) and (hover: none) {
+  #studio .home-service-card:hover { transform: none; }
+}
+@media (max-width: 768px) {
+  .hero .cta-button {
+    isolation: isolate;
+    height: 44px;
+    min-height: 44px;
+    padding: 0 10px !important;
+    font-family: 'Inter', sans-serif;
+    letter-spacing: 0 !important;
+    background: transparent;
+    border: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+  .hero .cta-button::before {
+    content: '';
+    position: absolute;
+    inset: 6px 0 !important;
+    border-radius: 7px;
+    background: linear-gradient(180deg, #e9f1f6, #dbe6ed);
+    border: 1px solid rgba(255,255,255,.6);
+    opacity: 1;
+    z-index: -1;
+    transform: none;
+  }
+  .hero .cta-button::after { display: none; }
+}
+/* More breathing room between stacked homepage cards on phones. */
+@media (max-width: 768px) {
+  #process .process-grid,
+  #work .work-grid,
+  #testimonials .testimonials-grid { row-gap: 28px; }
+}
+
+/* Focused homepage polish. */
+#top .hero::before { background: linear-gradient(90deg, rgba(3,12,19,.56), rgba(3,12,19,.28) 42%, rgba(3,12,19,0) 72%); }
+@media (min-width: 1025px) {
+  #top .hero { min-height: 90svh; }
+  .studio-services__intro { align-self: center; }
+  #studio .home-service-card { padding: 22px; }
+  #studio .home-service-card h3 { margin-bottom: 10px; }
+  #studio .home-service-card p { margin-bottom: 4px; }
+}
+#process .process-card { padding: 22px; gap: 10px; }
+#process .process-number { width: 48px; height: 48px; font-size: 18px; margin-bottom: 2px; }
+#work .work-info { display: flex; flex-direction: column; gap: 0; }
+#work .project-action { display: inline-flex; align-items: center; align-self: flex-start; min-height: 44px; margin-top: 12px; color: var(--accent); font-size: 13px; font-weight: 600; text-decoration: none; }
+#maverick-designs { scroll-margin-top: 100px; }
+#testimonials .testimonials-grid { max-width: 1200px; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 24px; align-items: stretch; }
+#testimonials .testimonial-card { padding: 28px; display: flex; flex-direction: column; }
+#testimonials .testimonial-quote { font-size: 17px; line-height: 1.65; margin-bottom: 12px; }
+#testimonials .testimonial-meta { margin-top: auto; padding-top: 24px; align-items: flex-start; }
+#testimonials .testimonial-proof { justify-items: start; }
+#testimonials .testimonial-stars { font-size: 12px; letter-spacing: .1em; }
+#testimonials .testimonial-verified { font-size: 12px; letter-spacing: 0; text-transform: none; }
+.testimonial-review summary { display: flex; align-items: center; width: fit-content; min-height: 44px; cursor: pointer; color: var(--accent); font-size: 13px; font-weight: 600; }
+.testimonial-review summary::after { content: '+'; margin-left: 8px; }
+.testimonial-review[open] summary::after { content: '−'; }
+.testimonial-review p { padding-top: 12px; color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+#contact .contact-welcome { font-size: 15px; line-height: 1.7; color: var(--text-muted); margin: 16px 0 28px; }
+#contact .contact-points { gap: 24px; }
+@media (max-width: 768px) {
+  #process .process-card { padding: 20px; }
+  #testimonials .testimonials-grid { grid-template-columns: 1fr; gap: 28px; }
+  #testimonials .testimonial-card { padding: 22px; }
+  #testimonials .testimonial-quote { font-size: 16px; }
+  #testimonials .testimonial-meta { flex-wrap: wrap; gap: 12px; padding-top: 16px; }
+  #top .hero::before { background: linear-gradient(90deg,rgba(3,12,19,.48),rgba(3,12,19,.2) 55%,transparent 85%); }
+}
+
+@media (max-width: 767px) {
+  #contact #interest-label { font-size: 14px !important; letter-spacing: .04em !important; }
+}
+
+/* Retain the existing still while media decodes; loading never gates content. */
+#top .hero-video { background: url('/images/hero-video-poster.webp') center / cover no-repeat; opacity: 0; transition: opacity .35s ease; }
+#top .hero-poster { opacity: .98; transition: none; }
+#top .hero-video.is-ready { opacity: .98; }
+#contact .contact-card-intro { margin: 0 0 20px; color: var(--text-muted); font-size: 14px; line-height: 1.6; }
+@media (max-width: 767px) {
+  #top .hero-content { position: relative; top: 24px; }
+  #contact .contact-card { padding-top: 24px; }
+  #contact .contact-form { gap: 18px; }
+}
+@media (prefers-reduced-motion: reduce) { #top .hero-video { transition: none; } }
+
+/* The welcome and services share one uninterrupted background and boundary. */
+.home-welcome__content { max-width: 800px; margin: 0 auto 36px; text-align: center; }
+.home-welcome__content h2 { max-width: 34ch; margin: 0 auto 16px; color: var(--text); }
+.home-welcome__content > p:last-child { max-width: 760px; margin: 0 auto; font-size: 16px; line-height: 1.65; color: var(--text-muted); }
+@media (max-width: 768px) {
+  .home-welcome__content { margin-bottom: 26px; }
+  .home-welcome__content h2 { margin-bottom: 14px; }
+  .home-welcome__content > p:last-child { font-size: 15px; line-height: 1.6; }
+}
+
+/* Widen only the desktop paragraph, retaining the welcome heading's text measure. */
+@media (min-width: 1025px) {
+  .home-welcome__content { max-width: 1000px; }
+  .home-welcome__content h2 { max-width: min(34ch, 800px); }
+  .home-welcome__content > p:last-child { max-width: 1000px; }
+}
+
+/* Let the studio summary fit naturally on one centered line on desktop. */
+@media (min-width: 1200px) {
+  .home-studio-intro__copy { max-width: 1200px; }
+  .home-studio-intro .studio-services__lead { max-width: 100%; }
+  .home-studio-intro h2 { max-width: 760px; margin-left: auto; margin-right: auto; }
+}

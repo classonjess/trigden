@@ -2,19 +2,52 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <script id="entry-intro-guard">
+  (function () {
+    var skip = !!location.hash || matchMedia('(prefers-reduced-motion: reduce)').matches;
+    try {
+      skip = skip || !!(document.referrer && new URL(document.referrer).origin === location.origin);
+      var navigation = performance.getEntriesByType('navigation')[0];
+      skip = skip || !!(navigation && navigation.type !== 'navigate');
+      skip = skip || sessionStorage.getItem('trigden-entry-seen') === '1' ||
+        document.cookie.split(';').some(function (cookie) { return cookie.trim() === 'trigden-entry-seen=1'; });
+      sessionStorage.setItem('trigden-entry-seen', '1');
+      // A session cookie also prevents replay in another tab of this browser session.
+      document.cookie = 'trigden-entry-seen=1; Path=/; SameSite=Lax';
+    } catch (_) { skip = true; } // If the decision cannot be made safely, leave the intro inert.
+    window.trigdenShouldPlayIntro = !skip;
+    function clearIntro() {
+      window.trigdenShouldPlayIntro = false;
+      document.documentElement.classList.add('skip-entry-intro');
+      if (document.body) document.body.classList.remove('intro-active');
+      var overlay = document.getElementById('entry-intro');
+      if (overlay) {
+        overlay.remove();
+        window.dispatchEvent(new Event('trigden:intro-done'));
+      }
+    }
+    if (skip) clearIntro();
+    window.addEventListener('pagehide', clearIntro);
+    window.addEventListener('pageshow', function (event) { if (event.persisted || !window.trigdenShouldPlayIntro) clearIntro(); });
+    window.addEventListener('hashchange', clearIntro);
+  })();
+  </script>
+  <style>.skip-entry-intro .entry-intro { display: none !important; } .skip-entry-intro body.intro-active { overflow: auto; }</style>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Start cookieyes banner -->
-  <script id="cookieyes" type="text/javascript" src="https://cdn-cookieyes.com/client_data/7bdd59f8a27359a8f937a8ff3725c9c2/script.js" defer></script>
+  <script src="consent-defaults.js"></script>
+  <script src="cookie-banner.js" defer></script>
+  <script src="analytics.js" defer></script>
   <!-- End cookieyes banner -->
   <title>Trigden Studio | Web Design, Development, SEO & Branding in Colorado</title>
-  <meta name="description" content="Trigden Studio provides web design, website development, SEO, and branding for small businesses in Colorado, with conversion-focused websites built to grow your business." />
+  <meta name="description" content="Trigden Studio creates custom websites, SEO, and branding for Colorado small businesses, with thoughtful design that supports lasting business growth." />
   <meta name="robots" content="index, follow" />
   <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
   <meta name="author" content="Jessica Classon" />
   
   <!-- Open Graph / Social Media -->
   <meta property="og:title" content="Trigden Studio | Web Design, Development, SEO & Branding in Colorado" />
-  <meta property="og:description" content="Web design, website development, SEO, and branding for small businesses in Colorado, built to convert and support long-term growth." />
+  <meta property="og:description" content="Trigden Studio creates custom websites, SEO, and branding for Colorado small businesses, with thoughtful design that supports lasting business growth." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://trigdenstudio.com/" />
   <meta property="og:site_name" content="Trigden Studio" />
@@ -29,7 +62,7 @@
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Trigden Studio | Web Design, Development, SEO & Branding in Colorado" />
-  <meta name="twitter:description" content="Web design, website development, SEO, and branding for small businesses in Colorado, built to convert and support long-term growth." />
+  <meta name="twitter:description" content="Trigden Studio creates custom websites, SEO, and branding for Colorado small businesses, with thoughtful design that supports lasting business growth." />
   <meta name="twitter:url" content="https://trigdenstudio.com/" />
   <meta name="twitter:image" content="https://trigdenstudio.com/images/og-preview.png" />
   <meta name="twitter:image:alt" content="Trigden Studio social preview" />
@@ -44,15 +77,29 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdn-cookieyes.com" crossorigin />
 
-  <link rel="stylesheet" href="style.css?v=20260405-9" />
+  <link rel="stylesheet" href="style.css?v=welcome-type21" />
+  <link rel="stylesheet" href="home-flow.css?v=studio-summary24" />
+  <script src="nav.js?v=launch-safety1" defer></script>
+  <script>
+    if (window.location.hash === '#about') {
+      window.location.replace('about.html');
+    }
+  </script>
 
-  <!-- Fonts — non-render-blocking; Playfair Display, Poppins, and DM Sans removed (unused) -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <!-- Fonts load after the page so they do not hold up first paint -->
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap" /></noscript>
+  <script>
+    window.addEventListener('load', function () {
+      var link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Montserrat:wght@400;500;600;700&display=swap';
+      document.head.appendChild(link);
+    });
+  </script>
 
   <!-- Preload LCP image -->
   <link rel="preload" as="image" href="/images/trigdenlogo-520w.webp" imagesrcset="/images/trigdenlogo-520w.webp 520w, /images/trigdenlogo-1040w.webp 1040w" imagesizes="min(72vw, 520px)" type="image/webp" fetchpriority="high" />
-  <link rel="preload" as="image" href="/images/mobilefav.webp" fetchpriority="high" type="image/webp" />
+  <link rel="preload" as="image" href="/images/hero-video-poster.webp" fetchpriority="high" type="image/webp" />
   <!-- Favicon & webmanifest -->
   <!-- PNG fallbacks (uploaded) -->
   <link rel="icon" type="image/png" sizes="192x192" href="/images/mobilefav.png">
@@ -132,8 +179,16 @@
   }
   </script>
   <!-- Your CSS file -->
+<noscript><style>.entry-intro { display: none; } body.intro-active { overflow: auto; }</style></noscript>
+  <script src="/reveal.js?v=fade-rise40-15" defer></script>
+  <script src="/footer-message.js?v=3" defer></script>
+  <link rel="stylesheet" href="/card-spacing.css?v=1" />
+  <link rel="stylesheet" href="/eyebrow-type.css?v=scroll-progress10" />
+  <link rel="stylesheet" href="/pill-sizing.css?v=2" />
+  <script src="form-safety.js?v=1"></script>
 </head>
 <body id="top">
+  <template id="entry-intro-template">
   <div id="entry-intro" class="entry-intro" aria-hidden="true">
     <div class="entry-intro__geometry">
       <span class="entry-intro__shape entry-intro__shape--one"></span>
@@ -154,6 +209,8 @@
       <p class="entry-intro__caption">Entering the studio</p>
     </div>
   </div>
+  </template>
+  <script src="entry-intro.js?v=three-pulses2"></script>
   <!-- Persistent animated background -->
   <div class="site-bg" aria-hidden="true">
     <div class="site-bg__geometry">
@@ -168,36 +225,43 @@
       <span class="site-bg__shape site-bg__shape--nine"></span>
     </div>
   </div>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <!-- Navigation -->
   <main id="main" role="main">
   <nav id="nav">
     <a href="#top" class="logo" aria-label="Trigden Studio home">
       <picture>
         <source type="image/webp" srcset="images/trigdenlogo-520w.webp 520w, images/trigdenlogo-1040w.webp 1040w" sizes="(max-width: 768px) 125px, 175px" />
-        <img src="images/trigdenlogo.png" alt="Trigden Studio" fetchpriority="high" width="520" height="84" />
+        <img src="images/trigdenlogo.png" alt="Trigden Studio" fetchpriority="high" width="175" height="28" />
       </picture>
     </a>
     <input type="checkbox" id="menu-toggle" class="menu-toggle" />
-    <label for="menu-toggle" class="hamburger" aria-label="Toggle menu">
+    <button type="button" class="hamburger" aria-label="Open menu" aria-expanded="false" aria-controls="primary-menu">
       <span></span>
       <span></span>
       <span></span>
-    </label>
-    <ul class="nav-links">
-      <li><a href="#about">About</a></li>
-      <li><a href="#process">Process</a></li>
-      <li><a href="#work">Work</a></li>
-      <li><a href="#services">Services</a></li>
-      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </button>
+    <ul class="nav-links" id="primary-menu">
+        <li><a href="index.html">Home</a></li>
+      <li class="nav-dropdown">
+        <a href="services.html" class="nav-dropdown__toggle" aria-haspopup="true" aria-expanded="false" aria-controls="services-menu">Services<span class="nav-caret" aria-hidden="true"></span></a>
+        <ul class="nav-dropdown__menu" id="services-menu">
+            <li class="mobile-all-services"><a href="services.html">View all services</a></li>
+          <li><a href="web-design.html">Web Design &amp; Development</a></li>
+          <li><a href="website-maintenance.html">Website Maintenance &amp; Support</a></li>
+          <li><a href="seo.html">SEO Optimization</a></li>
+          <li><a href="graphic-design.html">Graphic &amp; Logo Design</a></li>
+        </ul>
+      </li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Let's Talk<span class="nav-cta-arrow" aria-hidden="true"> ↗</span></a></li>
     </ul>
-    <a href="#contact" class="nav-cta">Contact</a>
+    <a href="contact.html" class="nav-cta">Let's Talk<span class="nav-cta-arrow" aria-hidden="true"> ↗</span></a>
   </nav>
 
-<section class="hero">
-  <video id="hero-vid" class="hero-video" autoplay muted defaultmuted loop playsinline webkit-playsinline preload="metadata" poster="./images/mobilefav.webp" disablepictureinpicture>
-      <source src="./video/website-banner-720.mp4" type="video/mp4" />
-    </video>
+<section id="main-content" tabindex="-1" class="hero">
+  <img class="hero-video hero-poster" src="./images/hero-video-poster.webp" alt="" aria-hidden="true" fetchpriority="high"  width="1280" height="720" />
+  <video id="hero-vid" class="hero-video" muted defaultmuted loop playsinline webkit-playsinline preload="none" poster="./images/hero-video-poster.webp" disablepictureinpicture></video>
 
   <button type="button" class="hero-motion-toggle" id="hero-motion-toggle" aria-controls="hero-vid" aria-label="Pause background video" aria-pressed="false">
     <span class="motion-icon" aria-hidden="true"></span>
@@ -205,39 +269,25 @@
   </button>
   
   <div class="hero-content">
-    <h1><span class="hero-accent">Websites</span> Designed To Grow With Your Business.</h1>
-    <p>Design, development, and performance, built to convert.</p>
-    <a href="#contact" class="cta-button">
-      Start a project
+    <h1><span class="hero-accent">Websites</span> That Grow With Your Business.</h1>
+    <p>Custom web design and development for businesses ready to grow. Based in Denver, working with clients nationwide.</p>
+    <a href="contact.html" class="cta-button">
+      Request a Quote
     </a>
   </div>
 </section>
 
-  <!-- Intro + Walking Animation (Unified Section) -->
-  <section class="intro-section" id="intro" role="region" aria-labelledby="intro-title" aria-describedby="intro-desc">
-    <div class="intro-container">
-      <!-- About Section -->
-      <section class="about-section" id="about">
-        <div class="about-container">
-          <div class="about-content">
-            <h2 class="intro-title" id="intro-title">
-              <span class="intro-word">Trigden</span>
-              <span class="intro-word">Studio</span>
-            </h2>
-
-            <p id="intro-desc" class="walk-tagline">Design That Drives Growth</p>
-
-            <p class="about-lead">
-              We build high-converting websites for growing businesses that need more than just a good-looking site.
-            </p>
-
-            <p class="about-services-intro">How we help you grow</p>
-            
-            <div class="about-services-grid stagger-children" aria-label="Core services">
-              <a href="#services" class="about-service-card">
-                <div class="about-service-head">
-                  <h3>Web Design</h3>
-                  <span class="about-service-icon about-service-icon--web" aria-hidden="true">
+  <section class="about-section studio-services" id="studio" aria-labelledby="welcome-title">
+    <div class="home-welcome__content studio-services__intro">
+      <p class="studio-services__eyebrow studio-eyebrow">WELCOME TO TRIGDEN STUDIO</p>
+      <h2 id="welcome-title">Your Business Deserves a Website That Works as Hard as You Do.</h2>
+      <p>At Trigden Studio, we help businesses build a stronger online presence through thoughtful design, practical solutions, and personal support. From custom websites to ongoing support, here's how we can help.</p>
+    </div>
+    <div class="studio-services__layout">
+      <div class="studio-services__catalog" id="services">
+      <div class="home-services-grid" aria-label="Services">
+        <a href="web-design.html" class="home-service-card">
+          <span class="about-service-icon about-service-icon--web" aria-hidden="true">
                     <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
                       <rect x="3.5" y="4" width="17" height="14" rx="2"></rect>
                       <path d="M3.5 8.5h17"></path>
@@ -247,39 +297,24 @@
                       <path d="M10.2 20h3.6"></path>
                     </svg>
                   </span>
-                </div>
-                <p>Conversion-focused page design with clear messaging and polished visual direction.</p>
-              </a>
-              <a href="#services" class="about-service-card">
-                <div class="about-service-head">
-                  <h3>Development</h3>
-                  <span class="about-service-icon about-service-icon--dev" aria-hidden="true">
+          <h3>Web Design &amp; Development</h3>
+          <p>Websites that build trust and turn visitors into customers.</p>
+          <span class="about-service-link">Web Design →</span>
+        </a>
+        <a href="website-maintenance.html" class="home-service-card">
+          <span class="about-service-icon about-service-icon--dev" aria-hidden="true">
                     <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
                       <path d="M8 6L3.8 12 8 18"></path>
                       <path d="M16 6l4.2 6-4.2 6"></path>
                       <path d="M13.4 4.8l-2.8 14.4"></path>
                     </svg>
                   </span>
-                </div>
-                <p>Fast, responsive websites built for performance, reliability, and long-term scalability.</p>
-              </a>
-              <a href="#services" class="about-service-card">
-                <div class="about-service-head">
-                  <h3>Graphic &amp; Digital Design</h3>
-                  <span class="about-service-icon about-service-icon--design" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
-                      <path d="M6.2 18.7l2.6-.6 8.7-8.7a1.9 1.9 0 0 0-2.7-2.7L6.1 15.4z"></path>
-                      <path d="M13.7 7.9l2.4 2.4"></path>
-                      <path d="M5.2 19.4h13.6"></path>
-                    </svg>
-                  </span>
-                </div>
-                <p>Cohesive brand elements and supporting digital assets designed for consistency and trust.</p>
-              </a>
-              <a href="#services" class="about-service-card">
-                <div class="about-service-head">
-                  <h3>SEO &amp; Performance</h3>
-                  <span class="about-service-icon about-service-icon--seo" aria-hidden="true">
+          <h3>Website Maintenance &amp; Support</h3>
+          <p>Keep your website updated and running smoothly.</p>
+          <span class="about-service-link">Maintenance →</span>
+        </a>
+        <a href="seo.html" class="home-service-card">
+          <span class="about-service-icon about-service-icon--seo" aria-hidden="true">
                     <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
                       <path d="M4 18.5h16"></path>
                       <path d="M6.5 16v-3.2"></path>
@@ -291,20 +326,27 @@
                       <path d="M19.4 15.1l1.9 1.9"></path>
                     </svg>
                   </span>
-                </div>
-                <p>Optimization and structure that help your site rank, load fast, and convert more visitors.</p>
-              </a>
-            </div>
-          
-          <div class="stats stagger-children">
-            <div class="stat" style="gap: 0 !important;">
-              <div class="stat-label" style="margin-top: 0 !important; padding-top: 0 !important; line-height: 1.2 !important; font-style: italic;">Based in Denver, serving clients nationwide.</div>
-            </div>
-          </div>
+          <h3>SEO &amp; Performance</h3>
+          <p>Help the right customers find your business online.</p>
+          <span class="about-service-link">SEO →</span>
+        </a>
+        <a href="graphic-design.html" class="home-service-card">
+          <span class="about-service-icon about-service-icon--design" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
+                      <path d="M6.2 18.7l2.6-.6 8.7-8.7a1.9 1.9 0 0 0-2.7-2.7L6.1 15.4z"></path>
+                      <path d="M13.7 7.9l2.4 2.4"></path>
+                      <path d="M5.2 19.4h13.6"></path>
+                    </svg>
+                  </span>
+          <h3>Graphic, Logo &amp; Digital Design</h3>
+          <p>Distinctive visuals that make your brand stand out.</p>
+          <span class="about-service-link">Graphic Design →</span>
+        </a>
+      </div>
 
-      </section>
-
-      </section>
+      </div>
+    </div>
+  </section>
 
   <!-- Our Process Section -->
   <section class="process-section flow-bg" id="process">
@@ -312,7 +354,7 @@
       <h2>Our Process</h2>
     </div>
 
-    <div class="process-grid stagger-children">
+    <div class="process-grid">
       <article class="process-card">
         <div class="process-number">1</div>
         <h3>Discover</h3>
@@ -344,26 +386,46 @@
       <p>Selected projects showcasing design and development</p>
     </div>
     
-    <div class="work-grid stagger-children">
-      <a href="https://www.mra-designs.com/" target="_blank" rel="noopener noreferrer" class="work-card mra-card">
+    <div class="work-grid">
+      <a href="https://aprillilesconsulting.com/" target="_blank" rel="noopener noreferrer" class="work-card april-card">
         <div class="work-image">
-          <picture>
-            <source
-              type="image/webp"
-              srcset="images/mralandingpage-320w.webp 320w, images/mralandingpage-600w.webp 600w, images/mralandingpage-1200w.webp 1200w"
-              sizes="(max-width: 768px) 45vw, 400px"
-            />
-            <img
-              src="images/mralandingpage.png"
-              alt="MRA Interior Design landing page preview"
-              loading="lazy"
-              decoding="async"
-              width="1200"
-              height="527"
-            />
-          </picture>
+          <span class="work-image-shadow"><img
+            src="images/april-liles-1400.webp"
+            srcset="images/april-liles-700.webp 700w, images/april-liles-1400.webp 1400w"
+            sizes="(max-width: 768px) 100vw, 400px"
+            alt="April Liles Consulting homepage, with a portrait and the line Leadership, Nutrition, Performance"
+            loading="lazy"
+            decoding="async"
+            width="1400"
+            height="681"
+          /></span>
         </div>
         <div class="work-info" data-num="01">
+          <h3>April Liles Consulting</h3>
+          <p>A consulting website for leadership, nutrition, and performance, with a clear way to start a conversation.</p>
+          <div class="work-tags">
+            <span class="work-tag">Web Design</span>
+            <span class="work-tag">Development</span>
+          </div>
+          <span class="project-action">Visit Website ↗</span>
+        </div>
+      </a>
+
+      <!-- Temporarily hidden until the MRA website launches; retain project and assets. -->
+      <article class="work-card mra-card" aria-label="MRA Interior Design project" hidden data-live-url="https://www.mra-interiors.com/">
+        <div class="work-image">
+          <span class="work-image-shadow"><img
+            src="images/mralandingpage-600w.webp"
+            srcset="images/mralandingpage-320w.webp 320w, images/mralandingpage-600w.webp 600w, images/mralandingpage-1200w.webp 1200w"
+            sizes="(max-width: 768px) 45vw, 400px"
+            alt="MRA Interior Design landing page preview"
+            loading="lazy"
+            decoding="async"
+            width="1200"
+            height="527"
+          /></span>
+        </div>
+        <div class="work-info" data-num="02">
           <h3>MRA Interior Design</h3>
           <p>Elegant, conversion-minded web visuals for a boutique interior design studio. Focused on clarity, hierarchy, and a premium feel.</p>
           <div class="work-tags">
@@ -372,27 +434,22 @@
             <span class="work-tag">Branding</span>
           </div>
         </div>
-      </a>
+      </article>
       
       <a href="https://integritymedicalservice.com/" target="_blank" rel="noopener noreferrer" class="work-card integrity-card">
         <div class="work-image">
-          <picture>
-            <source
-              type="image/webp"
-              srcset="images/integritylandingpage-600w.webp 600w, images/integritylandingpage-1200w.webp 1200w"
-              sizes="(max-width: 768px) 50vw, 400px"
-            />
-            <img
-              src="images/integritylandingpage.png"
-              alt="Integrity Medical Service landing page preview"
-              loading="lazy"
-              decoding="async"
-              width="1200"
-              height="532"
-            />
-          </picture>
+          <span class="work-image-shadow"><img
+            src="images/integritylandingpage-600w.webp"
+            srcset="images/integritylandingpage-600w.webp 600w, images/integritylandingpage-1200w.webp 1200w"
+            sizes="(max-width: 768px) 50vw, 400px"
+            alt="Integrity Medical Service landing page preview"
+            loading="lazy"
+            decoding="async"
+            width="1200"
+            height="532"
+          /></span>
         </div>
-        <div class="work-info" data-num="02">
+        <div class="work-info" data-num="03">
           <h3>Integrity Medical Service</h3>
           <p>Redesigned and optimized a multi-OEM medical imaging website to improve clarity, performance, and lead flow.</p>
           <div class="work-tags">
@@ -402,21 +459,23 @@
             <span class="work-tag">Marketing & Social Assets</span>
             <span class="work-tag">SEO</span>
           </div>
+          <span class="project-action">Visit Website ↗</span>
         </div>
       </a>
 
       <article class="work-card hoodie-card" aria-label="Maverick Co. apparel logo project">
         <div class="work-image">
-          <img class="hoodie-main-image" src="images/3hoodiepreview-350w.webp" srcset="images/3hoodiepreview-350w.webp 350w, images/3hoodiepreview-700w.webp 700w" sizes="(max-width: 768px) 100vw, 350px" alt="Three hoodie colorways featuring the Maverick Co. logo" loading="lazy" width="700" height="233" />
+          <span class="work-image-shadow"><img class="hoodie-main-image" src="images/3hoodiepreview-350w.webp" srcset="images/3hoodiepreview-350w.webp 350w, images/3hoodiepreview-700w.webp 700w" sizes="(max-width: 768px) 100vw, 350px" alt="Three hoodie colorways featuring the Maverick Co. logo" loading="lazy" width="700" height="233" /></span>
         </div>
-        <div class="work-info" data-num="03">
+        <div class="work-info" data-num="04">
           <h3>Maverick Co. Apparel Branding</h3>
           <p>A custom apparel logo design developed for chest placement across multiple hoodie colorways, balancing readability, character, and brand consistency.</p>
           <div class="work-tags">
             <span class="work-tag">Logo Design</span>
             <span class="work-tag">Brand Identity</span>
           </div>
-          <div class="work-mini-previews" aria-label="Additional Maverick project visuals">
+          <a class="project-action" href="#maverick-designs">View Designs →</a>
+          <div class="work-mini-previews" id="maverick-designs" aria-label="Additional Maverick project visuals">
             <button
               type="button"
               class="work-mini-preview is-active"
@@ -450,6 +509,16 @@
     </div>
   </section>
 
+  <section class="home-studio-intro" aria-labelledby="about-title">
+      <div class="home-studio-intro__copy studio-services__intro">
+        <p class="studio-services__eyebrow studio-eyebrow">ABOUT TRIGDEN STUDIO</p>
+        <h2 id="about-title">Design That Drives <span>Growth.</span></h2>
+        <p class="studio-services__lead">We build high-converting websites for growing businesses that need more than just a good-looking site.</p>
+        <a class="about-page-link" href="about.html">Meet Jess →</a>
+        <p class="studio-services__location">Based in Denver, serving clients nationwide.</p>
+      </div>
+  </section>
+
   <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-title">
     <div class="section-header">
       <h2 id="testimonials-title">What Clients Say</h2>
@@ -457,121 +526,28 @@
 
     <div class="testimonials-grid">
       <article class="testimonial-card">
-        <p class="testimonial-quote">"They helped me create a logo so I could put it on some hoodies and gave me a lot of different ideas to choose from."</p>
+        <p class="testimonial-quote">"They helped me create a logo so I could put it on some hoodies…"</p>
+        <details class="testimonial-review"><summary>Read full review</summary><p>"They helped me create a logo so I could put it on some hoodies and gave me a lot of different ideas to choose from."</p></details>
         <div class="testimonial-meta">
           <p class="testimonial-name">Gary, Maverick Co.</p>
           <div class="testimonial-proof" aria-label="Five star client feedback">
             <span class="testimonial-stars" aria-hidden="true">&#9733; &#9733; &#9733; &#9733; &#9733;</span>
-            <span class="testimonial-verified">Verified client feedback submitted via Typeform</span>
+            <span class="testimonial-verified">Client feedback.</span>
           </div>
         </div>
       </article>
 
       <article class="testimonial-card">
-        <p class="testimonial-quote">"Don't think twice!!! Jessica is absolutely lovely to work with, has amazing ideas and created more than I ever thought possible for my website! She has already reached out after 8 months ready to update it again with all our new work. I had her do my logo too, after she suggested it needed work and I get compliments all the time!! She is on speed dial on my phone!!!"</p>
+        <p class="testimonial-quote">"Don't think twice!!! Jessica is absolutely lovely to work with, has amazing ideas and created more than I ever thought possible for my website!"</p>
+        <details class="testimonial-review"><summary>Read full review</summary><p>"Don't think twice!!! Jessica is absolutely lovely to work with, has amazing ideas and created more than I ever thought possible for my website! She has already reached out after 8 months ready to update it again with all our new work. I had her do my logo too, after she suggested it needed work and I get compliments all the time!! She is on speed dial on my phone!!!"</p></details>
         <div class="testimonial-meta">
           <p class="testimonial-name">MRA Designs</p>
           <div class="testimonial-proof" aria-label="Five star client feedback">
             <span class="testimonial-stars" aria-hidden="true">&#9733; &#9733; &#9733; &#9733; &#9733;</span>
-            <span class="testimonial-verified">Verified client feedback submitted via Typeform</span>
+            <span class="testimonial-verified">Client feedback.</span>
           </div>
         </div>
       </article>
-    </div>
-  </section>
-
-  <!-- Services/CTA Section -->
-  <section class="services-cta-section" id="services">
-    <div class="services-cta-container">
-      <div class="services-cta-content">
-        <h2 class="services-title">Services Built To Grow Your Business Online</h2>
-        <p class="services-intro">We Design And Build High-Performing Websites, Improve Your Visibility On Search Engines, And Create Clean, Professional Visuals That Elevate Your Brand.</p>
-      </div>
-      
-      <div class="services-visual">
-        <div class="services-cards" aria-label="Services and investment options">
-          <article class="service-card service-card--webdev">
-            <h3>Web Design &amp; Development</h3>
-            <div class="service-tier">Starting at $1,500+</div>
-            <p>Custom websites that look great, load fast, and convert visitors.</p>
-            <ul class="service-features">
-              <li>Up to 5 custom pages</li>
-              <li>Mobile responsive design</li>
-              <li>Basic SEO setup</li>
-              <li>Contact form integration</li>
-              <li>Project launch in 4 weeks or less</li>
-            </ul>
-            <p class="service-note-webdev" style="font-size: 0.8em; color: #b0b0b0; margin-top: 12px; margin-bottom: 10px;">Need a larger site? Contact us for a custom quote on websites with more than 5 pages.</p>
-            <a href="#contact" class="service-btn">Get Started</a>
-          </article>
-
-          <article class="service-card service-card--seo">
-            <h3>SEO (Search Engine Optimization)</h3>
-            <div class="service-tier">Starting at $499</div>
-            <p>Boost your Google rankings and attract more customers.</p>
-            <ul class="service-features">
-              <li>On-page SEO setup</li>
-              <li>Keyword optimization</li>
-              <li>Meta titles &amp; descriptions</li>
-              <li>Page speed improvements</li>
-            </ul>
-            <a href="#contact" class="service-btn">Get Started</a>
-          </article>
-
-          <article class="service-card">
-            <h3>Graphic &amp; Digital Design</h3>
-            <div class="service-tier">Starting at $150</div>
-            <p>Creative visuals for your brand &amp; marketing.</p>
-            <ul class="service-features">
-              <li>Business cards</li>
-              <li>Social media graphics</li>
-              <li>Website banners</li>
-              <li>Marketing materials</li>
-            </ul>
-            <a href="#contact" class="service-btn">Request Design</a>
-          </article>
-
-          <div class="services-addon-card">
-            <h3>Need a Logo Design?</h3>
-            <div class="service-tier">$400</div>
-            <p>Get a custom logo designed for your business when you need a fresh brand mark.</p>
-            <a href="#contact" class="service-btn">Request Design</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="services-pricing-note">
-        <p><em>Final pricing depends on scope, timeline, and the number of pages or assets needed.</em></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="services-support-section">
-    <div class="services-support-block">
-      <div class="services-support-header">
-        <p class="services-eyebrow">Need a design partner?</p>
-        <h3 class="services-support-title">Design Support That Scales With Your Business.</h3>
-      </div>
-
-      <div class="services-support-cards" aria-label="Design support highlights">
-        <article class="support-card">
-          <div class="support-icon" aria-hidden="true">✦</div>
-          <h3>Conversion-Focused</h3>
-          <p>Pages designed for clarity, trust, and action so visitors are more likely to reach out.</p>
-        </article>
-
-        <article class="support-card">
-          <div class="support-icon" aria-hidden="true">&lt;/&gt;</div>
-          <h3>Fast + Reliable</h3>
-          <p>Clean implementation, responsive behavior, and dependable support to keep momentum moving.</p>
-        </article>
-
-        <article class="support-card">
-          <div class="support-icon" aria-hidden="true">◌</div>
-          <h3>Built to Scale</h3>
-          <p>A flexible design system and ongoing improvements that grow with your business.</p>
-        </article>
-      </div>
     </div>
   </section>
 
@@ -579,63 +555,71 @@
   <section class="contact-section flow-bg" id="contact">
     <div class="contact-content">
       <div class="contact-copy">
-        <p class="contact-eyebrow">Start Your Project</p>
-        <h2>Ready To Elevate Your Online Presence?</h2>
-        <p class="contact-lead">Whether you need a strategic redesign, a conversion-focused website, or a stronger digital foundation, Trigden Studio builds polished experiences designed to grow with your business.</p>
+        <p class="contact-eyebrow studio-eyebrow">Start Your Project</p>
+        <h2>Let's Bring Your Ideas to Life.</h2>
+        <p class="contact-lead">Whether you're launching a new website, improving an existing one, building your brand, or looking for ongoing support, I'd love to hear what you have in mind.</p>
+        <p class="contact-welcome">Share a little about your project - we can work through the details together.</p>
         <div class="contact-points" aria-label="Project details">
           <div class="contact-point">
-            <span class="contact-point__label">Services</span>
-            <span class="contact-point__value">Web design, development, SEO, and brand identity</span>
-          </div>
-          <div class="contact-point">
             <span class="contact-point__label">Based In</span>
-            <span class="contact-point__value">Colorado</span>
+            <span class="contact-point__value">Denver, Colorado - Serving Clients Nationwide</span>
           </div>
           <div class="contact-point">
             <span class="contact-point__label">Response Time</span>
-            <span class="contact-point__value">Within 24 hours</span>
+            <span class="contact-point__value">I'll be in touch as soon as possible.</span>
           </div>
         </div>
       </div>
 
       <div class="contact-card">
+        <p class="contact-card-intro">Tell me a little about your project to get started.</p>
         <form class="contact-form" id="contact-form" action="https://formspree.io/f/xreaqvyn" method="POST">
+          <input type="hidden" name="_subject" value="New Project Inquiry - Trigden Studio" />
+          <input type="hidden" name="_replyto" id="contact-replyto" value="" />
+          <div class="form-honeypot" aria-hidden="true">
+            <label for="contact-company">Company</label>
+            <input type="text" id="contact-company" name="_gotcha" tabindex="-1" autocomplete="off" />
+          </div>
           <div class="form-group">
-            <input type="text" id="name" name="name" autocomplete="name" placeholder="Your Name" aria-label="Your name" required />
+            <label class="sr-only" for="name">Your Name</label>
+            <input type="text" id="name" name="name" autocomplete="name" placeholder="Your Name" maxlength="120" required aria-required="true" />
           </div>
 
           <div class="form-group">
-            <input type="email" id="email" name="email" autocomplete="email" placeholder="Email Address" aria-label="Email address" required />
+            <label class="sr-only" for="email">Email Address</label>
+            <input type="email" id="email" name="email" autocomplete="email" placeholder="Email Address" maxlength="160" required aria-required="true" />
           </div>
 
-          <div class="form-group form-group--services">
-            <p class="interest-label">What are you interested in?</p>
-            <div class="checkbox-group">
+          <div class="form-group form-group--services" id="interest-group">
+            <p class="interest-label" id="interest-label">What Are You Interested In?</p>
+            <div class="checkbox-group" role="group" aria-labelledby="interest-label" aria-describedby="interest-error">
               <label class="checkbox-label">
-                <input type="checkbox" name="services" value="website-design" />
-                <span>Website Design &amp; Redesign</span>
+                <input type="checkbox" name="services" value="Web Design &amp; Development" />
+                <span>Web Design &amp; Development</span>
               </label>
               <label class="checkbox-label">
-                <input type="checkbox" name="services" value="website-development" />
-                <span>Website Development</span>
+                <input type="checkbox" name="services" value="Website Maintenance &amp; Support" />
+                <span>Website Maintenance &amp; Support</span>
               </label>
               <label class="checkbox-label">
-                <input type="checkbox" name="services" value="seo-performance-optimization" />
-                <span>SEO &amp; Performance Optimization</span>
+                <input type="checkbox" name="services" value="SEO &amp; Performance" />
+                <span>SEO &amp; Performance</span>
               </label>
               <label class="checkbox-label">
-                <input type="checkbox" name="services" value="brand-identity" />
-                <span>Brand &amp; Digital Assets</span>
+                <input type="checkbox" name="services" value="Graphic, Logo &amp; Digital Design" />
+                <span>Graphic, Logo &amp; Digital Design</span>
               </label>
               <label class="checkbox-label">
-                <input type="checkbox" name="services" value="not-sure" />
-                <span>Not sure yet - let's talk</span>
+                <input type="checkbox" name="services" value="Not Sure Yet" />
+                <span>Not Sure Yet</span>
               </label>
             </div>
+            <p class="form-field-error" id="interest-error" hidden>Select at least one option.</p>
           </div>
 
           <div class="form-group">
-            <textarea id="message" name="message" placeholder="Tell me about your project, goals, timeline, or what you need help with..." aria-label="Project details" required></textarea>
+            <label class="sr-only" for="message">Tell Me About Your Project</label>
+            <textarea id="message" name="message" maxlength="4000" placeholder="Tell Me About Your Project" aria-label="Tell me about your project"></textarea>
           </div>
 
           <button type="submit" class="submit-btn">Send Message</button>
@@ -647,20 +631,32 @@
   </section>
 
   <!-- Footer -->
-  <footer>
-    <div class="footer-pill">
-      <p>Stay fearless and have <span id="rotating-article">a</span> <span class="rotating-word">fantastic</span> <span id="current-day">day</span>.</p>
+  <footer class="site-footer">
+  <div class="footer-studio-grid">
+    <div class="footer-studio-brand">
+      <a class="footer-brand" href="/index.html">TRIGDEN STUDIO</a>
+      <p>Thoughtful websites and creative design for growing businesses. Based in Denver, working nationwide.</p>
+      <a href="mailto:hello@trigdenstudio.com">hello@trigdenstudio.com</a>
     </div>
-    <div class="footer-links">
-      <a href="privacy.html" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
-      <span class="sep">|</span>
-      <a href="terms.html" target="_blank" rel="noopener noreferrer">Terms of Service</a>
-      <span class="sep">|</span>
-      <a href="#" class="back-to-top" aria-label="Back to top">Back to Top ↑</a>
-    </div>
+    <nav class="footer-studio-nav" aria-label="Footer navigation">
+      <h2>Explore</h2>
+      <a href="/index.html">Home</a><a href="/about.html">About</a><a href="/services.html">Services</a><a href="/contact.html">Contact</a>
+    </nav>
+    <nav class="footer-studio-nav" aria-label="Footer services">
+      <h2><a href="/services.html">Services</a></h2>
+      <a href="/web-design.html">Web Design &amp; Development</a>
+      <a href="/website-maintenance.html">Website Maintenance &amp; Support</a>
+      <a href="/seo.html">SEO &amp; Performance</a>
+      <a href="/graphic-design.html">Graphic, Logo &amp; Digital Design</a>
+    </nav>
+  </div>
+  <div class="footer-signature"><p>Stay fearless and have <span id="rotating-article">an</span> <span class="rotating-word">incredible</span> <span id="current-day">day</span>.</p></div>
+  <div class="footer-bottom">
     <p class="footer-copyright">© <span id="year"></span> Trigden Studio. All rights reserved.</p>
-    <p class="footer-tagline">Designed &amp; Developed with purpose in Denver.</p>
-  </footer>
+    <div class="footer-legal"><a href="/privacy.html">Privacy Policy</a></div>
+  </div>
+  <p class="footer-tagline">Designed &amp; Developed with purpose in Denver.</p>
+</footer>
   </main>
 
   <script>
@@ -671,25 +667,16 @@
     const currentDayElement = document.getElementById('current-day');
     if (currentDayElement) {
       const todayName = new Date().toLocaleDateString(undefined, { weekday: 'long' });
-      currentDayElement.textContent = todayName.toLowerCase();
+      currentDayElement.textContent = todayName;
     }
 
     // Navbar scroll effect
     const nav = document.getElementById('nav');
     const menuToggle = document.getElementById('menu-toggle');
-    const mobileNavLinks = document.querySelectorAll('.nav-links a');
-
-    mobileNavLinks.forEach(link => {
-      link.addEventListener('click', () => {
-        if (window.innerWidth <= 768 && menuToggle) {
-          menuToggle.checked = false;
-        }
-      });
-    });
-
     window.addEventListener('hashchange', () => {
       if (window.innerWidth <= 768 && menuToggle) {
         menuToggle.checked = false;
+        menuToggle.dispatchEvent(new Event('change'));
       }
     });
 
@@ -880,13 +867,13 @@
       const message = (fallbackData.get('message') || '').toString().trim();
       const services = fallbackData.getAll('services').map(item => item.toString().trim()).filter(Boolean);
 
-      const subject = `New inquiry from ${name || 'Website visitor'}`;
+      const subject = `New Project Inquiry - Trigden Studio`;
       const bodyLines = [
         `Name: ${name || 'Not provided'}`,
         `Email: ${email || 'Not provided'}`,
-        `Services: ${services.length ? services.join(', ') : 'Not specified'}`,
+        `Interested in: ${services.length ? services.join(', ') : 'Not specified'}`,
         '',
-        'Message:',
+        'Project details:',
         message || 'Not provided'
       ];
 
@@ -896,17 +883,93 @@
 
     const contactForm = document.getElementById('contact-form');
     const formStatus = document.getElementById('form-status');
-    if (contactForm && formStatus) {
+    if (contactForm && formStatus && window.trigdenForms) {
+      const nameInput = document.getElementById('name');
+      const emailInput = document.getElementById('email');
+      const replyToInput = document.getElementById('contact-replyto');
+      const interestGroup = document.getElementById('interest-group');
+      const interestError = document.getElementById('interest-error');
+      const serviceBoxes = contactForm.querySelectorAll('input[name="services"]');
+
+      const clearValidity = (field) => {
+        if (!field) return;
+        field.setCustomValidity('');
+        field.removeAttribute('aria-invalid');
+      };
+
+      const selectedServices = () => [...serviceBoxes].filter((box) => box.checked);
+
+      const setInterestError = (show) => {
+        if (!interestError || !interestGroup) return;
+        interestError.hidden = !show;
+        interestGroup.classList.toggle('is-invalid', show);
+        serviceBoxes.forEach((box) => {
+          if (show) box.setAttribute('aria-invalid', 'true');
+          else box.removeAttribute('aria-invalid');
+        });
+      };
+
+      contactForm.querySelectorAll('input, textarea').forEach((field) => {
+        field.addEventListener('input', () => {
+          clearValidity(field);
+          formStatus.classList.remove('is-error', 'is-success');
+        });
+        field.addEventListener('change', () => {
+          clearValidity(field);
+          if (field.name === 'services') setInterestError(false);
+        });
+      });
+
       contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const submitButton = contactForm.querySelector('.submit-btn');
-        const formData = new FormData(contactForm);
+        const honeypot = contactForm.querySelector('[name="_gotcha"]');
+        if (submitButton?.disabled) return;
 
+        formStatus.textContent = '';
+        formStatus.classList.remove('is-error', 'is-success');
+        contactForm.querySelectorAll('input, textarea').forEach((field) => clearValidity(field));
+        setInterestError(false);
+
+        if (nameInput && !nameInput.value.trim()) {
+          nameInput.setCustomValidity('Enter your name.');
+          nameInput.setAttribute('aria-invalid', 'true');
+        }
+
+        if (emailInput && (emailInput.validity.typeMismatch || !emailInput.value.trim())) {
+          emailInput.setCustomValidity('Enter a valid email address.');
+          emailInput.setAttribute('aria-invalid', 'true');
+        }
+
+        if (!selectedServices().length) {
+          setInterestError(true);
+        }
+
+        if (!window.trigdenForms.validate(contactForm) || !selectedServices().length) {
+          contactForm.reportValidity();
+          formStatus.textContent = 'Please complete the required fields and try again.';
+          formStatus.classList.add('is-error');
+          const firstInvalid = contactForm.querySelector('[aria-invalid="true"], :invalid');
+          if (firstInvalid) firstInvalid.focus();
+          return;
+        }
+
+        if (honeypot && honeypot.value) {
+          window.trigdenForms.blocked(formStatus);
+          return;
+        }
+
+        if (replyToInput && emailInput) {
+          replyToInput.value = emailInput.value.trim();
+        }
+
+        const formData = new FormData(contactForm);
         formStatus.textContent = 'Sending your message...';
         if (submitButton) submitButton.disabled = true;
+        contactForm.setAttribute('aria-busy', 'true');
 
         try {
-          const response = await fetch(contactForm.action, {
+          const { response, result } = await window.trigdenForms.request(contactForm.action, {
             method: 'POST',
             body: formData,
             headers: {
@@ -914,45 +977,38 @@
             }
           });
 
-          const result = await response.json().catch(() => null);
-
           if (response.ok) {
             formStatus.textContent = "Thanks! Your message was sent successfully.";
+            formStatus.classList.add('is-success');
             contactForm.reset();
+            if (replyToInput) replyToInput.value = '';
+            setInterestError(false);
           } else {
             const apiMessage = result?.errors?.[0]?.message || result?.error;
+            formStatus.classList.add('is-error');
             if (response.status === 404 && apiMessage === 'Form not found') {
-              formStatus.textContent = 'Contact form is not configured correctly. Opening your email app with your message now.';
-              openMailFallback(contactForm);
+              formStatus.textContent = 'The contact form is not configured correctly. Opening your email app so you can send this to hello@trigdenstudio.com.';
             } else {
               formStatus.textContent = apiMessage ? `${apiMessage} Opening your email app now.` : 'Something went wrong. Opening your email app now.';
-              openMailFallback(contactForm);
             }
+            openMailFallback(contactForm);
           }
         } catch (error) {
+          if (error.name === 'AbortError') {
+            formStatus.textContent = 'The request timed out. Your details are preserved. Please retry or email hello@trigdenstudio.com if you are unsure whether it was received.';
+            formStatus.classList.add('is-error');
+            return;
+          }
+          formStatus.classList.add('is-error');
           formStatus.textContent = 'Network error. Opening your email app with your message now.';
           openMailFallback(contactForm);
         } finally {
+          contactForm.removeAttribute('aria-busy');
+          window.trigdenForms.focusStatus(formStatus);
           if (submitButton) submitButton.disabled = false;
         }
       });
-    }
-
-    // Rotating words in footer
-    const rotatingWords = ['fantastic', 'amazing', 'wonderful', 'incredible', 'awesome', 'brilliant'];
-    let currentWordIndex = 0;
-    const rotatingWordElement = document.querySelector('.rotating-word');
-    const rotatingArticleElement = document.getElementById('rotating-article');
-
-    const getArticle = (word) => /^[aeiou]/i.test(word) ? 'an' : 'a';
-
-    if (rotatingWordElement) {
-      setInterval(() => {
-        currentWordIndex = (currentWordIndex + 1) % rotatingWords.length;
-        const newWord = rotatingWords[currentWordIndex];
-        rotatingWordElement.textContent = newWord;
-        if (rotatingArticleElement) rotatingArticleElement.textContent = getArticle(newWord);
-      }, 3000);
+      contactForm.noValidate = true;
     }
 
     // Maverick card: swap main image when mini previews are clicked
@@ -970,6 +1026,9 @@
           const alt = button.getAttribute('data-image-alt');
           if (!src) return;
 
+          // The original responsive candidates must not override a selected preview.
+          mainImage.removeAttribute('srcset');
+          mainImage.removeAttribute('sizes');
           mainImage.src = src;
           if (alt) {
             mainImage.alt = alt;
@@ -988,13 +1047,26 @@
     const motionToggle = document.getElementById('hero-motion-toggle');
     if (!video) return;
 
+    // Keep the still visible until a decoded video frame is actually playing.
+    video.addEventListener('playing', () => video.classList.add('is-ready'));
+    video.addEventListener('error', () => video.classList.remove('is-ready'));
+
     video.muted = true;
     video.defaultMuted = true;
     video.playsInline = true;
     video.setAttribute('muted', '');
     video.setAttribute('playsinline', '');
     video.setAttribute('webkit-playsinline', '');
-    video.setAttribute('autoplay', '');
+
+    const ensureHeroSource = () => {
+      if (video.querySelector('source')) return;
+      const source = document.createElement('source');
+      source.src = './video/website-banner-720.mp4';
+      source.type = 'video/mp4';
+      video.appendChild(source);
+      video.preload = 'none';
+      video.load();
+    };
 
     try {
       video.playbackRate = 0.90;
@@ -1045,6 +1117,7 @@
     const toggleMotion = () => {
       allowKickstart = false;
       detachKickstartListeners();
+      ensureHeroSource();
 
       if (video.paused) {
         video.play().then(() => {
@@ -1063,7 +1136,18 @@
       setMotionToggleState(true);
     } else {
       setMotionToggleState(false);
-      video.load();
+
+      const startHeroVideo = () => {
+        ensureHeroSource();
+        kickstartPlayback();
+      };
+      const scheduleHeroVideo = () => {
+        if ('requestIdleCallback' in window) {
+          requestIdleCallback(startHeroVideo, { timeout: 2500 });
+        } else {
+          setTimeout(startHeroVideo, 1500);
+        }
+      };
 
       // Safari can reject the first play call before media is ready; retry on media/visibility events.
       document.addEventListener('touchstart', kickstartPlayback, { passive: true });
@@ -1073,7 +1157,8 @@
       video.addEventListener('canplay', kickstartPlayback);
       video.addEventListener('loadeddata', kickstartPlayback);
 
-      kickstartPlayback();
+      if (document.readyState === 'complete') scheduleHeroVideo();
+      else window.addEventListener('load', scheduleHeroVideo, { once: true });
     }
 
     if (motionToggle) {
@@ -1081,113 +1166,6 @@
     }
   });
 
-  // Scroll animations - Intersection Observer
-  const isMobileViewport = window.matchMedia('(max-width: 768px)').matches;
-  const observerOptions = isMobileViewport
-    ? {
-        threshold: 0.02,
-        rootMargin: '0px 0px -32px 0px'
-      }
-    : {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px'
-      };
-
-  const scrollObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('scroll-slide-left');
-        
-        // Add stagger animation to child elements
-        if (entry.target.classList.contains('stagger-children')) {
-          const children = entry.target.querySelectorAll(':scope > *');
-          children.forEach(child => {
-            child.classList.add('scroll-slide-left');
-          });
-        }
-      } else {
-        // Keep mobile reveals sticky so content doesn't keep re-popping while scrolling.
-        if (!isMobileViewport) {
-          entry.target.classList.remove('scroll-slide-left');
-
-          if (entry.target.classList.contains('stagger-children')) {
-            const children = entry.target.querySelectorAll(':scope > *');
-            children.forEach(child => {
-              child.classList.remove('scroll-slide-left');
-            });
-          }
-        }
-      }
-    });
-  }, observerOptions);
-
-  // Apply scroll animations to sections and cards
-  const animationTargets = [
-    '.about-section',
-    '.process-section',
-    '.work-section',
-    '.testimonials-section',
-    '.services-cta-section',
-    '.contact-section',
-    '.walking-strip',
-    '.process-card',
-    '.work-card',
-    '.about-content',
-    '.about-services-grid',
-    '.stats'
-  ];
-
-  if (window.matchMedia('(max-width: 768px)').matches) {
-    animationTargets.push('.service-card');
-    animationTargets.push('.support-card');
-  }
-
-  document.querySelectorAll(animationTargets.join(', ')).forEach(el => {
-    scrollObserver.observe(el);
-  });
-
-  // Entry intro sequence (3 logo pulses, then reveal website)
-  (function () {
-    const intro = document.getElementById('entry-intro');
-    if (!intro) return;
-
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-    function finishIntro() {
-      if (!intro || intro.classList.contains('is-exiting')) return;
-      intro.classList.add('is-exiting');
-      document.body.classList.remove('intro-active');
-
-      window.setTimeout(() => {
-        intro.remove();
-      }, 700);
-    }
-
-    document.body.classList.add('intro-active');
-
-    if (reduceMotion) {
-      // Show static branded screen briefly, then snap away — no animation
-      window.setTimeout(finishIntro, 800);
-      return;
-    }
-
-    // Wait for the pulse animation to fully finish, then fade out
-    const logo = intro.querySelector('.entry-intro__logo');
-    let dismissed = false;
-    const dismiss = () => {
-      if (dismissed) return;
-      dismissed = true;
-      window.setTimeout(finishIntro, 300);
-    };
-
-    if (logo) {
-      logo.addEventListener('animationend', dismiss, { once: true });
-      // Fallback in case animationend never fires (e.g. hidden tab, slow device)
-      window.setTimeout(dismiss, 3500);
-    } else {
-      window.setTimeout(finishIntro, 2460);
-    }
-  })();
 </script>
  </body>
 </html>

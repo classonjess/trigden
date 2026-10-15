@@ -1,0 +1,4 @@
+# Cloudflare Pages ignores hostname source rules; functions/_middleware.js implements this behavior.
+https://www.trigdenstudio.com/* https://trigdenstudio.com/:splat 301
+
+/branding.html /graphic-design.html 301

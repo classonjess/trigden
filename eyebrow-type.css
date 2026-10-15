@@ -1,0 +1,16 @@
+/* All eyebrow labels share the Services overview reference; colors stay page-specific. */
+:root { --eyebrow-size: 12px; --eyebrow-weight: 600; --eyebrow-tracking: .07em; }
+body .studio-eyebrow {
+  font-size: var(--eyebrow-size) !important;
+  font-weight: var(--eyebrow-weight) !important;
+  font-family: Inter, -apple-system, sans-serif !important;
+  line-height: 1.5 !important;
+  text-transform: uppercase;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  letter-spacing: var(--eyebrow-tracking) !important;
+  margin-bottom: 16px !important;
+  overflow-wrap: break-word;
+}
+@media (max-width: 768px) { :root { --eyebrow-tracking: .045em; } }
+@media (max-width: 767px) { :root { --eyebrow-size: 11px; --eyebrow-tracking: .02em; } }
