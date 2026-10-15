@@ -154,7 +154,7 @@
       <span class="site-bg__shape site-bg__shape--nine"></span>
     </div>
   </div>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <main id="main">
     <nav id="nav" class="scrolled">
       <a href="index.html" class="logo" aria-label="Trigden Studio home">
@@ -187,7 +187,7 @@
       <a href="contact.html" class="nav-cta">Let's Talk<span class="nav-cta-arrow" aria-hidden="true"> ↗</span></a>
     </nav>
 
-    <header class="wm-hero">
+    <header id="main-content" tabindex="-1" class="wm-hero">
       <div class="wm-wrap wm-hero__stage">
         <div class="wm-hero__copy">
           <p class="services-eyebrow studio-eyebrow">Website Maintenance &amp; Support</p>
@@ -412,7 +412,7 @@
             </ol>
             <p class="wm-inquiry__email"><a href="mailto:hello@trigdenstudio.com">hello@trigdenstudio.com</a></p>
           </div>
-          <form class="wm-form" id="inquiry-form" action="https://formspree.io/f/xreaqvyn" method="POST" novalidate>
+          <form class="wm-form" id="inquiry-form" action="https://formspree.io/f/xreaqvyn" method="POST">
             <input type="hidden" name="_subject" value="Website Maintenance Inquiry - Trigden Studio" />
             <input type="hidden" name="inquiry_type" value="Website Maintenance Inquiry" />
             <div class="wm-form__honeypot" aria-hidden="true">
@@ -521,7 +521,7 @@
       });
     });
 
-    if (inquiryForm && inquiryStatus) {
+    if (inquiryForm && inquiryStatus && window.trigdenForms) {
       const websiteInput = document.getElementById('inquiry-url');
       const emailInput = document.getElementById('inquiry-email');
 
@@ -620,6 +620,7 @@
           if (submitButton) submitButton.disabled = false;
         }
       });
+      inquiryForm.noValidate = true;
     }
   </script>
 </body>

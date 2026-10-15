@@ -48,9 +48,11 @@
 
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
+    const wasMobileOpen = window.innerWidth <= 768 && menuToggle?.checked;
     setOpen(false);
     if (window.innerWidth <= 768 && menuToggle) menuToggle.checked = false;
     updateMenuButton();
+    if (wasMobileOpen) menuButton?.focus();
   });
 
   document.querySelectorAll('.nav-links a').forEach((link) => {

@@ -225,7 +225,7 @@
       <span class="site-bg__shape site-bg__shape--nine"></span>
     </div>
   </div>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <!-- Navigation -->
   <main id="main" role="main">
   <nav id="nav">
@@ -259,7 +259,7 @@
     <a href="contact.html" class="nav-cta">Let's Talk<span class="nav-cta-arrow" aria-hidden="true"> ↗</span></a>
   </nav>
 
-<section class="hero">
+<section id="main-content" tabindex="-1" class="hero">
   <img class="hero-video hero-poster" src="./images/hero-video-poster.webp" alt="" aria-hidden="true" fetchpriority="high"  width="1280" height="720" />
   <video id="hero-vid" class="hero-video" muted defaultmuted loop playsinline webkit-playsinline preload="none" poster="./images/hero-video-poster.webp" disablepictureinpicture></video>
 
@@ -573,7 +573,7 @@
 
       <div class="contact-card">
         <p class="contact-card-intro">Tell me a little about your project to get started.</p>
-        <form class="contact-form" id="contact-form" action="https://formspree.io/f/xreaqvyn" method="POST" novalidate>
+        <form class="contact-form" id="contact-form" action="https://formspree.io/f/xreaqvyn" method="POST">
           <input type="hidden" name="_subject" value="New Project Inquiry - Trigden Studio" />
           <input type="hidden" name="_replyto" id="contact-replyto" value="" />
           <div class="form-honeypot" aria-hidden="true">
@@ -883,7 +883,7 @@
 
     const contactForm = document.getElementById('contact-form');
     const formStatus = document.getElementById('form-status');
-    if (contactForm && formStatus) {
+    if (contactForm && formStatus && window.trigdenForms) {
       const nameInput = document.getElementById('name');
       const emailInput = document.getElementById('email');
       const replyToInput = document.getElementById('contact-replyto');
@@ -1008,6 +1008,7 @@
           if (submitButton) submitButton.disabled = false;
         }
       });
+      contactForm.noValidate = true;
     }
 
     // Maverick card: swap main image when mini previews are clicked

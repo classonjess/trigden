@@ -23,7 +23,7 @@ test('sitemap retains entries and includes the four requested absolute URLs', ()
 });
 
 test('canonical and noindex policy matches each page destination', () => {
-  for (const [file, url] of [['contact.html', 'https://trigdenstudio.com/'], ['logo-design.html', 'https://trigdenstudio.com/graphic-design.html'], ['brand-design.html', 'https://trigdenstudio.com/graphic-design.html']]) {
+  for (const [file, url] of [['logo-design.html', 'https://trigdenstudio.com/graphic-design.html'], ['brand-design.html', 'https://trigdenstudio.com/graphic-design.html']]) {
     const html = read(file);
     assert(html.includes(`rel="canonical" href="${url}"`));
     assert(html.includes('name="robots" content="noindex, follow"'));
@@ -59,14 +59,16 @@ test('font sizes, local media and progressive enhancement safeguards', () => {
   assert(home.includes('preload="none"') && home.includes('playsinline') && home.includes('poster='));
   for (const file of ['index.html', 'about.html', 'services.html']) assert.equal((read(file).match(/src="analytics\.js"/g) || []).length, 1);
   assert(!read('style.css').includes('images/background.png'));
-  assert(!read('sitemap.xml').includes('/contact.html'));
+  assert(read('sitemap.xml').includes('<loc>https://trigdenstudio.com/contact</loc>'));
+  assert(read('contact.html').includes('rel="canonical" href="https://trigdenstudio.com/contact"'));
+  assert(read('contact.html').includes('name="robots" content="index, follow"'));
   assert(!read('sitemap.xml').includes('/branding.html'));
   assert(read('_headers').includes('https://:version.:project.pages.dev/*'));
 });
 
 test('sitemap lists indexable pages only and aliases target Graphic Design', () => {
   for (const match of read('sitemap.xml').matchAll(/<loc>https:\/\/trigdenstudio.com\/([^<]*)<\/loc>/g)) {
-    assert(!/name="robots" content="noindex/.test(read(match[1] || 'index.html')));
+    assert(!/name="robots" content="noindex/.test(read(!match[1] ? 'index.html' : match[1].includes('.') ? match[1] : match[1]+'.html')));
   }
   for (const file of ['logo-design.html', 'brand-design.html']) {
     assert(read(file).includes('content="0; url=graphic-design.html"'));

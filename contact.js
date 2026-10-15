@@ -1,11 +1,10 @@
 (() => {
   const form = document.getElementById('project-inquiry');
-  if (!form) return;
+  if (!form || !window.trigdenForms) return;
   const status = document.getElementById('inquiry-status');
   const button = form.querySelector('button[type="submit"]');
   const controls = [...form.querySelectorAll('input:not([type="hidden"]), select, textarea')];
   // Native validation remains available when JavaScript is disabled.
-  form.noValidate = true;
   controls.forEach(field => field.addEventListener('input', () => {
     field.removeAttribute('aria-invalid');
     field.setCustomValidity('');
@@ -55,4 +54,5 @@
       form.removeAttribute('aria-busy');
     }
   });
+  form.noValidate = true;
 })();

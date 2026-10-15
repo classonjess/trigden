@@ -12,7 +12,7 @@
   margin-right: auto;
   font-weight: 700;
   color: #fff;
-  background: linear-gradient(90deg, #3ea7c6 0%, #1e5e7a 100%);
+  background: linear-gradient(90deg, #28758b 0%, #1e5e7a 100%);
   border: none;
   border-radius: 999px;
   box-shadow: 0 2px 12px rgba(62, 167, 198, 0.13);
@@ -21,7 +21,7 @@
   cursor: pointer;
 }
 .service-btn:hover {
-  background: linear-gradient(90deg, #1e5e7a 0%, #3ea7c6 100%);
+  background: linear-gradient(90deg, #1e5e7a 0%, #28758b 100%);
   box-shadow: 0 4px 18px rgba(62, 167, 198, 0.18);
   transform: translateY(-2px) scale(1.04);
 }
@@ -2699,7 +2699,7 @@ nav.scrolled {
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.01em;
-  background: linear-gradient(90deg, #3ea7c6 0%, #1e5e7a 100%);
+  background: linear-gradient(90deg, #28758b 0%, #1e5e7a 100%);
   box-shadow: 0 2px 12px rgba(62, 167, 198, 0.13);
   transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
@@ -2707,7 +2707,7 @@ nav.scrolled {
 .home-service-card:hover .about-service-link,
 .home-service-card:focus-visible .about-service-link {
   color: #fff;
-  background: linear-gradient(90deg, #58c4e2 0%, #3ea7c6 100%);
+  background: linear-gradient(90deg, #2b768c 0%, #246b83 100%);
   box-shadow: 0 4px 18px rgba(62, 167, 198, 0.2);
   transform: translateY(-1px);
 }
@@ -5528,7 +5528,7 @@ body.intro-active .cky-consent-container {
   font-weight: 700;
   line-height: 1.2;
   letter-spacing: 0.01em;
-  background: linear-gradient(90deg, #3ea7c6 0%, #1e5e7a 100%);
+  background: linear-gradient(90deg, #28758b 0%, #1e5e7a 100%);
   box-shadow: 0 2px 12px rgba(62, 167, 198, 0.13);
   transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
@@ -5537,7 +5537,7 @@ body.intro-active .cky-consent-container {
 .services-visual-card:hover .about-service-link,
 .services-visual-card:focus-visible .about-service-link {
   color: #fff;
-  background: linear-gradient(90deg, #58c4e2 0%, #3ea7c6 100%);
+  background: linear-gradient(90deg, #2b768c 0%, #246b83 100%);
   box-shadow: 0 4px 18px rgba(62, 167, 198, 0.2);
   transform: translateY(-1px);
 }
@@ -6018,3 +6018,9 @@ footer.site-footer {
   #nav .nav-links > li:has(> .nav-cta) { margin-top: -12px !important; }
 }
 @media (max-width: 375px) { #nav .nav-links > li > a.nav-cta { font-size: 17px !important; } }
+
+/* Native anchor navigation also respects the visitor’s motion preference. */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto !important; }
+}
+#main-content { scroll-margin-top: 80px; }

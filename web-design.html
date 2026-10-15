@@ -99,7 +99,7 @@
       <span class="site-bg__shape site-bg__shape--nine"></span>
     </div>
   </div>
-  <a class="skip-link" href="#main">Skip to content</a>
+  <a class="skip-link" href="#main-content">Skip to content</a>
   <main id="main">
     <nav id="nav" class="scrolled">
       <a href="index.html" class="logo" aria-label="Trigden Studio home">
@@ -132,7 +132,7 @@
       <a href="contact.html" class="nav-cta">Let's Talk<span class="nav-cta-arrow" aria-hidden="true"> ↗</span></a>
     </nav>
 
-    <header class="web-hero">
+    <header id="main-content" tabindex="-1" class="web-hero">
       <div class="web-hero__stage">
         <div class="web-hero__copy">
           <p class="services-eyebrow studio-eyebrow">Web Design &amp; Development</p>
@@ -393,7 +393,7 @@
             <p>Share a few details about a new website or an existing one. I’ll review your inquiry and get back to you about next steps.</p>
             <p class="web-inquiry__email"><a href="mailto:hello@trigdenstudio.com">hello@trigdenstudio.com</a></p>
           </div>
-          <form class="web-form" id="inquiry-form" action="https://formspree.io/f/xreaqvyn" method="POST" novalidate>
+          <form class="web-form" id="inquiry-form" action="https://formspree.io/f/xreaqvyn" method="POST">
           <input type="hidden" name="_subject" value="Website project inquiry - Trigden Studio" />
           <div class="web-form__honeypot" aria-hidden="true">
             <label for="inquiry-company">Company website</label>
@@ -507,7 +507,7 @@
       });
     });
 
-    if (inquiryForm && inquiryStatus) {
+    if (inquiryForm && inquiryStatus && window.trigdenForms) {
       inquiryForm.addEventListener('submit', async (event) => {
         event.preventDefault();
         const submitButton = document.getElementById('inquiry-submit');
@@ -566,6 +566,7 @@
           if (submitButton) submitButton.disabled = false;
         }
       });
+      inquiryForm.noValidate = true;
     }
   </script>
 </body>

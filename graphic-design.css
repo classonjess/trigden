@@ -162,7 +162,7 @@ html:has(.gd-page) {
   border: none;
   cursor: pointer;
   color: #fff;
-  background: linear-gradient(90deg, #3ea7c6 0%, #1e5e7a 100%);
+  background: linear-gradient(90deg, #28758b 0%, #1e5e7a 100%);
   box-shadow: 0 2px 12px rgba(62, 167, 198, 0.16);
   transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
@@ -170,7 +170,7 @@ html:has(.gd-page) {
 .gd-btn--fill:hover,
 .gd-btn--fill:focus-visible {
   color: #fff;
-  background: linear-gradient(90deg, #58c4e2 0%, #3ea7c6 100%);
+  background: linear-gradient(90deg, #2b768c 0%, #246b83 100%);
   transform: translateY(-1px);
 }
 
