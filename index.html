@@ -185,7 +185,8 @@
   <link rel="stylesheet" href="/card-spacing.css?v=1" />
   <link rel="stylesheet" href="/eyebrow-type.css?v=scroll-progress10" />
   <link rel="stylesheet" href="/pill-sizing.css?v=2" />
-  <script src="form-safety.js?v=1"></script>
+  <script src="form-safety.js?v=confirmation2"></script>
+  <link rel="stylesheet" href="form-confirmation.css?v=1" />
 </head>
 <body id="top">
   <template id="entry-intro-template">
@@ -977,21 +978,18 @@
             }
           });
 
-          if (response.ok) {
-            formStatus.textContent = "Thanks! Your message was sent successfully.";
-            formStatus.classList.add('is-success');
-            contactForm.reset();
+          if (window.trigdenForms.isSuccess(response, result)) {
+            await window.trigdenForms.success(contactForm, formStatus);
             if (replyToInput) replyToInput.value = '';
             setInterestError(false);
           } else {
             const apiMessage = result?.errors?.[0]?.message || result?.error;
             formStatus.classList.add('is-error');
             if (response.status === 404 && apiMessage === 'Form not found') {
-              formStatus.textContent = 'The contact form is not configured correctly. Opening your email app so you can send this to hello@trigdenstudio.com.';
+              formStatus.textContent = 'The contact form is unavailable. Your details are preserved. Please retry or email hello@trigdenstudio.com.';
             } else {
-              formStatus.textContent = apiMessage ? `${apiMessage} Opening your email app now.` : 'Something went wrong. Opening your email app now.';
+              formStatus.textContent = apiMessage ? `${apiMessage} Please retry or email hello@trigdenstudio.com.` : 'Your inquiry could not be confirmed. Please retry or email hello@trigdenstudio.com.';
             }
-            openMailFallback(contactForm);
           }
         } catch (error) {
           if (error.name === 'AbortError') {
@@ -1000,12 +998,13 @@
             return;
           }
           formStatus.classList.add('is-error');
-          formStatus.textContent = 'Network error. Opening your email app with your message now.';
-          openMailFallback(contactForm);
+          formStatus.textContent = 'Network error. Your details are preserved. Please retry or email hello@trigdenstudio.com.';
         } finally {
           contactForm.removeAttribute('aria-busy');
-          window.trigdenForms.focusStatus(formStatus);
-          if (submitButton) submitButton.disabled = false;
+          if (contactForm.dataset.submitted !== 'true') {
+            window.trigdenForms.focusStatus(formStatus);
+            if (submitButton) submitButton.disabled = false;
+          }
         }
       });
       contactForm.noValidate = true;

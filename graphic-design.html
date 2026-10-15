@@ -154,7 +154,8 @@
   <link rel="stylesheet" href="/eyebrow-type.css?v=scroll-progress10" />
   <link rel="stylesheet" href="/pill-sizing.css?v=2" />
   <link rel="stylesheet" href="/mobile-hero-buttons.css?v=1" />
-  <script src="form-safety.js?v=1"></script>
+  <script src="form-safety.js?v=confirmation2"></script>
+  <link rel="stylesheet" href="form-confirmation.css?v=1" />
 </head>
 <body class="gd-page">
   <div class="site-bg" aria-hidden="true">
@@ -650,15 +651,13 @@
             headers: { Accept: 'application/json' }
           });
 
-          if (response.ok) {
-            inquiryStatus.textContent = 'Thanks! Your inquiry was sent. I’ll be in touch shortly.';
-            inquiryStatus.classList.add('is-success');
-            inquiryForm.reset();
+          if (window.trigdenForms.isSuccess(response, result)) {
+            await window.trigdenForms.success(inquiryForm, inquiryStatus);
           } else {
             const apiMessage = result?.errors?.[0]?.message || result?.error;
             inquiryStatus.textContent = apiMessage
               ? apiMessage
-              : 'Something went wrong. Please email hello@trigdenstudio.com and I’ll get back to you.';
+              : 'Something went wrong. Your details are preserved. Please retry or email hello@trigdenstudio.com.';
             inquiryStatus.classList.add('is-error');
           }
         } catch (error) {
@@ -667,12 +666,14 @@
             inquiryStatus.classList.add('is-error');
             return;
           }
-          inquiryStatus.textContent = 'Network error. Please email hello@trigdenstudio.com directly.';
+          inquiryStatus.textContent = 'Network error. Your details are preserved. Please retry or email hello@trigdenstudio.com.';
           inquiryStatus.classList.add('is-error');
         } finally {
           inquiryForm.removeAttribute('aria-busy');
-          window.trigdenForms.focusStatus(inquiryStatus);
-          if (submitButton) submitButton.disabled = false;
+          if (inquiryForm.dataset.submitted !== 'true') {
+            window.trigdenForms.focusStatus(inquiryStatus);
+            if (submitButton) submitButton.disabled = false;
+          }
         }
       });
       inquiryForm.noValidate = true;

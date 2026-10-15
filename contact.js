@@ -38,19 +38,16 @@
         method: 'POST', body: new FormData(form),
         headers: { Accept: 'application/json' }
       });
-      if (!response.ok || result?.ok !== true) {
+      if (!window.trigdenForms.isSuccess(response, result)) {
         throw new Error(response.status === 429 ? 'Too many attempts. Please wait a few minutes before trying again.' : 'Your inquiry could not be confirmed. Please try again or email hello@trigdenstudio.com.');
       }
-      form.reset();
-      controls.forEach(field => field.removeAttribute('aria-invalid'));
-      status.textContent = 'Thank you! Your inquiry has been received. I’ll be in touch soon.';
-      status.focus();
+      await window.trigdenForms.success(form, status);
     } catch (error) {
       status.classList.add('is-error');
       status.textContent = error.name === 'AbortError' ? 'The request timed out. Please email hello@trigdenstudio.com if you’re unsure whether it was received.' : error.message;
       status.focus();
     } finally {
-      button.disabled = false;
+      if (form.dataset.submitted !== 'true') button.disabled = false;
       form.removeAttribute('aria-busy');
     }
   });
