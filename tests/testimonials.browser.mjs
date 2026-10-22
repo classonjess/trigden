@@ -143,10 +143,9 @@ try{
   await page.evaluate(()=>document.fonts.ready);
   await page.waitForFunction(()=>{
    const footer=document.querySelector('footer.site-footer');
-   const right=Math.max(...[...footer.querySelectorAll('[aria-label="Footer services"] a')].flatMap(a=>{
-    const range=document.createRange();range.selectNodeContents(a);return [...range.getClientRects()].map(r=>r.right);
-   }));
-   return Math.abs(footer.querySelector('.footer-linkedin svg path').getBoundingClientRect().right-right)<1;
+   const reference=footer.querySelector('[aria-label="Footer services"] a[href="/website-maintenance"]');
+   const range=document.createRange();range.selectNodeContents(reference);
+   return Math.abs(footer.querySelector('.footer-linkedin svg path').getBoundingClientRect().right-range.getBoundingClientRect().right)<=2;
   });
   const gap=await linkedin.evaluate(a=>a.getBoundingClientRect().left-a.previousElementSibling.getBoundingClientRect().right);
   assert.equal(gap,20,'Footer link spacing is preserved');

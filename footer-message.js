@@ -24,7 +24,7 @@
   }
 })();
 
-/* Keep the lower links on the Services text edge without shifting columns. */
+/* Align the desktop icon to Website Maintenance & Support without shifting columns. */
 (() => {
   const footer = document.querySelector('footer.site-footer');
   const grid = footer?.querySelector('.footer-studio-grid');
@@ -36,14 +36,17 @@
   const links = [...services.querySelectorAll('a')];
   const align = () => {
     const boundary = bottom.getBoundingClientRect();
-    const rightEdges = links.flatMap(link => {
+    const desktop = matchMedia('(min-width: 769px)').matches;
+    const referenceLinks = desktop
+      ? links.filter(link => link.getAttribute('href') === '/website-maintenance') : links;
+    const rightEdges = referenceLinks.flatMap(link => {
       const range = document.createRange();
       range.selectNodeContents(link);
       return [...range.getClientRects()].map(rect => rect.right);
     });
     if (!rightEdges.length) return;
     // The visible glyph sits inside both the SVG and the 44px link target.
-    const iconInset = social && icon && matchMedia('(min-width: 769px)').matches
+    const iconInset = social && icon && desktop
       ? social.getBoundingClientRect().right - icon.getBoundingClientRect().right : 0;
     const inset = Math.max(0, boundary.right - Math.max(...rightEdges) - iconInset);
     footer.style.setProperty('--footer-services-end-space', `${inset}px`);
