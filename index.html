@@ -71,7 +71,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdn-cookieyes.com" crossorigin />
 
-  <link rel="stylesheet" href="style.css?v=hero-optimized1" />
+  <link rel="stylesheet" href="style.css?v=welcome-restored1" />
   <link rel="stylesheet" href="home-flow.css?v=studio-summary24" />
   <script src="nav.js?v=launch-safety1" defer></script>
   <script>
@@ -183,7 +183,29 @@
   <link rel="stylesheet" href="form-confirmation.css?v=1" />
 </head>
 <body id="top">
-  <script src="entry-intro.js?v=nav-pulse1" defer></script>
+  <template id="entry-intro-template">
+  <div id="entry-intro" class="entry-intro" aria-hidden="true">
+    <div class="entry-intro__geometry">
+      <span class="entry-intro__shape entry-intro__shape--one"></span>
+      <span class="entry-intro__shape entry-intro__shape--two"></span>
+      <span class="entry-intro__shape entry-intro__shape--three"></span>
+      <span class="entry-intro__shape entry-intro__shape--four"></span>
+      <span class="entry-intro__shape entry-intro__shape--five"></span>
+      <span class="entry-intro__shape entry-intro__shape--six"></span>
+      <span class="entry-intro__shape entry-intro__shape--seven"></span>
+      <span class="entry-intro__shape entry-intro__shape--eight"></span>
+      <span class="entry-intro__shape entry-intro__shape--nine"></span>
+    </div>
+    <div class="entry-intro__content">
+      <picture>
+        <source type="image/webp" srcset="images/trigdenlogo-520w.webp 520w, images/trigdenlogo-1040w.webp 1040w" sizes="min(72vw, 520px)" />
+        <img class="entry-intro__logo" src="images/trigdenlogo.png" alt="Trigden Studio" fetchpriority="high" width="1040" height="167" />
+      </picture>
+      <p class="entry-intro__caption">Entering the studio</p>
+    </div>
+  </div>
+  </template>
+  <script src="entry-intro.js?v=welcome-restored1"></script>
   <!-- Persistent animated background -->
   <div class="site-bg" aria-hidden="true">
     <div class="site-bg__geometry">

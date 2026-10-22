@@ -37,19 +37,39 @@
   const align = () => {
     const boundary = bottom.getBoundingClientRect();
     const desktop = matchMedia('(min-width: 769px)').matches;
-    const referenceLinks = desktop
-      ? links.filter(link => link.getAttribute('href') === '/website-maintenance') : links;
-    const rightEdges = referenceLinks.flatMap(link => {
+    const rightEdges = links.flatMap(link => {
       const range = document.createRange();
       range.selectNodeContents(link);
       return [...range.getClientRects()].map(rect => rect.right);
     });
     if (!rightEdges.length) return;
-    // The visible glyph sits inside both the SVG and the 44px link target.
-    const iconInset = social && icon && desktop
-      ? social.getBoundingClientRect().right - icon.getBoundingClientRect().right : 0;
-    const inset = Math.max(0, boundary.right - Math.max(...rightEdges) - iconInset);
-    footer.style.setProperty('--footer-services-end-space', `${inset}px`);
+    if (!desktop) {
+      footer.style.setProperty('--footer-services-end-space', `${Math.max(0, boundary.right - Math.max(...rightEdges))}px`);
+      footer.style.removeProperty('--footer-icon-end-padding');
+      footer.style.removeProperty('--footer-icon-justify');
+      return;
+    }
+    const reference = services.querySelector('a[href="/website-maintenance"]');
+    const svg = social?.querySelector('svg');
+    if (!reference || !social || !icon || !svg) return;
+    // Use the last non-whitespace character, including when the link wraps.
+    const walker = document.createTreeWalker(reference, NodeFilter.SHOW_TEXT);
+    let text, last;
+    while ((text = walker.nextNode())) if (text.textContent.trimEnd()) last = text;
+    if (!last) return;
+    const end = last.textContent.trimEnd().length;
+    const range = document.createRange();
+    range.setStart(last, end - 1);
+    range.setEnd(last, end);
+    const available = Math.max(0, boundary.right - range.getBoundingClientRect().right);
+    const svgBounds = svg.getBoundingClientRect();
+    const glyphEndSpace = svgBounds.right - icon.getBoundingClientRect().right;
+    const centeredInset = (social.getBoundingClientRect().width - svgBounds.width) / 2 + glyphEndSpace;
+    // Keep the accessible target fixed; use its internal space before moving the group.
+    const iconInset = Math.min(centeredInset, Math.max(glyphEndSpace, available));
+    footer.style.setProperty('--footer-icon-justify', 'flex-end');
+    footer.style.setProperty('--footer-icon-end-padding', `${Math.max(0, iconInset - glyphEndSpace)}px`);
+    footer.style.setProperty('--footer-services-end-space', `${Math.max(0, available - iconInset)}px`);
   };
   const observer = new ResizeObserver(align);
   observer.observe(grid);

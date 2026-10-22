@@ -21,41 +21,54 @@ test('internal return suppresses intro even when storage is blocked', () => {
 });
 
 const introScript = readFileSync(new URL('../entry-intro.js', import.meta.url), 'utf8');
-function intro({returning=false,reduced=false,logoPresent=true}={}) {
- const classes=new Set(),events=new Map(),windowEvents=new Map(),timers=new Map(),dispatched=[];let motion,sequence=0;
- const logo={classList:{add:c=>classes.add(c),remove:c=>classes.delete(c)},addEventListener:(n,f)=>events.set(n,f),removeEventListener:n=>events.delete(n)};
- const document={querySelector:()=>logoPresent?logo:null,documentElement:{classList:{contains:()=>returning}}};
+function intro({returning=false,reduced=false,loaded=true,decodeReject=false}={}) {
+ const classes=new Set(),events=new Map(),windowEvents=new Map(),docEvents=new Map(),timers=new Map(),frames=[],dispatched=[];
+ let sequence=0,installed=false,removed=false,motion;
+ const logo={complete:loaded,naturalWidth:loaded?1040:0,decode:()=>decodeReject?Promise.reject(Error('decode failed')):Promise.resolve(),addEventListener:(n,f)=>events.set(n,f)};
+ const overlay={classList:{add:c=>classes.add(c)},querySelector:()=>logo,remove:()=>{removed=true;installed=false;}};
+ const template={content:{cloneNode:()=>overlay},before:()=>{installed=true;},remove:()=>{}};
  const media={matches:reduced,addEventListener:(n,f)=>motion=f,removeEventListener:()=>motion=null};
- const window={trigdenShouldPlayIntro:!returning,matchMedia:()=>media,addEventListener:(n,f)=>windowEvents.set(n,f),removeEventListener:n=>windowEvents.delete(n),dispatchEvent:e=>dispatched.push(e.type)};
- runInNewContext(introScript,{document,window,Event:class{constructor(type){this.type=type;}},setTimeout:(fn,ms)=>{timers.set(++sequence,{fn,ms});return sequence;},clearTimeout:id=>timers.delete(id)});
- return {classes,events,windowEvents,timers,dispatched,reduce:()=>motion?.({matches:true})};
+ const document={hidden:false,getElementById:id=>id==='entry-intro-template'?template:installed?overlay:null,documentElement:{classList:{contains:()=>returning}},addEventListener:(n,f)=>docEvents.set(n,f),removeEventListener:n=>docEvents.delete(n)};
+ const window={trigdenShouldPlayIntro:!returning,addEventListener:(n,f)=>windowEvents.set(n,f),removeEventListener:n=>windowEvents.delete(n),dispatchEvent:e=>dispatched.push(e.type)};
+ runInNewContext(introScript,{document,window,matchMedia:()=>media,Event:class{constructor(type){this.type=type}},setTimeout:(fn,ms)=>{timers.set(++sequence,{fn,ms});return sequence;},clearTimeout:id=>timers.delete(id),requestAnimationFrame:fn=>frames.push(fn)});
+ return {classes,events,timers,windowEvents,docEvents,logo,dispatched,get installed(){return installed},get removed(){return removed},settle:async()=>{await new Promise(resolve=>setImmediate(resolve));while(frames.length)frames.shift()();await Promise.resolve()},reduce:()=>motion?.({matches:true}),timeout:ms=>[...timers.values()].find(t=>t.ms===ms)?.fn()};
 }
-test('first-visit pulses decorate only the existing logo, without an overlay or scroll lock',()=>{
- const fresh=intro();assert(fresh.classes.has('entry-logo-pulse'));
- for(const options of [{returning:true},{reduced:true},{logoPresent:false}])assert.equal(intro(options).classes.size,0);
- const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
- const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
- assert(!html.includes('entry-intro-template'));assert(!html.includes('id="entry-intro"'));
- assert(!introScript.includes('document.body'));assert(!css.includes('body.intro-active'));
+test('welcome waits for the decoded image before starting and then fades after all pulses',async()=>{
+ const h=intro({loaded:false});assert(h.installed);assert(!h.classes.has('is-ready'));
+ h.logo.complete=true;h.logo.naturalWidth=1040;h.events.get('load')();await h.settle();
+ assert(h.classes.has('is-ready'));assert(!h.removed);
+ h.events.get('animationend')({animationName:'introLogoPulse'});
+ assert(h.classes.has('is-exiting'));assert(!h.removed);h.timeout(250);
+ assert(h.removed);assert.deepEqual(h.dispatched,['trigden:intro-done']);
 });
-test('animation end, fallback, motion changes and navigation clean up nonblocking pulses',()=>{
- for(const reason of ['animation','fallback','motion','cancel','pagehide']){
-  const h=intro();assert.equal([...h.timers.values()][0].ms,2200);
-  if(reason==='animation')h.events.get('animationend')();
-  if(reason==='fallback')[...h.timers.values()][0].fn();
-  if(reason==='motion')h.reduce();
+test('returning and reduced-motion visitors get no overlay',()=>{
+ for(const options of [{returning:true},{reduced:true}])assert(!intro(options).installed);
+});
+test('failed images, stalled loads and decode failures release the page',async()=>{
+ const failed=intro({loaded:false});failed.events.get('error')();assert(failed.removed);
+ const stalled=intro({loaded:false});stalled.timeout(3000);assert(stalled.removed);
+ const decode=intro({decodeReject:true});await decode.settle();assert(decode.removed);
+});
+test('navigation, reduced motion and fallback cannot trap visitors',async()=>{
+ for(const reason of ['cancel','pagehide','motion','fallback']){
+  const h=intro();await h.settle();
   if(reason==='cancel')h.windowEvents.get('trigden:intro-cancel')();
   if(reason==='pagehide')h.windowEvents.get('pagehide')();
-  assert.equal(h.classes.size,0);assert.equal(h.timers.size,0);assert.equal(h.events.size,0);assert.equal(h.windowEvents.size,0);
-  assert.deepEqual(h.dispatched,['trigden:intro-done']);
+  if(reason==='motion')h.reduce();
+  if(reason==='fallback'){h.timeout(2200);h.timeout(250)}
+  assert(h.removed);assert.deepEqual(h.dispatched,['trigden:intro-done']);
  }
 });
-test('intro keeps three pulses with a bounded cleanup fallback',()=>{
+test('restored welcome keeps historical branding, exactly three pulses and an independent escape hatch',()=>{
+ const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
  const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
+ assert(html.includes('entry-intro-template'));assert(html.includes('Entering the studio'));
+ assert(html.includes('width="1040" height="167"'));
+ assert(!css.includes('entry-logo-pulse'));assert(!introScript.includes('#nav'));
  assert.match(css,/animation: introLogoPulse \.65s ease-in-out 3;/);
- assert.match(introScript,/setTimeout\(dismiss, 2200\)/);assert(2200>650*3);
+ assert.match(css,/animation: introSafetyExit 0s linear 6s forwards;/);
+ assert(!introScript.includes('document.body'));
 });
-
 test('persistent site background retains all shared intro-named animation keyframes',()=>{
  const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
  for(const match of css.matchAll(/animation:\s*(intro\w+)/g))assert(css.includes(`@keyframes ${match[1]} {`),match[1]);

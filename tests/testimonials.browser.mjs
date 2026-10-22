@@ -134,24 +134,36 @@ try{
  await run(402,{reduced:true});await run(402,{js:false});
  const context=await browser.newContext(),page=await context.newPage();
  await page.route('**/*',route=>new URL(route.request().url()).origin===new URL(base).origin?route.continue():route.abort());
- for(const width of [1024,1280,1440,1920]){
+ for(const width of [320,375,390,402,430,768,769,820,1024,1280,1440,1920]){
  await page.setViewportSize({width,height:1000});
  for(const path of ['/','/about','/services','/web-design','/website-maintenance','/seo','/graphic-design','/contact','/privacy','/terms','/404.html']){
   const response=await page.goto(base+path,{waitUntil:'load'});assert.equal(response.status(),200,path);
   const linkedin=page.getByRole('link',{name:'Jessica Classon on LinkedIn',exact:true});assert.equal(await linkedin.count(),1,path);assert.equal(await linkedin.getAttribute('href'),'https://www.linkedin.com/in/jessicaclasson');
   const schemas=await page.locator('script[type="application/ld+json"]').allTextContents();schemas.forEach(s=>JSON.parse(s));
   await page.evaluate(()=>document.fonts.ready);
-  await page.waitForFunction(()=>{
+  if(width>768)await page.waitForFunction(()=>{
    const footer=document.querySelector('footer.site-footer');
    const reference=footer.querySelector('[aria-label="Footer services"] a[href="/website-maintenance"]');
-   const range=document.createRange();range.selectNodeContents(reference);
+   const range=document.createRange();
+   const end=reference.firstChild.textContent.trimEnd().length;
+   range.setStart(reference.firstChild,end-1);range.setEnd(reference.firstChild,end);
    return Math.abs(footer.querySelector('.footer-linkedin svg path').getBoundingClientRect().right-range.getBoundingClientRect().right)<=2;
   });
+  else {
+   const layout=await linkedin.evaluate(a=>{
+    const privacy=a.previousElementSibling.getBoundingClientRect();
+    const copyright=document.querySelector('.footer-copyright').getBoundingClientRect();
+    return {left:privacy.left-copyright.left,gap:privacy.top-copyright.bottom};
+   });
+   assert.equal(layout.left,0,'Mobile links share the copyright left edge');
+   assert(Math.abs(layout.gap-12)<1,'Mobile gap stays 12px, including at 768px');
+  }
   const gap=await linkedin.evaluate(a=>a.getBoundingClientRect().left-a.previousElementSibling.getBoundingClientRect().right);
   assert.equal(gap,20,'Footer link spacing is preserved');
+  assert.deepEqual(await linkedin.evaluate(a=>{const r=a.getBoundingClientRect();return [r.width,r.height]}),[44,44],'Accessible target remains fixed');
  }
  }
  await context.close();
  if(output)await writeFile(output+'/carousel-results.json',JSON.stringify({results,footerPages:11,limitations:['Chrome emulation; physical iOS Safari not tested.','External assets blocked; no form delivery tests or production changes.']},null,2));
- console.log('PASS: '+results.length+' carousel scenarios and 44 footer alignment/schema checks across 11 pages.');
+ console.log('PASS: '+results.length+' carousel scenarios and 132 footer alignment/schema checks across 11 pages.');
 }finally{await browser.close();}
