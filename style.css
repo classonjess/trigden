@@ -5740,8 +5740,12 @@ footer.site-footer {
 }
 #main-content { scroll-margin-top: 80px; }
 
+/* Derive the lower row's content edge from the Services text above. */
+.site-footer .footer-bottom { padding-inline-end: var(--footer-services-end-space, 0px); }
 /* A small shared social link, with a full keyboard and touch target. */
-.site-footer .footer-legal { align-items: center; }
+.site-footer .footer-legal { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px 20px; max-width: 100%; margin-inline-start: auto; }
+.site-footer .footer-legal > a { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; line-height: 1; }
+.site-footer .footer-linkedin svg { display: block; flex-shrink: 0; }
 .site-footer .footer-linkedin { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; border-radius: 8px; }
 .site-footer .footer-linkedin:hover { background: rgba(111,214,240,.08); }
 .site-footer .footer-linkedin:focus-visible { outline: 2px solid #6fd6f0; outline-offset: 3px; }

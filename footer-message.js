@@ -23,3 +23,30 @@
     }, 3000);
   }
 })();
+
+/* Keep the lower links on the Services text edge without shifting columns. */
+(() => {
+  const footer = document.querySelector('footer.site-footer');
+  const grid = footer?.querySelector('.footer-studio-grid');
+  const services = footer?.querySelector('[aria-label="Footer services"]');
+  const bottom = footer?.querySelector('.footer-bottom');
+  if (!grid || !services || !bottom) return;
+  const links = [...services.querySelectorAll('a')];
+  const align = () => {
+    const boundary = bottom.getBoundingClientRect();
+    const rightEdges = links.flatMap(link => {
+      const range = document.createRange();
+      range.selectNodeContents(link);
+      return [...range.getClientRects()].map(rect => rect.right);
+    });
+    if (!rightEdges.length) return;
+    const inset = Math.max(0, boundary.right - Math.max(...rightEdges));
+    footer.style.setProperty('--footer-services-end-space', `${inset}px`);
+  };
+  const observer = new ResizeObserver(align);
+  observer.observe(grid);
+  links.forEach(link => observer.observe(link));
+  window.addEventListener('pageshow', align);
+  if (document.fonts) document.fonts.ready.then(align);
+  align();
+})();
