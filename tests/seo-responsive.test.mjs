@@ -5,12 +5,12 @@ import { onRequest } from '../functions/_middleware.js';
 const root = new URL('../', import.meta.url);
 const read = file => readFileSync(new URL(file, root), 'utf8');
 
-test('www redirects preserve path and query; apex and preview hosts never redirect', async () => {
+test('www redirects preserve path and query; clean apex and preview paths never redirect', async () => {
   const redirect = await onRequest({ request: new Request('https://www.trigdenstudio.com/work/project?ref=test'), next() { throw new Error('Must redirect first'); } });
   assert.equal(redirect.status, 301);
   assert.equal(redirect.headers.get('location'), 'https://trigdenstudio.com/work/project?ref=test');
   for (const host of ['trigdenstudio.com', 'trigden-review.pages.dev', 'seo-responsive-fixes.trigden-review.pages.dev']) {
-    const response = await onRequest({ request: new Request(`https://${host}/about.html`), next: async () => new Response('content', { headers: { 'Content-Type': 'text/html' } }) });
+    const response = await onRequest({ request: new Request(`https://${host}/about`), next: async () => new Response('content', { headers: { 'Content-Type': 'text/html' } }) });
     assert.equal(response.status, 200);
     assert.equal(await response.text(), 'content');
     assert.equal(response.headers.get('x-robots-tag'), host.endsWith('.pages.dev') ? 'noindex' : null);
@@ -19,11 +19,11 @@ test('www redirects preserve path and query; apex and preview hosts never redire
 
 test('sitemap retains entries and includes the four requested absolute URLs', () => {
   const sitemap = read('sitemap.xml');
-  for (const file of ['', 'web-design.html', 'seo.html', 'about.html', 'services.html', 'graphic-design.html', 'website-maintenance.html']) assert(sitemap.includes(`https://trigdenstudio.com/${file}`));
+  for (const file of ['', 'web-design', 'seo', 'about', 'services', 'graphic-design', 'website-maintenance']) assert(sitemap.includes(`https://trigdenstudio.com/${file}`));
 });
 
 test('canonical and noindex policy matches each page destination', () => {
-  for (const [file, url] of [['logo-design.html', 'https://trigdenstudio.com/graphic-design.html'], ['brand-design.html', 'https://trigdenstudio.com/graphic-design.html']]) {
+  for (const [file, url] of [['logo-design.html', 'https://trigdenstudio.com/graphic-design'], ['brand-design.html', 'https://trigdenstudio.com/graphic-design']]) {
     const html = read(file);
     assert(html.includes(`rel="canonical" href="${url}"`));
     assert(html.includes('name="robots" content="noindex, follow"'));
@@ -71,8 +71,8 @@ test('sitemap lists indexable pages only and aliases target Graphic Design', () 
     assert(!/name="robots" content="noindex/.test(read(!match[1] ? 'index.html' : match[1].includes('.') ? match[1] : match[1]+'.html')));
   }
   for (const file of ['logo-design.html', 'brand-design.html']) {
-    assert(read(file).includes('content="0; url=graphic-design.html"'));
-    assert(read(file).includes('location.replace("graphic-design.html")'));
+    assert(read(file).includes('content="0; url=/graphic-design"'));
+    assert(read(file).includes('location.replace("/graphic-design")'));
   }
 });
 test('launch descriptions and Contact schema match site identity', () => {
@@ -91,6 +91,6 @@ test('retired Branding URLs redirect to Graphic Design without losing query para
   for (const path of ['branding.html','branding']) {
     const response=await onRequest({request:new Request(`https://trigdenstudio.com/${path}?ref=old`),next(){throw new Error('Must redirect');}});
     assert.equal(response.status,301);
-    assert.equal(response.headers.get('location'),'https://trigdenstudio.com/graphic-design.html?ref=old');
+    assert.equal(response.headers.get('location'),'https://trigdenstudio.com/graphic-design?ref=old');
   }
 });

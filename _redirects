@@ -1,4 +1,32 @@
-# Cloudflare Pages ignores hostname source rules; functions/_middleware.js implements this behavior.
-https://www.trigdenstudio.com/* https://trigdenstudio.com/:splat 301
-
-/branding.html /graphic-design.html 301
+# Pages Functions handle these rules in functions/_middleware.js, including www normalization.
+# Keep these explicit static fallback redirects aligned with that middleware.
+/index.html / 301
+/index / 301
+/index/ / 301
+/about.html /about 301
+/about/ /about 301
+/services.html /services 301
+/services/ /services 301
+/web-design.html /web-design 301
+/web-design/ /web-design 301
+/website-maintenance.html /website-maintenance 301
+/website-maintenance/ /website-maintenance 301
+/seo.html /seo 301
+/seo/ /seo 301
+/graphic-design.html /graphic-design 301
+/graphic-design/ /graphic-design 301
+/contact.html /contact 301
+/contact/ /contact 301
+/privacy.html /privacy 301
+/privacy/ /privacy 301
+/terms.html /terms 301
+/terms/ /terms 301
+/branding /graphic-design 301
+/branding.html /graphic-design 301
+/branding/ /graphic-design 301
+/brand-design /graphic-design 301
+/brand-design.html /graphic-design 301
+/brand-design/ /graphic-design 301
+/logo-design /graphic-design 301
+/logo-design.html /graphic-design 301
+/logo-design/ /graphic-design 301

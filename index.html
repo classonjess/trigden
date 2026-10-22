@@ -82,7 +82,7 @@
   <script src="nav.js?v=launch-safety1" defer></script>
   <script>
     if (window.location.hash === '#about') {
-      window.location.replace('about.html');
+      window.location.replace('/about');
     }
   </script>
 
@@ -243,21 +243,21 @@
       <span></span>
     </button>
     <ul class="nav-links" id="primary-menu">
-        <li><a href="index.html">Home</a></li>
+        <li><a href="/">Home</a></li>
       <li class="nav-dropdown">
-        <a href="services.html" class="nav-dropdown__toggle" aria-haspopup="true" aria-expanded="false" aria-controls="services-menu">Services<span class="nav-caret" aria-hidden="true"></span></a>
+        <a href="/services" class="nav-dropdown__toggle" aria-haspopup="true" aria-expanded="false" aria-controls="services-menu">Services<span class="nav-caret" aria-hidden="true"></span></a>
         <ul class="nav-dropdown__menu" id="services-menu">
-            <li class="mobile-all-services"><a href="services.html">View all services</a></li>
-          <li><a href="web-design.html">Web Design &amp; Development</a></li>
-          <li><a href="website-maintenance.html">Website Maintenance &amp; Support</a></li>
-          <li><a href="seo.html">SEO Optimization</a></li>
-          <li><a href="graphic-design.html">Graphic &amp; Logo Design</a></li>
+            <li class="mobile-all-services"><a href="/services">View all services</a></li>
+          <li><a href="/web-design">Web Design &amp; Development</a></li>
+          <li><a href="/website-maintenance">Website Maintenance &amp; Support</a></li>
+          <li><a href="/seo">SEO Optimization</a></li>
+          <li><a href="/graphic-design">Graphic &amp; Logo Design</a></li>
         </ul>
       </li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="contact.html" class="nav-cta">Let's Talk<span class="nav-cta-arrow" aria-hidden="true"> ↗</span></a></li>
+      <li><a href="/about">About</a></li>
+      <li><a href="/contact" class="nav-cta">Let's Talk<span class="nav-cta-arrow" aria-hidden="true"> ↗</span></a></li>
     </ul>
-    <a href="contact.html" class="nav-cta">Let's Talk<span class="nav-cta-arrow" aria-hidden="true"> ↗</span></a>
+    <a href="/contact" class="nav-cta">Let's Talk<span class="nav-cta-arrow" aria-hidden="true"> ↗</span></a>
   </nav>
 
 <section id="main-content" tabindex="-1" class="hero">
@@ -272,7 +272,7 @@
   <div class="hero-content">
     <h1><span class="hero-accent">Websites</span> That Grow With Your Business.</h1>
     <p>Custom web design and development for businesses ready to grow. Based in Denver, working with clients nationwide.</p>
-    <a href="contact.html" class="cta-button">
+    <a href="/contact" class="cta-button">
       Request a Quote
     </a>
   </div>
@@ -287,7 +287,7 @@
     <div class="studio-services__layout">
       <div class="studio-services__catalog" id="services">
       <div class="home-services-grid" aria-label="Services">
-        <a href="web-design.html" class="home-service-card">
+        <a href="/web-design" class="home-service-card">
           <span class="about-service-icon about-service-icon--web" aria-hidden="true">
                     <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
                       <rect x="3.5" y="4" width="17" height="14" rx="2"></rect>
@@ -302,7 +302,7 @@
           <p>Websites that build trust and turn visitors into customers.</p>
           <span class="about-service-link">Web Design →</span>
         </a>
-        <a href="website-maintenance.html" class="home-service-card">
+        <a href="/website-maintenance" class="home-service-card">
           <span class="about-service-icon about-service-icon--dev" aria-hidden="true">
                     <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
                       <path d="M8 6L3.8 12 8 18"></path>
@@ -314,7 +314,7 @@
           <p>Keep your website updated and running smoothly.</p>
           <span class="about-service-link">Maintenance →</span>
         </a>
-        <a href="seo.html" class="home-service-card">
+        <a href="/seo" class="home-service-card">
           <span class="about-service-icon about-service-icon--seo" aria-hidden="true">
                     <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
                       <path d="M4 18.5h16"></path>
@@ -331,7 +331,7 @@
           <p>Help the right customers find your business online.</p>
           <span class="about-service-link">SEO →</span>
         </a>
-        <a href="graphic-design.html" class="home-service-card">
+        <a href="/graphic-design" class="home-service-card">
           <span class="about-service-icon about-service-icon--design" aria-hidden="true">
                     <svg viewBox="0 0 24 24" focusable="false" aria-hidden="true">
                       <path d="M6.2 18.7l2.6-.6 8.7-8.7a1.9 1.9 0 0 0-2.7-2.7L6.1 15.4z"></path>
@@ -515,7 +515,7 @@
         <p class="studio-services__eyebrow studio-eyebrow">ABOUT TRIGDEN STUDIO</p>
         <h2 id="about-title">Design That Drives <span>Growth.</span></h2>
         <p class="studio-services__lead">We build high-converting websites for growing businesses that need more than just a good-looking site.</p>
-        <a class="about-page-link" href="about.html">Meet Jess →</a>
+        <a class="about-page-link" href="/about">Meet Jess →</a>
         <p class="studio-services__location">Based in Denver, serving clients nationwide.</p>
       </div>
   </section>
@@ -635,26 +635,26 @@
   <footer class="site-footer">
   <div class="footer-studio-grid">
     <div class="footer-studio-brand">
-      <a class="footer-brand" href="/index.html">TRIGDEN STUDIO</a>
+      <a class="footer-brand" href="/">TRIGDEN STUDIO</a>
       <p>Thoughtful websites and creative design for growing businesses. Based in Denver, working nationwide.</p>
       <a href="mailto:hello@trigdenstudio.com">hello@trigdenstudio.com</a>
     </div>
     <nav class="footer-studio-nav" aria-label="Footer navigation">
       <h2>Explore</h2>
-      <a href="/index.html">Home</a><a href="/about.html">About</a><a href="/services.html">Services</a><a href="/contact.html">Contact</a>
+      <a href="/">Home</a><a href="/about">About</a><a href="/services">Services</a><a href="/contact">Contact</a>
     </nav>
     <nav class="footer-studio-nav" aria-label="Footer services">
-      <h2><a href="/services.html">Services</a></h2>
-      <a href="/web-design.html">Web Design &amp; Development</a>
-      <a href="/website-maintenance.html">Website Maintenance &amp; Support</a>
-      <a href="/seo.html">SEO &amp; Performance</a>
-      <a href="/graphic-design.html">Graphic, Logo &amp; Digital Design</a>
+      <h2><a href="/services">Services</a></h2>
+      <a href="/web-design">Web Design &amp; Development</a>
+      <a href="/website-maintenance">Website Maintenance &amp; Support</a>
+      <a href="/seo">SEO &amp; Performance</a>
+      <a href="/graphic-design">Graphic, Logo &amp; Digital Design</a>
     </nav>
   </div>
   <div class="footer-signature"><p>Stay fearless and have <span id="rotating-article">an</span> <span class="rotating-word">incredible</span> <span id="current-day">day</span>.</p></div>
   <div class="footer-bottom">
     <p class="footer-copyright">© <span id="year"></span> Trigden Studio. All rights reserved.</p>
-    <div class="footer-legal"><a href="/privacy.html">Privacy Policy</a></div>
+    <div class="footer-legal"><a href="/privacy">Privacy Policy</a></div>
   </div>
   <p class="footer-tagline">Designed &amp; Developed with purpose in Denver.</p>
 </footer>
