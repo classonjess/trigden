@@ -21,27 +21,42 @@ test('internal return suppresses intro even when storage is blocked', () => {
 });
 
 const introScript = readFileSync(new URL('../entry-intro.js', import.meta.url), 'utf8');
-test('entry overlay is created only on initial visits, never on returns or reduced motion', () => {
-  for (const [returning,reduced,expected] of [[false,false,1],[true,false,0],[false,true,0],[true,true,0]]) {
-    let inserted=0, removed=0;
-    const template={ content:{cloneNode:()=>({})},before:()=>inserted++,remove:()=>removed++ };
-    runInNewContext(introScript,{document:{body:{classList:{remove(){}}},getElementById:id=>id==='entry-intro-template'?template:null,documentElement:{classList:{contains:()=>returning}}},window:{trigdenShouldPlayIntro:!returning,matchMedia:()=>({matches:reduced})}});
-    assert.equal(inserted,expected);
-    assert.equal(removed,1);
-  }
+function intro({returning=false,reduced=false,logoPresent=true}={}) {
+ const classes=new Set(),events=new Map(),windowEvents=new Map(),timers=new Map(),dispatched=[];let motion,sequence=0;
+ const logo={classList:{add:c=>classes.add(c),remove:c=>classes.delete(c)},addEventListener:(n,f)=>events.set(n,f),removeEventListener:n=>events.delete(n)};
+ const document={querySelector:()=>logoPresent?logo:null,documentElement:{classList:{contains:()=>returning}}};
+ const media={matches:reduced,addEventListener:(n,f)=>motion=f,removeEventListener:()=>motion=null};
+ const window={trigdenShouldPlayIntro:!returning,matchMedia:()=>media,addEventListener:(n,f)=>windowEvents.set(n,f),removeEventListener:n=>windowEvents.delete(n),dispatchEvent:e=>dispatched.push(e.type)};
+ runInNewContext(introScript,{document,window,Event:class{constructor(type){this.type=type;}},setTimeout:(fn,ms)=>{timers.set(++sequence,{fn,ms});return sequence;},clearTimeout:id=>timers.delete(id)});
+ return {classes,events,windowEvents,timers,dispatched,reduce:()=>motion?.({matches:true})};
+}
+test('first-visit pulses decorate only the existing logo, without an overlay or scroll lock',()=>{
+ const fresh=intro();assert(fresh.classes.has('entry-logo-pulse'));
+ for(const options of [{returning:true},{reduced:true},{logoPresent:false}])assert.equal(intro(options).classes.size,0);
+ const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+ const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
+ assert(!html.includes('entry-intro-template'));assert(!html.includes('id="entry-intro"'));
+ assert(!introScript.includes('document.body'));assert(!css.includes('body.intro-active'));
 });
-
-test('intro pulse fallback outlasts pulse and completion follows the exit fade',()=>{
- const timers=[],events=[];let removed=false,locked=false;
- const intro={classList:{add(){}},querySelector:()=>({addEventListener(){}}),remove:()=>removed=true};
- const template={content:{cloneNode:()=>({})},before(){},remove(){}};
- runInNewContext(introScript,{document:{getElementById:id=>id==='entry-intro-template'?template:intro,documentElement:{classList:{contains:()=>false}},body:{classList:{add:()=>locked=true,remove:()=>locked=false}}},window:{trigdenShouldPlayIntro:true,matchMedia:()=>({matches:false,addEventListener(){}}),addEventListener(){},dispatchEvent:e=>events.push(e.type)},Event:class {constructor(type){this.type=type}},setTimeout:(fn,ms)=>{timers.push({fn,ms});return timers.length},clearTimeout(){}});
- assert(locked);assert.equal(timers[0].ms,2200);timers[0].fn();assert.equal(locked,false);assert.equal(removed,false);assert.equal(timers[1].ms,250);timers[1].fn();assert(removed);assert.deepEqual(events,['trigden:intro-done']);
+test('animation end, fallback, motion changes and navigation clean up nonblocking pulses',()=>{
+ for(const reason of ['animation','fallback','motion','cancel','pagehide']){
+  const h=intro();assert.equal([...h.timers.values()][0].ms,2200);
+  if(reason==='animation')h.events.get('animationend')();
+  if(reason==='fallback')[...h.timers.values()][0].fn();
+  if(reason==='motion')h.reduce();
+  if(reason==='cancel')h.windowEvents.get('trigden:intro-cancel')();
+  if(reason==='pagehide')h.windowEvents.get('pagehide')();
+  assert.equal(h.classes.size,0);assert.equal(h.timers.size,0);assert.equal(h.events.size,0);assert.equal(h.windowEvents.size,0);
+  assert.deepEqual(h.dispatched,['trigden:intro-done']);
+ }
 });
-
-test('intro runs exactly three pulses and its fallback allows the full animation',()=>{
+test('intro keeps three pulses with a bounded cleanup fallback',()=>{
  const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
  assert.match(css,/animation: introLogoPulse \.65s ease-in-out 3;/);
- assert.match(introScript,/setTimeout\(dismiss, 2200\)/);
- assert(2200>650*3);
+ assert.match(introScript,/setTimeout\(dismiss, 2200\)/);assert(2200>650*3);
+});
+
+test('persistent site background retains all shared intro-named animation keyframes',()=>{
+ const css=readFileSync(new URL('../style.css',import.meta.url),'utf8');
+ for(const match of css.matchAll(/animation:\s*(intro\w+)/g))assert(css.includes(`@keyframes ${match[1]} {`),match[1]);
 });

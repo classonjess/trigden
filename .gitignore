@@ -1,1 +1,4 @@
 .DS_Store
+
+# Generated Pages output; preserve archival source files in the checkout.
+/dist/

@@ -19,12 +19,7 @@
     function clearIntro() {
       window.trigdenShouldPlayIntro = false;
       document.documentElement.classList.add('skip-entry-intro');
-      if (document.body) document.body.classList.remove('intro-active');
-      var overlay = document.getElementById('entry-intro');
-      if (overlay) {
-        overlay.remove();
-        window.dispatchEvent(new Event('trigden:intro-done'));
-      }
+      window.dispatchEvent(new Event('trigden:intro-cancel'));
     }
     if (skip) clearIntro();
     window.addEventListener('pagehide', clearIntro);
@@ -32,7 +27,6 @@
     window.addEventListener('hashchange', clearIntro);
   })();
   </script>
-  <style>.skip-entry-intro .entry-intro { display: none !important; } .skip-entry-intro body.intro-active { overflow: auto; }</style>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <!-- Start cookieyes banner -->
   <script src="consent-defaults.js"></script>
@@ -77,7 +71,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://cdn-cookieyes.com" crossorigin />
 
-  <link rel="stylesheet" href="style.css?v=welcome-type21" />
+  <link rel="stylesheet" href="style.css?v=hero-optimized1" />
   <link rel="stylesheet" href="home-flow.css?v=studio-summary24" />
   <script src="nav.js?v=launch-safety1" defer></script>
   <script>
@@ -98,7 +92,6 @@
   </script>
 
   <!-- Preload LCP image -->
-  <link rel="preload" as="image" href="/images/trigdenlogo-520w.webp" imagesrcset="/images/trigdenlogo-520w.webp 520w, /images/trigdenlogo-1040w.webp 1040w" imagesizes="min(72vw, 520px)" type="image/webp" fetchpriority="high" />
   <link rel="preload" as="image" href="/images/hero-video-poster.webp" fetchpriority="high" type="image/webp" />
   <!-- Favicon & webmanifest -->
   <!-- PNG fallbacks (uploaded) -->
@@ -179,7 +172,6 @@
   }
   </script>
   <!-- Your CSS file -->
-<noscript><style>.entry-intro { display: none; } body.intro-active { overflow: auto; }</style></noscript>
   <script src="/reveal.js?v=fade-rise40-15" defer></script>
   <script src="/footer-message.js?v=3" defer></script>
   <link rel="stylesheet" href="/card-spacing.css?v=1" />
@@ -189,29 +181,7 @@
   <link rel="stylesheet" href="form-confirmation.css?v=1" />
 </head>
 <body id="top">
-  <template id="entry-intro-template">
-  <div id="entry-intro" class="entry-intro" aria-hidden="true">
-    <div class="entry-intro__geometry">
-      <span class="entry-intro__shape entry-intro__shape--one"></span>
-      <span class="entry-intro__shape entry-intro__shape--two"></span>
-      <span class="entry-intro__shape entry-intro__shape--three"></span>
-      <span class="entry-intro__shape entry-intro__shape--four"></span>
-      <span class="entry-intro__shape entry-intro__shape--five"></span>
-      <span class="entry-intro__shape entry-intro__shape--six"></span>
-      <span class="entry-intro__shape entry-intro__shape--seven"></span>
-      <span class="entry-intro__shape entry-intro__shape--eight"></span>
-      <span class="entry-intro__shape entry-intro__shape--nine"></span>
-    </div>
-    <div class="entry-intro__content">
-      <picture>
-        <source type="image/webp" srcset="images/trigdenlogo-520w.webp 520w, images/trigdenlogo-1040w.webp 1040w" sizes="min(72vw, 520px)" />
-        <img class="entry-intro__logo" src="images/trigdenlogo.png" alt="Trigden Studio" fetchpriority="high" width="1040" height="167" />
-      </picture>
-      <p class="entry-intro__caption">Entering the studio</p>
-    </div>
-  </div>
-  </template>
-  <script src="entry-intro.js?v=three-pulses2"></script>
+  <script src="entry-intro.js?v=nav-pulse1" defer></script>
   <!-- Persistent animated background -->
   <div class="site-bg" aria-hidden="true">
     <div class="site-bg__geometry">
@@ -1039,132 +1009,6 @@
       });
     })();
   </script>
-  <script>
-  // Force video load and play (with iOS/Safari fallback)
-  document.addEventListener('DOMContentLoaded', function() {
-    const video = document.getElementById('hero-vid');
-    const motionToggle = document.getElementById('hero-motion-toggle');
-    if (!video) return;
-
-    // Keep the still visible until a decoded video frame is actually playing.
-    video.addEventListener('playing', () => video.classList.add('is-ready'));
-    video.addEventListener('error', () => video.classList.remove('is-ready'));
-
-    video.muted = true;
-    video.defaultMuted = true;
-    video.playsInline = true;
-    video.setAttribute('muted', '');
-    video.setAttribute('playsinline', '');
-    video.setAttribute('webkit-playsinline', '');
-
-    const ensureHeroSource = () => {
-      if (video.querySelector('source')) return;
-      const source = document.createElement('source');
-      source.src = './video/website-banner-720.mp4';
-      source.type = 'video/mp4';
-      video.appendChild(source);
-      video.preload = 'none';
-      video.load();
-    };
-
-    try {
-      video.playbackRate = 0.90;
-    } catch (e) {
-    }
-
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let allowKickstart = !prefersReducedMotion;
-
-    const setMotionToggleState = (isPaused) => {
-      if (!motionToggle) return;
-
-      motionToggle.classList.toggle('is-paused', isPaused);
-      motionToggle.setAttribute('aria-pressed', isPaused ? 'true' : 'false');
-      motionToggle.setAttribute('aria-label', isPaused ? 'Play background video' : 'Pause background video');
-
-      const screenReaderText = motionToggle.querySelector('.sr-only');
-      if (screenReaderText) {
-        screenReaderText.textContent = isPaused ? 'Play background video' : 'Pause background video';
-      }
-    };
-
-    const detachKickstartListeners = () => {
-      document.removeEventListener('touchstart', kickstartPlayback);
-      document.removeEventListener('click', kickstartPlayback);
-      document.removeEventListener('visibilitychange', onVisibilityChange);
-      window.removeEventListener('pageshow', kickstartPlayback);
-      video.removeEventListener('canplay', kickstartPlayback);
-      video.removeEventListener('loadeddata', kickstartPlayback);
-    };
-
-    const kickstartPlayback = () => {
-      if (!allowKickstart || !video.paused || document.hidden) return;
-
-      video.play().then(() => {
-        setMotionToggleState(false);
-        detachKickstartListeners();
-      }).catch(() => {
-      });
-    };
-
-    const onVisibilityChange = () => {
-      if (!document.hidden) {
-        kickstartPlayback();
-      }
-    };
-
-    const toggleMotion = () => {
-      allowKickstart = false;
-      detachKickstartListeners();
-      ensureHeroSource();
-
-      if (video.paused) {
-        video.play().then(() => {
-          setMotionToggleState(false);
-        }).catch(() => {
-          setMotionToggleState(true);
-        });
-      } else {
-        video.pause();
-        setMotionToggleState(true);
-      }
-    };
-
-    if (prefersReducedMotion) {
-      video.pause();
-      setMotionToggleState(true);
-    } else {
-      setMotionToggleState(false);
-
-      const startHeroVideo = () => {
-        ensureHeroSource();
-        kickstartPlayback();
-      };
-      const scheduleHeroVideo = () => {
-        if ('requestIdleCallback' in window) {
-          requestIdleCallback(startHeroVideo, { timeout: 2500 });
-        } else {
-          setTimeout(startHeroVideo, 1500);
-        }
-      };
-
-      // Safari can reject the first play call before media is ready; retry on media/visibility events.
-      document.addEventListener('touchstart', kickstartPlayback, { passive: true });
-      document.addEventListener('click', kickstartPlayback);
-      document.addEventListener('visibilitychange', onVisibilityChange);
-      window.addEventListener('pageshow', kickstartPlayback);
-      video.addEventListener('canplay', kickstartPlayback);
-      video.addEventListener('loadeddata', kickstartPlayback);
-
-      if (document.readyState === 'complete') scheduleHeroVideo();
-      else window.addEventListener('load', scheduleHeroVideo, { once: true });
-    }
-
-    if (motionToggle) {
-      motionToggle.addEventListener('click', toggleMotion);
-    }
-  });
-
-</script>
+  <script src="hero-video.js?v=crf22-1" defer></script>
  </body>
 </html>
