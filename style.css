@@ -4569,7 +4569,7 @@ footer .footer-copyright {
   flex-wrap: wrap;
   gap: 40px;
   border-top: 1px solid rgba(62, 167, 198, 0.08);
-  padding-top: 40px;
+  padding-top: 24px;
 }
 
 .footer-nav {
@@ -5749,3 +5749,8 @@ footer.site-footer {
 .site-footer .footer-linkedin { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; border-radius: 8px; }
 .site-footer .footer-linkedin:hover { background: rgba(111,214,240,.08); }
 .site-footer .footer-linkedin:focus-visible { outline: 2px solid #6fd6f0; outline-offset: 3px; }
+@media (max-width: 768px) {
+  .site-footer .footer-bottom { display: flex; flex-direction: column; align-items: flex-start; padding-inline-end: 0; row-gap: 12px; }
+  .site-footer .footer-copyright { text-align: left; }
+  .site-footer .footer-legal { margin-inline-start: 0; justify-content: flex-start; }
+}
