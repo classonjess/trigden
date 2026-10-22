@@ -27,6 +27,23 @@ async function run(width,{reduced=false,js=true,touch=false}={}){
   assert.equal(layout.documentWidth,width,'No page overflow');
   assert.equal(layout.visible,width<=768?1:2,'Responsive card count');
   assert(layout.heights.every(h=>Math.abs(h-layout.heights[0])<1),'Equal card heights');
+  if(width<=768){
+   const centered=await track.evaluate(t=>{
+    const r=t.getBoundingClientRect(),card=t.firstElementChild.getBoundingClientRect();
+    const controls=document.querySelector('.testimonial-controls').getBoundingClientRect();
+    const dots=document.querySelector('.testimonial-pagination').getBoundingClientRect();
+    const arrows=[...document.querySelectorAll('.testimonial-arrow')].map(a=>a.getBoundingClientRect());
+    const middle=b=>(b.left+b.right)/2;
+    return {card:Math.abs(middle(card)-middle(r)),controls:Math.abs(middle(controls)-middle(r)),dots:Math.abs(middle(dots)-middle(r)),dotHeight:dots.height,arrowWidths:arrows.map(a=>a.width),gaps:[dots.left-arrows[0].right,arrows[1].left-dots.right]};
+   });
+   assert(centered.card<1,'Mobile card is centered in the track');
+   if(js){
+    assert(centered.controls<1&&centered.dots<1,'Controls and pagination share the card center');
+    assert.equal(centered.dotHeight,44,'Pagination stays on one row');
+    assert(centered.arrowWidths.every(w=>w===44),'Mobile arrows never shrink');
+    assert(Math.abs(centered.gaps[0]-centered.gaps[1])<1,'Arrow spacing is balanced');
+   }
+  }
   if(reduced)assert.equal(layout.behavior,'auto');
   const name=width+(reduced?'-reduced':'')+(!js?'-no-js':'');
   if(output){
@@ -113,16 +130,29 @@ async function run(width,{reduced=false,js=true,touch=false}={}){
  }finally{await context.close();}
 }
 try{
- for(const width of [1440,1024,769,768,402,390,320])await run(width,{touch:width===402});
+ for(const width of [1440,1024,769,768,430,402,390,375,320])await run(width,{touch:width===402});
  await run(402,{reduced:true});await run(402,{js:false});
  const context=await browser.newContext(),page=await context.newPage();
  await page.route('**/*',route=>new URL(route.request().url()).origin===new URL(base).origin?route.continue():route.abort());
+ for(const width of [1024,1280,1440,1920]){
+ await page.setViewportSize({width,height:1000});
  for(const path of ['/','/about','/services','/web-design','/website-maintenance','/seo','/graphic-design','/contact','/privacy','/terms','/404.html']){
   const response=await page.goto(base+path,{waitUntil:'load'});assert.equal(response.status(),200,path);
   const linkedin=page.getByRole('link',{name:'Jessica Classon on LinkedIn',exact:true});assert.equal(await linkedin.count(),1,path);assert.equal(await linkedin.getAttribute('href'),'https://www.linkedin.com/in/jessicaclasson');
   const schemas=await page.locator('script[type="application/ld+json"]').allTextContents();schemas.forEach(s=>JSON.parse(s));
+  await page.evaluate(()=>document.fonts.ready);
+  await page.waitForFunction(()=>{
+   const footer=document.querySelector('footer.site-footer');
+   const right=Math.max(...[...footer.querySelectorAll('[aria-label="Footer services"] a')].flatMap(a=>{
+    const range=document.createRange();range.selectNodeContents(a);return [...range.getClientRects()].map(r=>r.right);
+   }));
+   return Math.abs(footer.querySelector('.footer-linkedin svg path').getBoundingClientRect().right-right)<1;
+  });
+  const gap=await linkedin.evaluate(a=>a.getBoundingClientRect().left-a.previousElementSibling.getBoundingClientRect().right);
+  assert.equal(gap,20,'Footer link spacing is preserved');
+ }
  }
  await context.close();
  if(output)await writeFile(output+'/carousel-results.json',JSON.stringify({results,footerPages:11,limitations:['Chrome emulation; physical iOS Safari not tested.','External assets blocked; no form delivery tests or production changes.']},null,2));
- console.log('PASS: '+results.length+' carousel scenarios and 11 footer/schema pages.');
+ console.log('PASS: '+results.length+' carousel scenarios and 44 footer alignment/schema checks across 11 pages.');
 }finally{await browser.close();}

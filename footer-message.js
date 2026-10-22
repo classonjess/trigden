@@ -30,6 +30,8 @@
   const grid = footer?.querySelector('.footer-studio-grid');
   const services = footer?.querySelector('[aria-label="Footer services"]');
   const bottom = footer?.querySelector('.footer-bottom');
+  const social = footer?.querySelector('.footer-linkedin');
+  const icon = social?.querySelector('svg path');
   if (!grid || !services || !bottom) return;
   const links = [...services.querySelectorAll('a')];
   const align = () => {
@@ -40,7 +42,10 @@
       return [...range.getClientRects()].map(rect => rect.right);
     });
     if (!rightEdges.length) return;
-    const inset = Math.max(0, boundary.right - Math.max(...rightEdges));
+    // The visible glyph sits inside both the SVG and the 44px link target.
+    const iconInset = social && icon && matchMedia('(min-width: 769px)').matches
+      ? social.getBoundingClientRect().right - icon.getBoundingClientRect().right : 0;
+    const inset = Math.max(0, boundary.right - Math.max(...rightEdges) - iconInset);
     footer.style.setProperty('--footer-services-end-space', `${inset}px`);
   };
   const observer = new ResizeObserver(align);

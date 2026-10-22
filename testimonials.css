@@ -51,7 +51,11 @@
 #testimonials .testimonial-arrow[aria-disabled="true"]:focus-visible { opacity: 1; color: #718a99; }
 @media (max-width: 768px) {
   #testimonials .testimonials-grid { grid-auto-columns: 100%; gap: 20px; }
-  #testimonials .testimonial-card { padding: 22px; }
+  #testimonials .testimonial-card { width: 100%; padding: 22px; }
+  #testimonials .testimonial-controls { gap: 12px; }
+  #testimonials .testimonial-arrow { flex-shrink: 0; }
+  #testimonials .testimonial-pagination { flex-wrap: nowrap; flex-shrink: 0; }
+  #testimonials .testimonial-dot { min-width: 32px; flex-shrink: 0; }
   #testimonials .section-header .testimonials-google-rating { max-width: 28ch; margin: 12px auto 0; }
 }
 @media (prefers-reduced-motion: reduce) {
