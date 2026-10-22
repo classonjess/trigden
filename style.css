@@ -5739,3 +5739,9 @@ footer.site-footer {
   html { scroll-behavior: auto !important; }
 }
 #main-content { scroll-margin-top: 80px; }
+
+/* A small shared social link, with a full keyboard and touch target. */
+.site-footer .footer-legal { align-items: center; }
+.site-footer .footer-linkedin { display: inline-flex; align-items: center; justify-content: center; width: 44px; min-height: 44px; border-radius: 8px; }
+.site-footer .footer-linkedin:hover { background: rgba(111,214,240,.08); }
+.site-footer .footer-linkedin:focus-visible { outline: 2px solid #6fd6f0; outline-offset: 3px; }

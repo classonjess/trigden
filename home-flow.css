@@ -133,10 +133,6 @@
 #testimonials .testimonial-proof { justify-items: start; }
 #testimonials .testimonial-stars { font-size: 12px; letter-spacing: .1em; }
 #testimonials .testimonial-verified { font-size: 12px; letter-spacing: 0; text-transform: none; }
-.testimonial-review summary { display: flex; align-items: center; width: fit-content; min-height: 44px; cursor: pointer; color: var(--accent); font-size: 13px; font-weight: 600; }
-.testimonial-review summary::after { content: '+'; margin-left: 8px; }
-.testimonial-review[open] summary::after { content: '−'; }
-.testimonial-review p { padding-top: 12px; color: var(--text-muted); font-size: 15px; line-height: 1.7; }
 #contact .contact-welcome { font-size: 15px; line-height: 1.7; color: var(--text-muted); margin: 16px 0 28px; }
 #contact .contact-points { gap: 24px; }
 @media (max-width: 768px) {

@@ -107,3 +107,25 @@ For another build, preserve/remove only the previous generated output after revi
 Pages Functions remain in the project-root `functions/` directory, outside the public output. Cloudflare must compile them from that root so the existing www and clean-URL middleware is preserved. For local validation, run `wrangler pages dev dist` **from the repository root**, as shown above. Both optimized URLs must return MP4 responses; the original URL must return 404 from the generated output.
 
 **Separate production authorization is still required** to verify the actual Pages project/production branch/build settings, set or approve build command `node scripts/build-site.mjs` and publish output `dist`, and verify Functions compilation before any push/deployment. Do not add a guessed Wrangler project/account configuration or deploy the root directory. Local output exclusion is validated; live hosting will not adopt it automatically.
+
+## Testimonials and LinkedIn (local review)
+
+The homepage contains five distinct testimonials: the preserved Gary / Maverick Co. and MRA Designs client feedback, plus Mariano Gomes Alves, Kirsten van der Riet and James P's Google reviews. Google wording was read directly from the business's Google review panel on October 21, 2026. The Google display names include “Mariano rogerio Gomes Alves” and “kirsten van der riet”; cards use the names supplied by the owner. Spelling, capitalization and punctuation inside the quotations are preserved. All five full testimonials retain their original wording in the document. With JavaScript, reviews longer than five rendered lines initially use a five-line crop with a subtle text-only gradient fade and an accessible Read full review / Read less button. Reviews that fit do not receive a visible expansion control. Without JavaScript, all text is shown in full. Only Google reviews display five-star ratings; the two existing testimonials retain their text and “Client feedback” attribution without implying a verified rating or Google source.
+
+The public [Google Maps listing](https://www.google.com/maps/place/Trigden+Studio/data=!4m2!3m1!1s0x0:0xfcb1ae0ee7b20da9) was verified against the business name, website and all three reviewers. It contains the Reviews tab and is used instead of an account-specific management URL. The Google-only rating was confirmed as 5.0 from 3 reviews; the section intentionally displays only five soft-gold stars and “5.0 on Google”, without a visible review count. This is static content, not a live Google ratings integration; update it if Google review counts change. No review or aggregate-rating JSON-LD was added.
+
+`testimonials.css` and `testimonials.js` implement a dependency-free, manual scroll-snap carousel: two cards above 768px and one at/below 768px. Buttons, pagination, native touch scrolling, track keyboard arrows/Home/End, and reduced motion are supported. At the last desktop position the previous card overlaps so two real cards remain visible; no cloned or duplicate reviews are inserted. Without JavaScript, native horizontal scrolling and every complete review remain available. Cards stretch to equal heights, with compact five-line previews after enhancement. Expanding a review removes the crop and fade and lets the cards grow naturally so every word is readable. There are no height animations; reduced motion continues to disable smooth carousel scrolling. Width and font changes recalculate which reviews need expansion controls. The existing Inter/Montserrat font loaders retain `display=swap`.
+
+Every existing static footer (including 404) includes the same accessible LinkedIn icon. The existing AboutPage's Person gets LinkedIn `sameAs`; the personal profile is not assigned as the identity of the business.
+
+Run all automated checks with `node --test tests/*.test.mjs`. Run the additional local-only browser harness with the same existing Playwright and Chrome settings documented above:
+
+```bash
+TRIGDEN_PLAYWRIGHT_MODULE=/absolute/path/to/playwright \
+TRIGDEN_CHROME_EXECUTABLE='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome' \
+TRIGDEN_PREVIEW_URL=http://127.0.0.1:8743 \
+TRIGDEN_BROWSER_ARTIFACTS=/absolute/path/outside/this/repository \
+node tests/testimonials.browser.mjs
+```
+
+The build allowlist includes both new carousel assets. No changes are required to Cloudflare settings, middleware, redirects, forms, videos, poster or intro scripts. A fresh temporary build and Wrangler Pages preview can be used for review without overwriting an existing `dist` directory or deploying anything.

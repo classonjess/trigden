@@ -44,6 +44,8 @@ export const PUBLIC_FILES = [
   "sitemap.xml",
   "style.css",
   "terms.html",
+  "testimonials.css",
+  "testimonials.js",
   "web-design.css",
   "web-design.html",
   "website-maintenance.css",
