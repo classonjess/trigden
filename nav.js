@@ -7,9 +7,6 @@
     if (!menuButton || !menuToggle) return;
     menuButton.setAttribute('aria-expanded', String(menuToggle.checked));
     menuButton.setAttribute('aria-label', menuToggle.checked ? 'Close menu' : 'Open menu');
-    const locked = window.innerWidth <= 768 && menuToggle.checked;
-    document.documentElement.classList.toggle('mobile-menu-open', locked);
-    document.body.classList.toggle('mobile-menu-open', locked);
   };
   if (menuButton && menuToggle) {
     menuButton.addEventListener('click', () => {
@@ -18,12 +15,6 @@
       if (!menuToggle.checked && dropdown) setOpen(false);
     });
     menuToggle.addEventListener('change', updateMenuButton);
-    window.addEventListener('resize', () => {
-      if (window.innerWidth > 768) menuToggle.checked = false;
-      updateMenuButton();
-    });
-    window.addEventListener('pageshow', updateMenuButton);
-    updateMenuButton();
   }
   if (!dropdown || !toggle) return;
 

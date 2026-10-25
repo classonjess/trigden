@@ -6035,11 +6035,3 @@ footer.site-footer {
   .site-footer .footer-copyright { text-align: left; }
   .site-footer .footer-legal { margin-top: 0; margin-inline-start: 0; justify-content: flex-start; }
 }
-
-@media (max-width: 768px) {
-  html.mobile-menu-open,
-  body.mobile-menu-open {
-    overflow: hidden;
-    overscroll-behavior: none;
-  }
-}
