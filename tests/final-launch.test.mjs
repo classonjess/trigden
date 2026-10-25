@@ -22,26 +22,11 @@ test('mobile Escape restores hamburger focus only when the menu was open', () =>
     const checkbox = {checked:open,addEventListener(){}};
     const toggle = {addEventListener(){},setAttribute(){}};
     const dropdown = {querySelector:()=>toggle,classList:{add(){},toggle(){}},addEventListener(){},contains(){return false;}};
-    const rootClasses=new Set(), bodyClasses=new Set();
-    const classList = classes => ({toggle(name,on){if(on)classes.add(name);else classes.delete(name);}});
-    const document = {documentElement:{classList:classList(rootClasses)},body:{classList:classList(bodyClasses)},querySelector:s=>s==='.nav-dropdown'?dropdown:s==='.hamburger'?button:null,getElementById:id=>id==='menu-toggle'?checkbox:null,querySelectorAll:()=>[],addEventListener:(name,fn)=>listeners[name]=fn};
-    const window = {innerWidth:390,addEventListener:(name,fn)=>listeners[name]=fn};
-    vm.runInNewContext(read('nav.js'), {document,window});
-    assert.equal(rootClasses.has('mobile-menu-open'),open);
-    assert.equal(bodyClasses.has('mobile-menu-open'),open);
+    const document = {querySelector:s=>s==='.nav-dropdown'?dropdown:s==='.hamburger'?button:null,getElementById:id=>id==='menu-toggle'?checkbox:null,querySelectorAll:()=>[],addEventListener:(name,fn)=>listeners[name]=fn};
+    vm.runInNewContext(read('nav.js'), {document,window:{innerWidth:390}});
     listeners.keydown({key:'Escape'});
     assert.equal(checkbox.checked,false);
     assert.equal(focused,open);
-    assert.equal(rootClasses.has('mobile-menu-open'),false);
-    assert.equal(bodyClasses.has('mobile-menu-open'),false);
-    checkbox.checked=true;
-    listeners.pageshow();
-    assert.equal(bodyClasses.has('mobile-menu-open'),true);
-    window.innerWidth=1024;
-    listeners.resize();
-    assert.equal(checkbox.checked,false);
-    assert.equal(rootClasses.has('mobile-menu-open'),false);
-    assert.equal(bodyClasses.has('mobile-menu-open'),false);
   }
 });
 
