@@ -6036,12 +6036,6 @@ footer.site-footer {
   .site-footer .footer-legal { margin-top: 0; margin-inline-start: 0; justify-content: flex-start; }
 }
 
-/* Reuse the homepage button for the closing service-page quote action. */
-.service-quote-cta {
-  padding: 24px 22px 48px;
-  text-align: center;
-}
-
 @media (max-width: 768px) {
   html.mobile-menu-open,
   body.mobile-menu-open {
